@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "Fund Reporter": {
+      "schemaPath": "graphql.schema.json",
+      "extensions": {
+        "endpoints": {
+          "dev": "http://localhost:3000/api/v1/schema"
+        }
+      }
+    }
+  }
+}

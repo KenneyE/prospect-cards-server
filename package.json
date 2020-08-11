@@ -1,0 +1,13 @@
+{
+  "name": "fund-reporter-server",
+  "version": "0.0.1",
+  "license": "UNLICENSED",
+  "author": "ekenney5@gmail.com",
+  "scripts": {
+    "spec": "bundle exec rspec",
+    "prettier": "./node_modules/.bin/prettier --write '**/*.rb'"
+  },
+  "devDependencies": {
+    "@prettier/plugin-ruby": "^0.19.0"
+  }
+}

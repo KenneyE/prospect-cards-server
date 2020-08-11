@@ -33,5 +33,7 @@ module FundReporterServer
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.default_protect_from_forgery = :null_session
   end
 end

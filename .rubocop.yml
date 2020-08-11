@@ -1,0 +1,62 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+AllCops:
+  TargetRubyVersion: '2.7'
+  NewCops: enable
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+    - 'lib/**/*'
+    - 'vendor/**/*'
+    - 'Gemfile'
+    - 'Rakefile'
+    - '**/*.erb'
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/SymbolArray:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/Documentation:
+  Exclude:
+    - 'app/graphql/types/**'
+Layout/LineLength:
+  # Ignore comments at beginning of files for model annotations
+  IgnoredPatterns: ['\A#']
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+Naming/PredicateName:
+  Exclude:
+    - 'app/graphql/types/**'
+Metrics/BlockLength:
+  Exclude:
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+    - 'Guardfile'
+Metrics/ClassLength:
+  Enabled: false
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*.rb'
+RSpec/Focus:
+  Severity: error
+RSpec/MultipleExpectations:
+  Max: 2
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_raw_token
+    - find_by_sql
+    - find_by_badge
+    - find_by_verified_user_badge
+Rails/EnumHash:
+  Enabled: false
