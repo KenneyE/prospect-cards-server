@@ -28,6 +28,7 @@ gem 'rack-cors'
 gem 'apollo_upload_server', '2.0.1'
 gem 'devise'
 gem 'devise_invitable', '~> 2.0.0'
+gem 'devise-jwt'
 gem 'graphql'
 gem 'graphql-errors'
 
