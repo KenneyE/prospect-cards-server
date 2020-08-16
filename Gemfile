@@ -36,6 +36,9 @@ gem 'paper_trail'
 gem 'sidekiq'
 gem 'nilify_blanks'
 
+gem 'sendgrid-ruby'
+gem 'paper_trail'
+
 group :test do
   gem 'factory_bot_rails', '~> 4.0'
   gem 'rspec-rails', '~> 3.7'

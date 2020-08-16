@@ -10,7 +10,6 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     origins 'localhost:3001', 'https://fund-reporter-client.herokuapp.com'
 
     resource '*',
-             headers: :any,
              headers: %w[Authorization],
              methods: :any,
              expose: %w[Authorization],
