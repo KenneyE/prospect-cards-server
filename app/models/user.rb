@@ -11,6 +11,8 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
          :lockable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenyList
 
+  has_many :listings
+
   # Override devise mailer to use ActionMailer
   # https://github.com/plataformatec/devise#activejob-integration
   def send_devise_notification(notification, *args)

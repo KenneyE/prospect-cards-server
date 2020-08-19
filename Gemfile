@@ -36,6 +36,7 @@ gem 'paper_trail'
 gem 'sidekiq'
 gem 'nilify_blanks'
 
+gem 'stripe'
 gem 'sendgrid-ruby'
 gem 'paper_trail'
 

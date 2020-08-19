@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_174158) do
+ActiveRecord::Schema.define(version: 2020_08_19_021452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 2020_08_16_174158) do
     t.string "jti", null: false
     t.datetime "exp", null: false
     t.index ["jti"], name: "index_jwt_deny_list_on_jti"
+  end
+
+  create_table "listings", force: :cascade do |t|
+    t.text "title", null: false
+    t.text "description", null: false
+    t.bigint "user_id", null: false
+    t.integer "price", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -57,4 +67,5 @@ ActiveRecord::Schema.define(version: 2020_08_16_174158) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "listings", "users"
 end

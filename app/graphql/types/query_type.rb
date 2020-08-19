@@ -3,4 +3,9 @@ class Types::QueryType < Types::BaseObject
   def auth
     context[:current_user].present?
   end
+
+  field :viewer, Types::User, null: false
+  def viewer
+    context[:current_user]
+  end
 end
