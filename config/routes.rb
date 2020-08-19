@@ -11,5 +11,9 @@ Rails.application.routes.draw do
                sessions: 'users/sessions', # invitations: 'users/invitations'
              }
 
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :listings, only: [] do
+    collection do
+      post :_msearch
+    end
+  end
 end
