@@ -1,9 +1,11 @@
 class ListingsController < ApplicationController
   def _msearch
-    query = params[:query]
+    query = JSON.parse(request.body.read.split("\n")[1])
 
-    listings = Listing.search({ query: query.to_unsafe_h }) if query
+    query['size'] = 100
 
-    render json: listings.results.results
+    listings = Listing.search(query) if query
+
+    render json: { listings: { hits: { hits: listings.results.results }  } }
   end
 end
