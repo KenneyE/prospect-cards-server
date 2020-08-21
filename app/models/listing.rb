@@ -6,6 +6,7 @@ class Listing < ApplicationRecord
     indexes :id, type: :long
     indexes :title, type: :text
     indexes :description, type: :text
+    indexes :image, type: :text
 
     indexes :player do
       indexes :name, type: :keyword
@@ -23,7 +24,15 @@ class Listing < ApplicationRecord
 
   def as_indexed_json(options = {})
     self.as_json(
+      methods: :image,
       only: %i[id title description], include: { player: { only: :name } }
+    )
+  end
+
+  def image
+    Rails.application.routes.url_helpers.rails_blob_path(
+      images.first,
+      only_path: true
     )
   end
 end
