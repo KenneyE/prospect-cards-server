@@ -16,8 +16,11 @@ class Mutations::SaveListing < Mutations::BaseMutation
 
     raise_errors(l)
 
+    # https://github.com/jetruby/apollo_upload_server-ruby/issues/10#issuecomment-406928478
     imgs.each do |img|
-      l.images.attach(io: img['document'].to_io,filename: img['document'].original_filename)
+      l.images.attach(
+        io: img['document'].to_io, filename: img['document'].original_filename
+      )
     end
 
     { viewer: current_user, message: 'Listing created!' }
