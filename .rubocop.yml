@@ -35,7 +35,6 @@ Metrics/BlockLength:
   Exclude:
     - '**/*.rake'
     - 'spec/**/*.rb'
-    - 'Guardfile'
 Metrics/ClassLength:
   Enabled: false
 Style/TrailingCommaInArrayLiteral:
@@ -52,11 +51,5 @@ RSpec/Focus:
   Severity: error
 RSpec/MultipleExpectations:
   Max: 2
-Rails/DynamicFindBy:
-  Whitelist:
-    - find_by_raw_token
-    - find_by_sql
-    - find_by_badge
-    - find_by_verified_user_badge
 Rails/EnumHash:
   Enabled: false
