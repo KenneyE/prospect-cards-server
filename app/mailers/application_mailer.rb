@@ -6,7 +6,6 @@ class ApplicationMailer < ActionMailer::Base
 
   before_action :_skip_test
 
-  sig { void }
   def initialize
     super
     @mail = T.let(SendGrid::Mail.new, SendGrid::Mail)
@@ -29,12 +28,10 @@ class ApplicationMailer < ActionMailer::Base
     @mail.add_attachment(attachment)
   end
 
-  sig { params(string: String).void }
   def _add_content_from_string(string)
     @mail.add_content(Content.new(type: 'text/html', value: string))
   end
 
-  sig { params(view_path: String).void }
   def _add_content_from_partial(view_path)
     @mail.add_content(
       Content.new(
@@ -50,12 +47,10 @@ class ApplicationMailer < ActionMailer::Base
     )
   end
 
-  sig { params(emails: T::Array[String]).void }
   def _add_to_emails(emails)
     emails.each { |email| @personalization.add_to(Email.new(email: email)) }
   end
 
-  sig { void }
   def _send_email
     @mail.add_personalization(@personalization)
 
@@ -71,7 +66,6 @@ class ApplicationMailer < ActionMailer::Base
 
   private
 
-  sig { params(response: T.untyped).void }
   def _puts_response_info(response)
     puts '========================= EMAIL RESPONSE ========================='
     puts 'Status', response.status_code
@@ -80,7 +74,6 @@ class ApplicationMailer < ActionMailer::Base
     puts '========================= EMAIL RESPONSE ========================='
   end
 
-  sig { void }
   def _skip_test
     mail.perform_deliveries = false if Rails.env.test?
   end
