@@ -32,5 +32,6 @@ module FundReporterServer
     config.api_only = true
 
     config.default_protect_from_forgery = :null_session
+    config.autoload_paths << Rails.root.join('lib/')
   end
 end
