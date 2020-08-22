@@ -2,13 +2,3 @@ http.cors.enabled : true
 http.cors.allow-origin : "*"
 http.cors.allow-methods : OPTIONS, HEAD, GET, POST, PUT, DELETE
 http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type, Content-Length
-development:
-  host: 'http://localhost:9200/'
-  transport_options:
-    request:
-      timeout: !!integer 300
-production:
-  host: '<%= ENV['ELASTICSEARCH_URI'] %>'
-  transport_options:
-    request:
-      timeout: !!integer 300
