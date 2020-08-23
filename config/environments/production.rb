@@ -55,7 +55,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = {
-    host: 'https://fund-reporter-server.herokuapp.com'
+    host: 'fund-reporter-server.herokuapp.com'
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
