@@ -31,8 +31,6 @@ class Listing < ApplicationRecord
   end
 
   def image
-    if images.attached?
-      Rails.application.routes.url_helpers.rails_blob_url(images.first)
-    end
+    Rails.application.routes.url_helpers.rails_blob_url(images.first)
   end
 end
