@@ -29,6 +29,6 @@ class StripeAccount < ApplicationRecord
   def refresh_url
     "#{
     Rails.application.credentials.dig(:app, :client_url)
-    }/account/refresh"
+    }/account/sell"
   end
 end
