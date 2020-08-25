@@ -12,10 +12,12 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenyList
 
-  after_create_commit :create_stripe_account
+  after_create_commit :create_stripe_objects
   has_many :listings
   belongs_to :stripe_account,
              foreign_key: :stripe_account_id, primary_key: :token
+  belongs_to :stripe_customer,
+             foreign_key: :stripe_customer_id, primary_key: :token
 
   # Override devise mailer to use ActionMailer
   # https://github.com/plataformatec/devise#activejob-integration
@@ -25,10 +27,12 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
 
   private
 
-  def create_stripe_account
+  def create_stripe_objects
     account = Stripe::Account.create({ type: 'express' })
+    cust = Stripe::Customer.create({ email: email })
 
     StripeAccount.create(token: account.id)
-    update(stripe_account_id: account.id)
+    StripeCustomer.create(token: cust.id)
+    update(stripe_account_id: account.id, stripe_customer_id: cust.id)
   end
 end
