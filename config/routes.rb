@@ -10,10 +10,5 @@ Rails.application.routes.draw do
              controllers: {
                sessions: 'users/sessions', # invitations: 'users/invitations'
              }
-
-  resources :listings, only: [] do
-    collection do
-      post :_msearch
-    end
-  end
+  post '/stripe_webhook', to: 'stripe_webhooks#event'
 end
