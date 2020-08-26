@@ -28,7 +28,13 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
   private
 
   def create_stripe_objects
-    account = Stripe::Account.create({ type: 'express' })
+    account =
+      Stripe::Account.create(
+        {
+          type: 'express',
+          settings: { payouts: { schedule: { interval: 'manual' } } }
+        }
+      )
     cust = Stripe::Customer.create({ email: email })
 
     StripeAccount.create(token: account.id)
