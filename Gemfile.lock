@@ -116,17 +116,17 @@ GEM
     dry-core (0.4.9)
       concurrent-ruby (~> 1.0)
     dry-equalizer (0.3.0)
-    elasticsearch (7.9.0)
-      elasticsearch-api (= 7.9.0)
-      elasticsearch-transport (= 7.9.0)
-    elasticsearch-api (7.9.0)
+    elasticsearch (6.8.2)
+      elasticsearch-api (= 6.8.2)
+      elasticsearch-transport (= 6.8.2)
+    elasticsearch-api (6.8.2)
       multi_json
-    elasticsearch-model (7.1.1)
+    elasticsearch-model (6.1.1)
       activesupport (> 3)
-      elasticsearch (> 1)
+      elasticsearch (~> 6)
       hashie
-    elasticsearch-rails (7.1.1)
-    elasticsearch-transport (7.9.0)
+    elasticsearch-rails (6.1.1)
+    elasticsearch-transport (6.8.2)
       faraday (~> 1)
       multi_json
     erubi (1.9.0)
@@ -325,8 +325,8 @@ DEPENDENCIES
   devise
   devise-jwt
   devise_invitable (~> 2.0.0)
-  elasticsearch-model
-  elasticsearch-rails
+  elasticsearch-model (~> 6.0)
+  elasticsearch-rails (~> 6.0)
   factory_bot_rails (~> 4.0)
   graphql
   graphql-errors

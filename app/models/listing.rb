@@ -31,6 +31,9 @@ class Listing < ApplicationRecord
   end
 
   def image
-    Rails.application.routes.url_helpers.rails_blob_url(images.first, host: Rails.application.credentials.dig(:app, :host))
+    Rails.application.routes.url_helpers.rails_blob_url(
+      images.first,
+      host: Rails.application.credentials.dig(:app, :host)
+    )
   end
 end

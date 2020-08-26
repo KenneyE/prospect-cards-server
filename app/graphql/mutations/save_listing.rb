@@ -1,16 +1,18 @@
 # typed: true
 class Mutations::SaveListing < Mutations::BaseMutation
   argument :listing, Inputs::ListingInput, required: true
+  argument :player, Inputs::PlayerInput, required: true
 
   field :viewer, Types::User, null: false
 
-  def resolve(listing:)
+  def resolve(listing:, player:)
     imgs = listing[:images]
 
+    p = Player.find_or_create_by(name: player[:name])
     l =
       Listing.new(
         listing.to_h.except(:images).merge(
-          price: 1200, user: User.first, player: Player.first
+          price: 1200, user: User.first, player: p
         )
       )
 
