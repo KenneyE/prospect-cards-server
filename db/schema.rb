@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_24_153903) do
+ActiveRecord::Schema.define(version: 2020_08_27_014633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,36 @@ ActiveRecord::Schema.define(version: 2020_08_24_153903) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["token"], name: "index_stripe_customers_on_token"
+  end
+
+  create_table "stripe_payment_intents", force: :cascade do |t|
+    t.text "token", null: false
+    t.integer "amount", null: false
+    t.text "client_secret", null: false
+    t.text "customer", null: false
+    t.jsonb "metadata", null: false
+    t.text "status", null: false
+    t.text "on_behalf_of"
+    t.text "transfer_group"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "stripe_subscriptions", force: :cascade do |t|
+    t.text "token", null: false
+    t.text "customer", null: false
+    t.boolean "cancel_at_period_end", null: false
+    t.integer "current_period_start", null: false
+    t.integer "current_period_end", null: false
+    t.integer "quantity", null: false
+    t.text "status", null: false
+    t.integer "trial_end"
+    t.text "plan", null: false
+    t.integer "created", null: false
+    t.jsonb "metadata"
+    t.jsonb "discount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

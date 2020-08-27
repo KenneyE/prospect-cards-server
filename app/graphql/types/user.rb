@@ -36,4 +36,25 @@ class Types::User < Types::ActiveRecordObject
 
     p.joins(:listings).group('players.id').order('COUNT(players.id) DESC' )
   end
+
+  field :available_products, [Types::Product], null: false
+  def available_products
+    [
+      {
+        token: 'price_1HKXHGIFW5W5DEYQwbeHoEZi',
+        price: 2000,
+        term: 'month'
+      },
+      {
+        token: 'price_1HKXHGIFW5W5DEYQmWW2aIvz',
+        price: 10500,
+        term: '6 months'
+      },
+      {
+        token: 'price_1HKXHGIFW5W5DEYQ4AWYr99h',
+        price: 20000,
+        term: 'year'
+      }
+    ]
+  end
 end
