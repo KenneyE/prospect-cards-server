@@ -9,6 +9,13 @@ class Types::QueryType < Types::BaseObject
     context[:current_user]
   end
 
+  field :listing, Types::Listing, null: false do
+    argument :id, Integer, required: true
+  end
+  def listing(id:)
+    Listing.find(id)
+  end
+
   field :stripe_checkout_session_id, String, null: false do
     argument :price, String, required: false
   end
