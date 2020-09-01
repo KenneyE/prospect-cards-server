@@ -9,7 +9,8 @@ class Listing < ApplicationRecord
     indexes :image, type: :text
 
     indexes :player do
-      indexes :name, type: :keyword
+      indexes :name, type: :text
+      indexes :name_as_keyword, type: :keyword
     end
   end
 
@@ -26,7 +27,7 @@ class Listing < ApplicationRecord
     self.as_json(
       methods: :image,
       only: %i[id title description],
-      include: { player: { only: :name } }
+      include: { player: { only: :name, methods: :name_as_keyword } }
     )
   end
 
