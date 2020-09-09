@@ -3,4 +3,6 @@ class Inputs::ListingInput < Types::BaseInputObject
   argument :title, String, required: true
   argument :description, String, required: true
   argument :images, [ApolloUploadServer::Upload], required: true
+  argument :category_id, Integer, required: true
+  argument :product_type_id, Integer, required: true
 end
