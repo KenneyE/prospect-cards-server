@@ -31,6 +31,10 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
+  def has_active_subscription?
+    stripe_subscriptions.find_each.any?(:active?)
+  end
+
   private
 
   def create_stripe_objects

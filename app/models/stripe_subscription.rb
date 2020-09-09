@@ -1,4 +1,5 @@
 class StripeSubscription < StripeModel
+  ACTIVE_STATES = %w[active trialing past_due].freeze
   WEBHOOK_EVENTS = %w[
     customer.subscription.created
     customer.subscription.updated
@@ -9,6 +10,10 @@ class StripeSubscription < StripeModel
     { token: subscription.id, plan: subscription.plan.id }.merge(
       mirrored_params(subscription)
     )
+  end
+
+  def active?
+    ACTIVE_STATES.include?(status) && quantity.positive?
   end
 
   private

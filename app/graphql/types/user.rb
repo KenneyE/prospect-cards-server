@@ -9,6 +9,10 @@ class Types::User < Types::ActiveRecordObject
     object.stripe_account
   end
 
+  field :has_active_subscription,
+        Boolean,
+        null: false, method: :has_active_subscription?
+
   field :payment_intent, String, null: false
   def payment_intent
     intent =

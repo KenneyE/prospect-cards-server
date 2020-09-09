@@ -1,4 +1,4 @@
-class StripePaymentIntent < ApplicationRecord
+class StripePaymentIntent < StripeModel
   WEBHOOK_EVENTS = %w[
     payment_intent.amount_capturable_updated
     payment_intent.canceled
