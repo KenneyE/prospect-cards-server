@@ -10,7 +10,13 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     origins 'localhost:3001', 'https://fund-reporter-client.herokuapp.com'
 
     resource '*',
-             headers: %w[Authorization X-Requested-With X-Auth-Token Content-Type Content-Length],
+             headers: %w[
+               Authorization
+               X-Requested-With
+               X-Auth-Token
+               Content-Type
+               Content-Length
+             ],
              methods: :any,
              expose: %w[Authorization],
              credentials: true

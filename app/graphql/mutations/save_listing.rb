@@ -16,7 +16,6 @@ class Mutations::SaveListing < Mutations::BaseMutation
         )
       )
 
-
     # https://github.com/jetruby/apollo_upload_server-ruby/issues/10#issuecomment-406928478
     imgs.each do |img|
       l.images.attach(

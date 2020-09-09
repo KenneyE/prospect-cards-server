@@ -22,25 +22,20 @@ class V1::GraphqlController < ApplicationController
   private
 
   def execute_query
-    result = FundReporterServerSchema.execute(
-      params[:query],
-      variables: prepare_variables(params[:variables]),
-      context: {
-        current_user: current_user
-      },
-      operation_name: params[:operationName]
-    )
+    result =
+      FundReporterServerSchema.execute(
+        params[:query],
+        variables: prepare_variables(params[:variables]),
+        context: { current_user: current_user },
+        operation_name: params[:operationName]
+      )
   end
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)
     case variables_param
     when String
-      if variables_param.present?
-        JSON.parse(variables_param) || {}
-      else
-        {}
-      end
+      variables_param.present? ? JSON.parse(variables_param) || {} : {}
     when Hash
       variables_param
     when ActionController::Parameters
@@ -56,6 +51,9 @@ class V1::GraphqlController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+    render json: {
+             errors: [{ message: e.message, backtrace: e.backtrace }], data: {}
+           },
+           status: 500
   end
 end

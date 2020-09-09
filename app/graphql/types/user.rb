@@ -31,30 +31,20 @@ class Types::User < Types::ActiveRecordObject
   def players(name: nil)
     p = Player.all
     unless name.nil?
-      p = p.where("LOWER(name) LIKE :name", name: "%#{name.downcase}%")
+      p = p.where('LOWER(name) LIKE :name', name: "%#{name.downcase}%")
     end
 
-    p.joins(:listings).group('players.id').order('COUNT(players.id) DESC' )
+    p.joins(:listings).group('players.id').order('COUNT(players.id) DESC')
   end
 
   field :available_products, [Types::Product], null: false
   def available_products
     [
+      { token: 'price_1HKXHGIFW5W5DEYQwbeHoEZi', price: 2000, term: 'month' },
       {
-        token: 'price_1HKXHGIFW5W5DEYQwbeHoEZi',
-        price: 2000,
-        term: 'month'
+        token: 'price_1HKXHGIFW5W5DEYQmWW2aIvz', price: 10_500, term: '6 months'
       },
-      {
-        token: 'price_1HKXHGIFW5W5DEYQmWW2aIvz',
-        price: 10500,
-        term: '6 months'
-      },
-      {
-        token: 'price_1HKXHGIFW5W5DEYQ4AWYr99h',
-        price: 20000,
-        term: 'year'
-      }
+      { token: 'price_1HKXHGIFW5W5DEYQ4AWYr99h', price: 20_000, term: 'year' }
     ]
   end
 end

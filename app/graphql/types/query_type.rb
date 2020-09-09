@@ -28,7 +28,7 @@ class Types::QueryType < Types::BaseObject
       cancel_url: "#{client_url}/account/add_payment"
     }
 
-    opts[:line_items] = [{ price: price , quantity: 1}] if price.present?
+    opts[:line_items] = [{ price: price, quantity: 1 }] if price.present?
 
     Stripe::Checkout::Session.create(opts).id
   end

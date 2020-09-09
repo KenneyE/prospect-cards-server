@@ -1,7 +1,3 @@
 require 'test_helper'
 
-class StripeAccountTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-end
+class StripeAccountTest < ActiveSupport::TestCase; end # end #   assert true # test "the truth" do

@@ -24,7 +24,7 @@ class StripeAccount < ApplicationRecord
     {
       token: account.id,
       charges_enabled: account.charges_enabled,
-      details_submitted: account.details_submitted,
+      details_submitted: account.details_submitted
     }
   end
 
@@ -37,8 +37,6 @@ class StripeAccount < ApplicationRecord
   end
 
   def refresh_url
-    "#{
-    Rails.application.credentials.dig(:app, :client_url)
-    }/account/sell"
+    "#{Rails.application.credentials.dig(:app, :client_url)}/account/sell"
   end
 end

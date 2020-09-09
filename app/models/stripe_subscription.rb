@@ -1,8 +1,8 @@
 class StripeSubscription < StripeModel
-  WEBHOOK_EVENTS = [
-    'customer.subscription.created',
-    'customer.subscription.updated',
-    'customer.subscription.deleted',
+  WEBHOOK_EVENTS = %w[
+    customer.subscription.created
+    customer.subscription.updated
+    customer.subscription.deleted
   ].freeze
 
   def params_from_stripe_object(subscription)
