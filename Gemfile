@@ -31,8 +31,8 @@ gem 'nilify_blanks'
 gem 'aws-sdk-s3', require: false
 gem 'stripe'
 gem 'sendgrid-ruby'
-gem 'elasticsearch-model', '~> 6.0'
-gem 'elasticsearch-rails', '~> 6.0'
+gem 'elasticsearch-model', '~> 7.0'
+gem 'elasticsearch-rails', '~> 7.0'
 
 group :test do
   gem 'factory_bot_rails', '~> 4.0'
