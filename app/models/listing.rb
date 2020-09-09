@@ -16,12 +16,16 @@ class Listing < ApplicationRecord
     indexes :category do
       indexes :name, type: :keyword
     end
+    indexes :product_type do
+      indexes :name, type: :keyword
+    end
   end
 
   has_one_attached :primary_image
   has_many_attached :images
 
   belongs_to :user
+  belongs_to :product_type
   belongs_to :category
   belongs_to :player
 
@@ -34,7 +38,8 @@ class Listing < ApplicationRecord
       only: %i[id title description],
       include: {
         player: { only: :name, methods: :name_as_keyword },
-        category: { only: :name }
+        category: { only: :name },
+        product_type: { only: :name }
       }
     )
   end

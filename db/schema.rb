@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_09_194135) do
+ActiveRecord::Schema.define(version: 2020_09_09_220336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,12 +57,20 @@ ActiveRecord::Schema.define(version: 2020_09_09_194135) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "player_id", null: false
     t.bigint "category_id", null: false
+    t.bigint "product_type_id", null: false
     t.index ["category_id"], name: "index_listings_on_category_id"
     t.index ["player_id"], name: "index_listings_on_player_id"
+    t.index ["product_type_id"], name: "index_listings_on_product_type_id"
     t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
   create_table "players", force: :cascade do |t|
+    t.text "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "product_types", force: :cascade do |t|
     t.text "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -155,5 +163,6 @@ ActiveRecord::Schema.define(version: 2020_09_09_194135) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "listings", "categories"
   add_foreign_key "listings", "players"
+  add_foreign_key "listings", "product_types"
   add_foreign_key "listings", "users"
 end

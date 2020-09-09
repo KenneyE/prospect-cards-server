@@ -41,8 +41,8 @@ class Types::User < Types::ActiveRecordObject
     p.joins(:listings).group('players.id').order('COUNT(players.id) DESC')
   end
 
-  field :available_products, [Types::Product], null: false
-  def available_products
+  field :available_memberships, [Types::Membership], null: false
+  def available_memberships
     [
       { token: 'price_1HKXHGIFW5W5DEYQwbeHoEZi', price: 2000, term: 'month' },
       {

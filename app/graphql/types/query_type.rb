@@ -16,6 +16,16 @@ class Types::QueryType < Types::BaseObject
     Listing.find(id)
   end
 
+  field :categories, [Types::Category], null: false
+  def categories
+    Category.all
+  end
+
+  field :product_types, [Types::ProductType], null: false
+  def product_types
+    ProductType.all
+  end
+
   field :stripe_checkout_session_id, String, null: false do
     argument :price, String, required: false
   end
