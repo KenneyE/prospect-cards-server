@@ -31,6 +31,9 @@ class Listing < ApplicationRecord
     )
   end
 
+
+
+
   def image_urls
     images.map do |image|
       Rails.application.routes.url_helpers.rails_blob_url(
