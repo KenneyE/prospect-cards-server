@@ -12,12 +12,17 @@ class Listing < ApplicationRecord
       indexes :name, type: :text
       indexes :name_as_keyword, type: :keyword
     end
+
+    indexes :category do
+      indexes :name, type: :keyword
+    end
   end
 
   has_one_attached :primary_image
   has_many_attached :images
 
   belongs_to :user
+  belongs_to :category
   belongs_to :player
 
   validates :title, :description, :price, presence: true
@@ -27,12 +32,12 @@ class Listing < ApplicationRecord
     self.as_json(
       methods: :image_urls,
       only: %i[id title description],
-      include: { player: { only: :name, methods: :name_as_keyword } }
+      include: {
+        player: { only: :name, methods: :name_as_keyword },
+        category: { only: :name }
+      }
     )
   end
-
-
-
 
   def image_urls
     images.map do |image|
