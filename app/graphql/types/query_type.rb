@@ -11,15 +11,9 @@ class Types::QueryType < Types::BaseObject
 
   field :listing, Types::Listing, null: false do
     argument :id, Integer, required: true
-    argument :track, Boolean, required: false
   end
-  # TODO: Make tracking its own mutation.
-  def listing(id:, track: false)
-    listing = Listing.find(id)
-
-    current_user.players << listing.player if track && current_user.present?
-
-    listing
+  def listing(id:)
+    Listing.find(id)
   end
 
   field :categories, [Types::Category], null: false
