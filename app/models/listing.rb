@@ -32,6 +32,21 @@ class Listing < ApplicationRecord
   validates :title, :description, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
 
+  def self.might_also_like(user)
+    names = user.players.map(&:name)
+
+    __elasticsearch__.search(
+      query: { bool: { must: { term: { 'players.name': names } } } },
+      aggs: {
+        recommendations: {
+          significant_terms: {
+            field: 'players', exclude: names, min_doc_count: 0
+          }
+        }
+      }
+    )
+  end
+
   def as_indexed_json(options = {})
     self.as_json(
       methods: :image_urls,

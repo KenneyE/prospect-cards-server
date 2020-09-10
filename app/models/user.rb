@@ -1,4 +1,7 @@
 class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include default devise modules. Others available are:
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   has_paper_trail
 
   devise :database_authenticatable,
@@ -15,6 +18,9 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
   after_create_commit :create_stripe_objects
 
   has_many :listings
+  has_many :player_interests
+  has_many :players, through: :player_interests
+
   has_many :stripe_payment_intents,
            foreign_key: :customer, primary_key: :stripe_customer_id
   has_many :stripe_subscriptions,
@@ -25,6 +31,13 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
   belongs_to :stripe_customer,
              foreign_key: :stripe_customer_id, primary_key: :token
 
+  mapping dynamic: :strict do
+    indexes :id, type: :long
+    indexes :players do
+      indexes :name, type: :keyword
+    end
+  end
+
   # Override devise mailer to use ActionMailer
   # https://github.com/plataformatec/devise#activejob-integration
   def send_devise_notification(notification, *args)
@@ -33,6 +46,15 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
 
   def has_active_subscription?
     stripe_subscriptions.find_each.any?(:active?)
+  end
+
+  def as_indexed_json(options = {})
+    self.as_json(
+      only: %i[id],
+      include: {
+        players: { only: :name }
+      }
+    )
   end
 
   private

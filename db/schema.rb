@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_09_220336) do
+ActiveRecord::Schema.define(version: 2020_09_10_155124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(version: 2020_09_09_220336) do
     t.index ["player_id"], name: "index_listings_on_player_id"
     t.index ["product_type_id"], name: "index_listings_on_product_type_id"
     t.index ["user_id"], name: "index_listings_on_user_id"
+  end
+
+  create_table "player_interests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "player_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["player_id"], name: "index_player_interests_on_player_id"
+    t.index ["user_id"], name: "index_player_interests_on_user_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -165,4 +174,6 @@ ActiveRecord::Schema.define(version: 2020_09_09_220336) do
   add_foreign_key "listings", "players"
   add_foreign_key "listings", "product_types"
   add_foreign_key "listings", "users"
+  add_foreign_key "player_interests", "players"
+  add_foreign_key "player_interests", "users"
 end

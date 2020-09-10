@@ -5,5 +5,9 @@ module Types
     def client_url
       Rails.application.credentials.dig(:app, :client_url)
     end
+
+    def current_user
+      context[:current_user]
+    end
   end
 end
