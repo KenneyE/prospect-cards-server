@@ -11,9 +11,14 @@ class Types::QueryType < Types::BaseObject
 
   field :listing, Types::Listing, null: false do
     argument :id, Integer, required: true
+    argument :track, Boolean, required: false
   end
-  def listing(id:)
-    Listing.find(id)
+  def listing(id:, track: false)
+    listing = Listing.find(id)
+
+    current_user.players << listing.player if track && current_user.present?
+
+    listing
   end
 
   field :categories, [Types::Category], null: false
