@@ -15,7 +15,7 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenyList
 
-  after_create_commit :create_stripe_objects
+  # after_validation :create_stripe_objects
 
   has_many :listings
   has_many :player_interests
@@ -26,10 +26,10 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
   has_many :stripe_subscriptions,
            foreign_key: :customer, primary_key: :stripe_customer_id
 
-  belongs_to :stripe_account,
-             foreign_key: :stripe_account_id, primary_key: :token
-  belongs_to :stripe_customer,
-             foreign_key: :stripe_customer_id, primary_key: :token
+  # belongs_to :stripe_account,
+  #            foreign_key: :stripe_account_id, primary_key: :token
+  # belongs_to :stripe_customer,
+  #            foreign_key: :stripe_customer_id, primary_key: :token
 
   mapping dynamic: :strict do
     indexes :id, type: :long
