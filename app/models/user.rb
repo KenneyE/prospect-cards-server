@@ -15,7 +15,7 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenyList
 
-  # after_validation :create_stripe_objects
+  after_validation :create_stripe_objects
 
   has_many :listings, dependent: :destroy
   has_many :player_interests, dependent: :destroy
