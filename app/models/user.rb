@@ -32,10 +32,16 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
            dependent: :destroy,
            inverse_of: :user
   has_one :stripe_account,
-          primary_key: :token, dependent: :destroy, inverse_of: :user
+          foreign_key: :stripe_account_id,
+          primary_key: :token,
+          dependent: :destroy,
+          inverse_of: :user
 
   has_one :stripe_customer,
-          primary_key: :token, dependent: :destroy, inverse_of: :user
+          foreign_key: :stripe_account_id,
+          primary_key: :token,
+          dependent: :destroy,
+          inverse_of: :user
 
   mapping dynamic: :strict do
     indexes :id, type: :long
