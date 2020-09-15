@@ -21,7 +21,7 @@
   "lint-staged": {
     "*.{rb}": [
       "prettier --write",
-      "rubocop -a"
+      "bundle exec rubocop -a"
     ]
   }
 }

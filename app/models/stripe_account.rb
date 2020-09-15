@@ -12,8 +12,8 @@ class StripeAccount < StripeModel
         account: token,
         refresh_url: refresh_url,
         return_url: return_url,
-        type: 'account_onboarding'
-      }
+        type: 'account_onboarding',
+      },
     ).url
   end
 
@@ -26,7 +26,7 @@ class StripeAccount < StripeModel
     {
       token: account.id,
       charges_enabled: account.charges_enabled,
-      details_submitted: account.details_submitted
+      details_submitted: account.details_submitted,
     }
   end
 

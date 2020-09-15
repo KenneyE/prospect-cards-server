@@ -1,4 +1,4 @@
-class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include default devise modules. Others available are:
+class User < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
@@ -56,7 +56,7 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
-  def has_active_subscription?
+  def active_subscription?
     stripe_subscriptions.find_each.any?(:active?)
   end
 

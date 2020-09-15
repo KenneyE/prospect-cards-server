@@ -11,9 +11,9 @@ AllCops:
     - 'bin/**/*'
     - 'lib/**/*'
     - 'vendor/**/*'
-    - 'Gemfile'
     - 'Rakefile'
     - '**/*.erb'
+    - 'node_modules/**/*'
 Style/FrozenStringLiteralComment:
   Enabled: false
 Style/SymbolArray:
@@ -21,8 +21,7 @@ Style/SymbolArray:
 Style/ClassAndModuleChildren:
   Enabled: false
 Style/Documentation:
-  Exclude:
-    - 'app/graphql/types/**'
+  Enabled: false
 Layout/LineLength:
   # Ignore comments at beginning of files for model annotations
   IgnoredPatterns: ['\A#']

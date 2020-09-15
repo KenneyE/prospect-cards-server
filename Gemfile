@@ -1,46 +1,46 @@
-source 'https://rubygems.org'
+source('https://rubygems.org')
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.1'
+ruby('2.7.1')
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3' # Use postgresql as the database for Active Record
-gem 'pg', '>= 0.18', '< 2.0' # Use Puma as the app server
-gem 'puma', '~> 4.1' # gem 'bcrypt', '~> 3.1.7'
+gem('pg', '>= 0.18', '< 2.0') # Use Puma as the app server
+gem('puma', '~> 4.1') # gem 'bcrypt', '~> 3.1.7'
+gem('rails', '~> 6.0.3') # Use postgresql as the database for Active Record
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.2', require: false
+gem('bootsnap', '>= 1.4.2', require: false)
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors'
+gem('rack-cors')
 
-gem 'apollo_upload_server', '2.0.1'
-gem 'devise'
-gem 'devise-jwt'
-gem 'graphql'
-gem 'graphql-errors'
+gem('apollo_upload_server', '2.0.1')
+gem('devise')
+gem('devise-jwt')
+gem('graphql')
+gem('graphql-errors')
 
-gem 'paper_trail'
-gem 'sidekiq'
-gem 'nilify_blanks'
+gem('nilify_blanks')
+gem('paper_trail')
+gem('sidekiq')
 
-gem 'aws-sdk-s3', require: false
-gem 'stripe'
-gem 'sendgrid-ruby'
-gem 'elasticsearch-model', '~> 7.0'
-gem 'elasticsearch-rails', '~> 7.0'
+gem('aws-sdk-s3', require: false)
+gem('elasticsearch-model', '~> 7.0')
+gem('elasticsearch-rails', '~> 7.0')
+gem('sendgrid-ruby')
+gem('stripe')
 
 group :test do
-  gem 'factory_bot_rails', '~> 4.0'
-  gem 'rspec-rails', '~> 3.7'
   gem 'database_cleaner'
-  gem 'simplecov', require: false
-  gem 'webmock'
+  gem 'factory_bot_rails', '~> 4.0'
   gem 'parallel_tests'
+  gem 'rspec-rails', '~> 3.7'
+  gem 'simplecov', require: false
   gem 'spring-commands-rspec'
+  gem 'webmock'
 end
 
 group :development, :test do
@@ -51,11 +51,11 @@ end
 group :development do
   gem 'brakeman'
   gem 'rubocop', require: false
-  gem 'rubocop-rspec'
-  gem 'rubocop-rails', require: false
   gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec'
 
-  gem 'listen', '~> 3.2' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'listen', '~> 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end

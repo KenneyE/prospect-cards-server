@@ -1,4 +1,4 @@
-require 'sendgrid-ruby'
+require('sendgrid-ruby')
 
 # Top-level mailer with obligatory class-level documentation
 class ApplicationMailer < ActionMailer::Base
@@ -20,7 +20,7 @@ class ApplicationMailer < ActionMailer::Base
   def _add_attachment(document)
     attachment = Attachment.new
     attachment.content =
-      Base64.strict_encode64(open(document.expiring_url).read)
+      Base64.strict_encode64(File.open(document.expiring_url).read)
     attachment.type = document.content_type
     attachment.filename = document.original_filename
     attachment.disposition = 'attachment'
@@ -33,18 +33,8 @@ class ApplicationMailer < ActionMailer::Base
   end
 
   def _add_content_from_partial(view_path)
-    @mail.add_content(
-      Content.new(
-        type: 'text/plain',
-        value: render_to_string("#{view_path}.text.erb", layout: false)
-      )
-    )
-    @mail.add_content(
-      Content.new(
-        type: 'text/html',
-        value: render_to_string("#{view_path}.html.erb", layout: false)
-      )
-    )
+    _add_html_content(view_path)
+    _add_text_content(view_path)
   end
 
   def _add_to_emails(emails)
@@ -58,7 +48,7 @@ class ApplicationMailer < ActionMailer::Base
 
     sg =
       SendGrid::API.new(
-        api_key: ENV['SENDGRID_API_KEY'], host: 'https://api.sendgrid.com'
+        api_key: ENV['SENDGRID_API_KEY'], host: 'https://api.sendgrid.com',
       )
     response = sg.client.mail._('send').post(request_body: @mail.to_json)
     _puts_response_info(response)
@@ -66,12 +56,30 @@ class ApplicationMailer < ActionMailer::Base
 
   private
 
+  def _add_html_content(view_path)
+    @mail.add_content(
+      Content.new(
+        type: 'text/html',
+        value: render_to_string("#{view_path}.html.erb", layout: false),
+      ),
+    )
+  end
+
+  def _add_text_content(view_path)
+    @mail.add_content(
+      Content.new(
+        type: 'text/plain',
+        value: render_to_string("#{view_path}.text.erb", layout: false),
+      ),
+    )
+  end
+
   def _puts_response_info(response)
-    puts '========================= EMAIL RESPONSE ========================='
-    puts 'Status', response.status_code
-    puts 'Body', response.body
-    puts 'Headers', response.headers
-    puts '========================= EMAIL RESPONSE ========================='
+    logger.info('=================== EMAIL RESPONSE =====================')
+    logger.info('Status', response.status_code)
+    logger.info('Body', response.body)
+    logger.info('Headers', response.headers)
+    logger.info('=================== EMAIL RESPONSE =====================')
   end
 
   def _skip_test

@@ -5,9 +5,7 @@ class Mutations::TrackInterest < Mutations::BaseMutation
   field :success, Boolean, null: false
 
   def resolve(listing_id:)
-    if current_user.present?
-      current_user.players << Listing.find(listing_id).player
-    end
+    current_user.players << Listing.find(listing_id).player if current_user.present?
 
     { success: true }
   end

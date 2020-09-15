@@ -5,7 +5,7 @@ class StripeWebhookService
   STRIPE_CLASSES = [
     StripeSubscription,
     StripeCustomer,
-    StripePaymentIntent
+    StripePaymentIntent,
   ].freeze
 
   def self.class_from_event_type(event_type)

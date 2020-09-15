@@ -6,9 +6,9 @@ class StripeWebhooksController < ApplicationController
 
     _update_local_record
 
-    render json: {}, status: 200
-  rescue Stripe::SignatureVerificationError, Stripe::StripeError => error # care about the error that occurred so keep to ourselves. # Use version with message only for debugging. Otherwise, stripe doesn't
-    render json: { error: error.message }, status: 400 # render json: {}, status: 400
+    render(json: {}, status: :ok)
+  rescue Stripe::SignatureVerificationError, Stripe::StripeError => e
+    render(json: { error: e.message }, status: :bad_request)
   end
 
   def _processable_event?(event)
@@ -22,7 +22,7 @@ class StripeWebhooksController < ApplicationController
     Stripe::Webhook.construct_event(
       payload,
       sig_header,
-      Rails.application.credentials.dig(:stripe, :webhook_signing_secret)
+      Rails.application.credentials.dig(:stripe, :webhook_signing_secret),
     )
   end
 
@@ -39,5 +39,5 @@ class StripeWebhooksController < ApplicationController
     ours = _event_class.find_or_initialize_by({ token: theirs.id })
 
     ours.update_from_stripe(theirs)
-  end # In case this is an event type that we don't handle currently.
+  end
 end

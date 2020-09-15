@@ -12,6 +12,6 @@ class StripeModel < ApplicationRecord
   protected
 
   def params_to_hash(array, subscription)
-    Hash[array.collect { |param| [param, subscription[param]] }]
+    array.index_with { |param| subscription[param] }
   end
 end

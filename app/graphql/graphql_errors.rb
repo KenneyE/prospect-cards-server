@@ -1,8 +1,10 @@
 # Error handling
 module GraphqlErrors
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def self.rescue
+    # rubocop:disable Metrics/BlockLength
     proc do
-      rescue_from ActiveRecord::RecordNotFound do |e, _obj, args|
+      rescue_from ActiveRecord::RecordNotFound do |e, _obj, _args|
         GraphQL::ExecutionError.new(ErrorCode.log_error(e).user_message)
       end
 
@@ -37,5 +39,7 @@ module GraphqlErrors
         GraphQL::ExecutionError.new(ErrorCode.log_error(e).user_message)
       end
     end
+    # rubocop:enable Metrics/BlockLength
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

@@ -35,7 +35,7 @@ class Types::QueryType < Types::BaseObject
       mode: price.present? ? 'subscription' : 'setup',
       customer: viewer.stripe_customer_id,
       success_url: "#{client_url}/account/payment_added",
-      cancel_url: "#{client_url}/account/add_payment"
+      cancel_url: "#{client_url}/account/add_payment",
     }
 
     opts[:line_items] = [{ price: price, quantity: 1 }] if price.present?

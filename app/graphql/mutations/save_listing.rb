@@ -6,27 +6,33 @@ class Mutations::SaveListing < Mutations::BaseMutation
   field :viewer, Types::User, null: false
 
   def resolve(listing:, player:)
-    imgs = listing[:images]
-
-    p = Player.find_or_create_by(name: player[:name])
-    l =
-      Listing.new(
-        listing.to_h.except(:images).merge(
-          price: 1200, user: User.first, player: p
-        )
-      )
-
-    # https://github.com/jetruby/apollo_upload_server-ruby/issues/10#issuecomment-406928478
-    imgs.each do |img|
-      l.images.attach(
-        io: img['document'].to_io, filename: img['document'].original_filename
-      )
-    end
-
+    l = _save_listing(listing, player)
+    _save_images(l, listing[:images])
     l.save
 
     raise_errors(l)
 
     { viewer: current_user, message: 'Listing created!' }
+  end
+
+  private
+
+  def _save_listing(listing, player)
+    p = Player.find_or_create_by(name: player[:name])
+
+    Listing.new(
+      listing.to_h.except(:images).merge(
+        price: 1200, user: User.first, player: p,
+      ),
+    )
+  end
+
+  def _save_images(listing, images)
+    # https://github.com/jetruby/apollo_upload_server-ruby/issues/10#issuecomment-406928478
+    images.each do |img|
+      listing.images.attach(
+        io: img['document'].to_io, filename: img['document'].original_filename,
+      )
+    end
   end
 end

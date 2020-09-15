@@ -32,30 +32,15 @@ class Listing < ApplicationRecord
   validates :title, :description, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
 
-  def self.might_also_like(user)
-    names = user.players.map(&:name)
-
-    __elasticsearch__.search(
-      query: { bool: { must: { term: { 'players.name': names } } } },
-      aggs: {
-        recommendations: {
-          significant_terms: {
-            field: 'players', exclude: names, min_doc_count: 0
-          }
-        }
-      }
-    )
-  end
-
-  def as_indexed_json(options = {})
-    self.as_json(
+  def as_indexed_json(_options = {})
+    as_json(
       methods: :image_urls,
       only: %i[id title description],
       include: {
         player: { only: :name, methods: :name_as_keyword },
         category: { only: :name },
-        product_type: { only: :name }
-      }
+        product_type: { only: :name },
+      },
     )
   end
 
@@ -63,7 +48,7 @@ class Listing < ApplicationRecord
     images.map do |image|
       Rails.application.routes.url_helpers.rails_blob_url(
         image,
-        host: Rails.application.credentials.dig(:app, :host)
+        host: Rails.application.credentials.dig(:app, :host),
       )
     end
   end

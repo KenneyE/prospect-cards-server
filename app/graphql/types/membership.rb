@@ -3,6 +3,3 @@ class Types::Membership < Types::ActiveRecordObject
   field :price, Integer, null: false
   field :term, String, null: false
 end
-
-
-
