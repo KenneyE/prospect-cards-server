@@ -1,7 +1,7 @@
 class StripeAccount < StripeModel
   WEBHOOK_EVENTS = %w[account.updated].freeze
 
-  has_one :user, foreign_key: :stripe_account_id, primary_key: :token
+  belongs_to :user, primary_key: :token
 
   def onboarding_link
     Stripe::AccountLink.create(
