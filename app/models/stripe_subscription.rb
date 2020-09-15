@@ -6,6 +6,11 @@ class StripeSubscription < StripeModel
     customer.subscription.deleted
   ].freeze
 
+  belongs_to :user,
+             foreign_key: :customer,
+             primary_key: :stripe_customer_id,
+             inverse_of: :user
+
   def params_from_stripe_object(subscription)
     { token: subscription.id, plan: subscription.plan.id }.merge(
       mirrored_params(subscription)

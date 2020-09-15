@@ -9,6 +9,11 @@ class StripePaymentIntent < StripeModel
     payment_intent.succeeded
   ].freeze
 
+  belongs_to :user,
+             foreign_key: :customer,
+             primary_key: :stripe_customer_id,
+             inverse_of: :stripe_payment_intents
+
   def params_from_stripe_object(intent)
     { token: intent.id }.merge(mirrored_params(intent))
   end

@@ -19,7 +19,6 @@ gem 'rack-cors'
 
 gem 'apollo_upload_server', '2.0.1'
 gem 'devise'
-gem 'devise_invitable', '~> 2.0.0'
 gem 'devise-jwt'
 gem 'graphql'
 gem 'graphql-errors'
@@ -54,6 +53,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'rubocop-rspec'
   gem 'rubocop-rails', require: false
+  gem 'rubocop-performance', require: false
 
   gem 'listen', '~> 3.2' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

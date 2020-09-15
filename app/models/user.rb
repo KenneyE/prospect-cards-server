@@ -17,19 +17,25 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
 
   # after_validation :create_stripe_objects
 
-  has_many :listings
-  has_many :player_interests
+  has_many :listings, dependent: :destroy
+  has_many :player_interests, dependent: :destroy
   has_many :players, through: :player_interests
 
   has_many :stripe_payment_intents,
-           foreign_key: :customer, primary_key: :stripe_customer_id
+           foreign_key: :customer,
+           primary_key: :stripe_customer_id,
+           dependent: :destroy,
+           inverse_of: :user
   has_many :stripe_subscriptions,
-           foreign_key: :customer, primary_key: :stripe_customer_id
+           foreign_key: :customer,
+           primary_key: :stripe_customer_id,
+           dependent: :destroy,
+           inverse_of: :user
+  has_one :stripe_account,
+          primary_key: :token, dependent: :destroy, inverse_of: :user
 
-  # belongs_to :stripe_account,
-  #            foreign_key: :stripe_account_id, primary_key: :token
-  # belongs_to :stripe_customer,
-  #            foreign_key: :stripe_customer_id, primary_key: :token
+  has_one :stripe_customer,
+          primary_key: :token, dependent: :destroy, inverse_of: :user
 
   mapping dynamic: :strict do
     indexes :id, type: :long
@@ -49,12 +55,7 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
   end
 
   def as_indexed_json(options = {})
-    self.as_json(
-      only: %i[id],
-      include: {
-        players: { only: :name }
-      }
-    )
+    self.as_json(only: %i[id], include: { players: { only: :name } })
   end
 
   private

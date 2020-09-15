@@ -6,9 +6,6 @@ Rails.application.routes.draw do
   end
   devise_for :users,
              defaults: { format: :json },
-             controllers: {
-               sessions: 'users/sessions',
-               registrations: 'users/registrations'
-             }
+             controllers: { sessions: 'users/sessions' }
   post '/stripe_webhook', to: 'stripe_webhooks#event'
 end
