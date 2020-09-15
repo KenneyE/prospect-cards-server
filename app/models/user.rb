@@ -15,7 +15,7 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenyList
 
-  after_validation :create_stripe_objects
+  after_validation :create_stripe_objects, on: :create
 
   has_many :listings, dependent: :destroy
   has_many :player_interests, dependent: :destroy
@@ -67,17 +67,21 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
   private
 
   def create_stripe_objects
-    account =
-      Stripe::Account.create(
-        {
-          type: 'express',
-          settings: { payouts: { schedule: { interval: 'manual' } } }
-        }
-      )
+    account = Stripe::Account.create(stripe_account_opts)
+
     cust = Stripe::Customer.create({ email: email })
 
     StripeAccount.create(token: account.id)
     StripeCustomer.create(token: cust.id)
-    update(stripe_account_id: account.id, stripe_customer_id: cust.id)
+
+    self.stripe_account_id = account.id
+    self.stripe_customer_id = cust.id
+  end
+
+  def stripe_account_opts
+    {
+      type: 'express',
+      settings: { payouts: { schedule: { interval: 'manual' } } }
+    }
   end
 end
