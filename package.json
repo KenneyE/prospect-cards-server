@@ -5,7 +5,7 @@
   "author": "ekenney5@gmail.com",
   "scripts": {
     "spec": "bundle exec rspec",
-    "prettier": "./node_modules/.bin/prettier --write '**/*.rb'"
+    "prettier": "./node_modules/.bin/prettier --write"
   },
   "devDependencies": {
     "@prettier/plugin-ruby": "^0.20.1",
@@ -19,6 +19,9 @@
     }
   },
   "lint-staged": {
-    "*.{rb}": "prettier --write"
+    "*.{rb}": [
+      "prettier --write",
+      "rubocop -a"
+    ]
   }
 }

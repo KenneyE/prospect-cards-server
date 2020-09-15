@@ -60,8 +60,8 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
     stripe_subscriptions.find_each.any?(:active?)
   end
 
-  def as_indexed_json(options = {})
-    self.as_json(only: %i[id], include: { players: { only: :name } })
+  def as_indexed_json(_options = {})
+    as_json(only: %i[id], include: { players: { only: :name } })
   end
 
   private
@@ -81,7 +81,7 @@ class User < ApplicationRecord #  :timeoutable, and :omniauthable # Include defa
   def stripe_account_opts
     {
       type: 'express',
-      settings: { payouts: { schedule: { interval: 'manual' } } }
+      settings: { payouts: { schedule: { interval: 'manual' } } },
     }
   end
 end
