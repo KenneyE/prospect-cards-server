@@ -1,4 +1,3 @@
-# typed: true
 class Mutations::SaveListing < Mutations::BaseMutation
   argument :listing, Inputs::ListingInput, required: true
   argument :player, Inputs::PlayerInput, required: true

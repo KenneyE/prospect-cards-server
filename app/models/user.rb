@@ -20,6 +20,7 @@ class User < ApplicationRecord
   has_many :listings, dependent: :destroy
   has_many :player_interests, dependent: :destroy
   has_many :players, through: :player_interests
+  has_many :offers, dependent: :destroy
 
   has_many :stripe_payment_intents,
            foreign_key: :customer,

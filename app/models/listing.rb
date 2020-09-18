@@ -24,6 +24,8 @@ class Listing < ApplicationRecord
   has_one_attached :primary_image
   has_many_attached :images
 
+  has_many :offers
+
   belongs_to :user
   belongs_to :product_type
   belongs_to :category
