@@ -28,6 +28,7 @@ gem('paper_trail')
 gem('sidekiq')
 
 gem('aws-sdk-s3', require: false)
+gem('searchkick')
 gem('elasticsearch-model', '~> 7.0')
 gem('elasticsearch-rails', '~> 7.0')
 gem('sendgrid-ruby')
