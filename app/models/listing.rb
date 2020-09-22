@@ -4,7 +4,7 @@ class Listing < ApplicationRecord
   has_one_attached :primary_image
   has_many_attached :images
 
-  has_many :offers
+  has_many :offers, dependent: :destroy
 
   belongs_to :user
   belongs_to :product_type
@@ -23,6 +23,7 @@ class Listing < ApplicationRecord
       description: description,
       image_urls: image_urls,
       rookie: rookie,
+      price: price,
       player: {
         name: player.name,
       },
