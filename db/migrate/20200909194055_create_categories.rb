@@ -5,7 +5,7 @@ class CreateCategories < ActiveRecord::Migration[6.0]
     'Football',
     'Soccer',
     'Ice Hockey',
-    'Not Specified',
+    'Other',
   ].freeze
 
   def change
