@@ -20,6 +20,7 @@ class User < ApplicationRecord
   has_many :listings, dependent: :destroy
   has_many :player_interests, dependent: :destroy
   has_many :players, through: :player_interests
+  has_many :offers, dependent: :destroy
 
   has_many :stripe_payment_intents,
            foreign_key: :customer,
@@ -68,12 +69,11 @@ class User < ApplicationRecord
 
   def _create_stripe_objects
     account = Stripe::Account.create(_stripe_account_opts)
-
     cust = Stripe::Customer.create({ email: email })
 
     update(
       stripe_account_id: account.id,
-      stripe_customer_id: cust.id
+      stripe_customer_id: cust.id,
     )
 
     StripeAccount.create(token: account.id)
