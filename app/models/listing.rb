@@ -23,7 +23,7 @@ class Listing < ApplicationRecord
       title: title,
       description: description,
       image_urls: image_urls,
-      rookie: rookie,
+      rookie: rookie?,
       price: price,
       player: {
         name: player.name,
