@@ -1,25 +1,5 @@
 class Listing < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-
-  mapping dynamic: :strict do
-    indexes :id, type: :long
-    indexes :title, type: :text
-    indexes :description, type: :text
-    indexes :image_urls, type: :text
-
-    indexes :player do
-      indexes :name, type: :text
-      indexes :name_as_keyword, type: :keyword
-    end
-
-    indexes :category do
-      indexes :name, type: :keyword
-    end
-    indexes :product_type do
-      indexes :name, type: :keyword
-    end
-  end
+  searchkick
 
   has_one_attached :primary_image
   has_many_attached :images
@@ -34,16 +14,22 @@ class Listing < ApplicationRecord
   validates :title, :description, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
 
-  def as_indexed_json(_options = {})
-    as_json(
-      methods: :image_urls,
-      only: %i[id title description],
-      include: {
-        player: { only: :name, methods: :name_as_keyword },
-        category: { only: :name },
-        product_type: { only: :name },
+  def search_data
+    {
+      id: id,
+      title: title,
+      description: description,
+      image_urls: image_urls,
+      player: {
+        name: player.name,
       },
-    )
+      category: {
+        name: category.name,
+      },
+      product_type: {
+        name: product_type.name,
+      }
+    }
   end
 
   def image_urls
