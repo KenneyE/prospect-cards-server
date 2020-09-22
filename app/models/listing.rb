@@ -4,10 +4,13 @@ class Listing < ApplicationRecord
   has_one_attached :primary_image
   has_many_attached :images
 
-  has_many :offers
+  has_many :offers, dependent: :destroy
 
   belongs_to :user
   belongs_to :product_type
+  belongs_to :manufacturer
+  belongs_to :set_type
+  belongs_to :grader, optional: true
   belongs_to :category
   belongs_to :player
 
@@ -20,6 +23,8 @@ class Listing < ApplicationRecord
       title: title,
       description: description,
       image_urls: image_urls,
+      rookie: rookie,
+      price: price,
       player: {
         name: player.name,
       },
@@ -28,7 +33,16 @@ class Listing < ApplicationRecord
       },
       product_type: {
         name: product_type.name,
-      }
+      },
+      manufacturer: {
+        name: manufacturer.name,
+      },
+      set_type: {
+        name: set_type.name,
+      },
+      grader: {
+        name: grader.name,
+      },
     }
   end
 
