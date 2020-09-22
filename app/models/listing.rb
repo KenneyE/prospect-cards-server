@@ -10,6 +10,7 @@ class Listing < ApplicationRecord
   belongs_to :product_type
   belongs_to :manufacturer
   belongs_to :set_type
+  belongs_to :grader, optional: true
   belongs_to :category
   belongs_to :player
 
@@ -38,6 +39,9 @@ class Listing < ApplicationRecord
       },
       set_type: {
         name: set_type.name,
+      },
+      grader: {
+        name: grader.name,
       },
     }
   end

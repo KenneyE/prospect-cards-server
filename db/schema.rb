@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_22_042418) do
+ActiveRecord::Schema.define(version: 2020_09_22_044003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,12 @@ ActiveRecord::Schema.define(version: 2020_09_22_042418) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "graders", force: :cascade do |t|
+    t.text "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "jwt_deny_list", force: :cascade do |t|
     t.string "jti", null: false
     t.datetime "exp", null: false
@@ -61,7 +67,9 @@ ActiveRecord::Schema.define(version: 2020_09_22_042418) do
     t.bigint "manufacturer_id", null: false
     t.bigint "set_type_id", null: false
     t.boolean "rookie", default: false, null: false
+    t.bigint "grader_id"
     t.index ["category_id"], name: "index_listings_on_category_id"
+    t.index ["grader_id"], name: "index_listings_on_grader_id"
     t.index ["manufacturer_id"], name: "index_listings_on_manufacturer_id"
     t.index ["player_id"], name: "index_listings_on_player_id"
     t.index ["product_type_id"], name: "index_listings_on_product_type_id"
@@ -198,6 +206,7 @@ ActiveRecord::Schema.define(version: 2020_09_22_042418) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "listings", "categories"
+  add_foreign_key "listings", "graders"
   add_foreign_key "listings", "manufacturers"
   add_foreign_key "listings", "players"
   add_foreign_key "listings", "product_types"
