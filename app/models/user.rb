@@ -43,13 +43,6 @@ class User < ApplicationRecord
           dependent: :destroy,
           inverse_of: :user
 
-  mapping dynamic: :strict do
-    indexes :id, type: :long
-    indexes :players do
-      indexes :name, type: :keyword
-    end
-  end
-
   # Override devise mailer to use ActionMailer
   # https://github.com/plataformatec/devise#activejob-integration
   def send_devise_notification(notification, *args)
