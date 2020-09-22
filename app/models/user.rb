@@ -1,6 +1,5 @@
 class User < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  searchkick
 
   has_paper_trail
 
@@ -61,8 +60,13 @@ class User < ApplicationRecord
     stripe_subscriptions.find_each.any?(:active?)
   end
 
-  def as_indexed_json(_options = {})
-    as_json(only: %i[id], include: { players: { only: :name } })
+  def search_data
+    {
+      id: id,
+      players: {
+        name: players.pluck(:name),
+      },
+    }
   end
 
   private
