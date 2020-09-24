@@ -10,7 +10,7 @@ class CreateProductTypes < ActiveRecord::Migration[6.0]
     'Single',
     'Team Set',
     'Uncut Sheet',
-    'Not Specified',
+    'Other',
   ].freeze
 
   def change

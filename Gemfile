@@ -29,10 +29,11 @@ gem('sidekiq')
 
 gem('aws-sdk-s3', require: false)
 gem('searchkick')
-gem('elasticsearch-model', '~> 7.0')
 gem('elasticsearch-rails', '~> 7.0')
 gem('sendgrid-ruby')
 gem('stripe')
+
+gem 'imgix-rails'
 
 group :test do
   gem 'database_cleaner'

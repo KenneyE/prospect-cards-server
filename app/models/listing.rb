@@ -1,3 +1,5 @@
+include Imgix::Rails::UrlHelper
+
 class Listing < ApplicationRecord
   searchkick
 
@@ -23,7 +25,7 @@ class Listing < ApplicationRecord
       title: title,
       description: description,
       image_urls: image_urls,
-      rookie: rookie,
+      rookie: rookie?,
       price: price,
       player: {
         name: player.name,
@@ -48,10 +50,7 @@ class Listing < ApplicationRecord
 
   def image_urls
     images.map do |image|
-      Rails.application.routes.url_helpers.rails_blob_url(
-        image,
-        host: Rails.application.credentials.dig(:app, :host),
-      )
+      ix_image_url(image.key, height: 170)
     end
   end
 end

@@ -1,6 +1,5 @@
 class User < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  searchkick
 
   has_paper_trail
 
@@ -44,13 +43,6 @@ class User < ApplicationRecord
           dependent: :destroy,
           inverse_of: :user
 
-  mapping dynamic: :strict do
-    indexes :id, type: :long
-    indexes :players do
-      indexes :name, type: :keyword
-    end
-  end
-
   # Override devise mailer to use ActionMailer
   # https://github.com/plataformatec/devise#activejob-integration
   def send_devise_notification(notification, *args)
@@ -61,8 +53,13 @@ class User < ApplicationRecord
     stripe_subscriptions.find_each.any?(:active?)
   end
 
-  def as_indexed_json(_options = {})
-    as_json(only: %i[id], include: { players: { only: :name } })
+  def search_data
+    {
+      id: id,
+      players: {
+        name: players.pluck(:name),
+      },
+    }
   end
 
   private
