@@ -118,10 +118,6 @@ GEM
       elasticsearch-transport (= 7.9.0)
     elasticsearch-api (7.9.0)
       multi_json
-    elasticsearch-model (7.1.1)
-      activesupport (> 3)
-      elasticsearch (> 1)
-      hashie
     elasticsearch-rails (7.1.1)
     elasticsearch-transport (7.9.0)
       faraday (~> 1)
@@ -144,6 +140,10 @@ GEM
     hashie (4.1.0)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
+    imgix (3.4.0)
+      addressable
+    imgix-rails (4.0.2)
+      imgix (~> 3.0)
     jmespath (1.4.0)
     jwt (2.2.1)
     listen (3.2.1)
@@ -327,11 +327,11 @@ DEPENDENCIES
   database_cleaner
   devise
   devise-jwt
-  elasticsearch-model (~> 7.0)
   elasticsearch-rails (~> 7.0)
   factory_bot_rails (~> 4.0)
   graphql
   graphql-errors
+  imgix-rails
   listen (~> 3.2)
   nilify_blanks
   paper_trail

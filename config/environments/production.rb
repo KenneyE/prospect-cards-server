@@ -31,6 +31,12 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon
 
+  config.imgix = {
+    source: 'krispy-kards.imgix.net',
+    use_https: true,
+    include_library_param: true
+  }
+
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
   # config.action_cable.url = 'wss://example.com/cable'

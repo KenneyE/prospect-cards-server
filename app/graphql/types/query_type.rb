@@ -26,6 +26,21 @@ class Types::QueryType < Types::BaseObject
     ProductType.all
   end
 
+  field :manufacturers, [Types::Manufacturer], null: false
+  def manufacturers
+    ProductType.all
+  end
+
+  field :set_types, [Types::SetType], null: false
+  def set_types
+    SetType.all
+  end
+
+  field :graders, [Types::Grader], null: false
+  def graders
+    Grader.all
+  end
+
   field :stripe_checkout_session_id, String, null: false do
     argument :price, String, required: false
   end
