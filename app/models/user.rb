@@ -66,7 +66,7 @@ class User < ApplicationRecord
     }
   end
 
-  def profile_pic_url
+  def profile_picture_url
     key = profile_picture.attached? ? profile_picture.key : 'Krispy Kards-logo-black.png'
 
     ix_image_url(key, height: 300)
