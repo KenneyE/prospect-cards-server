@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include(Imgix::Rails::UrlHelper)
+
   searchkick
 
   has_paper_trail
@@ -15,6 +17,8 @@ class User < ApplicationRecord
          jwt_revocation_strategy: JwtDenyList
 
   after_create_commit :_create_stripe_objects
+
+  has_one_attached :profile_picture
 
   has_many :listings, dependent: :destroy
   has_many :player_interests, dependent: :destroy
@@ -60,6 +64,12 @@ class User < ApplicationRecord
         name: players.pluck(:name),
       },
     }
+  end
+
+  def profile_pic_url
+    key = profile_picture.attached? ? profile_picture.key : 'Krispy Kards-logo-black.png'
+
+    ix_image_url(key, height: 300)
   end
 
   private

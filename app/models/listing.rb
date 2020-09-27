@@ -1,7 +1,9 @@
-include Imgix::Rails::UrlHelper
-
 class Listing < ApplicationRecord
+  include(Imgix::Rails::UrlHelper)
+
   searchkick
+
+  has_paper_trail
 
   has_one_attached :primary_image
   has_many_attached :images

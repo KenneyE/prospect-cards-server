@@ -1,4 +1,6 @@
 class Types::User < Types::ActiveRecordObject
+  field :profile_picture_url, String, null: false, method: :profile_pic_url
+
   field :listings, [Types::Listing], null: false
   field :stripe_account, Types::StripeAccount, null: false do
     argument :refresh, Boolean, required: false
