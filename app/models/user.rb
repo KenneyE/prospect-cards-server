@@ -67,9 +67,12 @@ class User < ApplicationRecord
   end
 
   def profile_picture_url
-    key = profile_picture.attached? ? profile_picture.key : 'Krispy Kards-logo-black.png'
-
-    ix_image_url(key, height: 300)
+    if profile_picture.attached?
+      variant_url(profile_picture.variant(resize_to_limit: [300, nil]))
+    else
+      # TODO: Don't use imgix for this.
+      ix_image_url('Krispy Kards-logo-black.png', height: 300)
+    end
   end
 
   private

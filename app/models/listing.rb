@@ -1,6 +1,4 @@
 class Listing < ApplicationRecord
-  include(Imgix::Rails::UrlHelper)
-
   searchkick
 
   has_paper_trail
@@ -52,7 +50,7 @@ class Listing < ApplicationRecord
 
   def image_urls
     images.map do |image|
-      ix_image_url(image.key, height: 170)
+      variant_url(image.variant(resize_to_limit: [170, nil]))
     end
   end
 end

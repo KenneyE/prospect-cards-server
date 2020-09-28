@@ -9,7 +9,7 @@ gem('puma', '~> 4.1') # gem 'bcrypt', '~> 3.1.7'
 gem('rails', '~> 6.0.3') # Use postgresql as the database for Active Record
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem('image_processing', '~> 1.2')
 
 # Reduces boot times through caching; required in config/boot.rb
 gem('bootsnap', '>= 1.4.2', require: false)
@@ -28,12 +28,12 @@ gem('paper_trail')
 gem('sidekiq')
 
 gem('aws-sdk-s3', require: false)
-gem('searchkick')
 gem('elasticsearch-rails', '~> 7.0')
+gem('searchkick')
 gem('sendgrid-ruby')
 gem('stripe')
 
-gem 'imgix-rails'
+gem('imgix-rails')
 
 group :test do
   gem 'database_cleaner'
