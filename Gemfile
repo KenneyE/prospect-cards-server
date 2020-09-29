@@ -4,36 +4,37 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby('2.7.1')
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem('pg', '>= 0.18', '< 2.0')
-gem('puma', '~> 4.1')
-gem('rails', '~> 6.0.3')
+gem 'pg', '>= 0.18', '< 2.0'
+gem 'puma', '~> 4.1'
+# gem 'rails', '~> 6.0.3'
+gem 'rails', github: 'rails/rails', branch: 'master'
 
 # Use Active Storage variant
-gem('image_processing', '~> 1.2')
+gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem('bootsnap', '>= 1.4.2', require: false)
+gem 'bootsnap', '>= 1.4.2', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem('rack-cors')
+gem 'rack-cors'
 
-gem('apollo_upload_server', '2.0.1')
-gem('devise')
-gem('devise-jwt')
-gem('graphql')
-gem('graphql-errors')
+gem 'apollo_upload_server', '2.0.1'
+gem 'devise'
+gem 'devise-jwt'
+gem 'graphql'
+gem 'graphql-errors'
 
-gem('nilify_blanks')
-gem('paper_trail')
-gem('sidekiq')
+gem 'nilify_blanks'
+gem 'paper_trail'
+gem 'sidekiq'
 
-gem('aws-sdk-s3', require: false)
-gem('elasticsearch-rails', '~> 7.0')
-gem('searchkick')
-gem('sendgrid-ruby')
-gem('stripe')
+gem 'aws-sdk-s3', require: false
+gem 'elasticsearch-rails', '~> 7.0'
+gem 'searchkick'
+gem 'sendgrid-ruby'
+gem 'stripe'
 
-gem('imgix-rails')
+gem 'imgix-rails'
 
 group :test do
   gem 'database_cleaner'
