@@ -24,7 +24,7 @@ class Listing < ApplicationRecord
       id: id,
       title: title,
       description: description,
-      image_urls: image_urls,
+      imageUrls: image_urls,
       rookie: rookie?,
       price: price,
       player: {
@@ -33,13 +33,13 @@ class Listing < ApplicationRecord
       category: {
         name: category.name,
       },
-      product_type: {
+      productType: {
         name: product_type.name,
       },
       manufacturer: {
         name: manufacturer.name,
       },
-      set_type: {
+      setType: {
         name: set_type.name,
       },
       grader: {
