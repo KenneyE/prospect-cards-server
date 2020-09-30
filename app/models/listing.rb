@@ -27,6 +27,9 @@ class Listing < ApplicationRecord
       imageUrls: image_urls,
       rookie: rookie?,
       price: price,
+      user: {
+        id: user_id,
+      },
       player: {
         name: player.name,
       },

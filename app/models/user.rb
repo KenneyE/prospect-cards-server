@@ -21,6 +21,8 @@ class User < ApplicationRecord
   has_one_attached :profile_picture
 
   has_many :listings, dependent: :destroy
+  has_many :incoming_offers, through: :listings, source: :offers
+
   has_many :player_interests, dependent: :destroy
   has_many :players, through: :player_interests
   has_many :offers, dependent: :destroy
