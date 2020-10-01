@@ -21,7 +21,7 @@ class Mutations::SaveListing < Mutations::BaseMutation
 
     Listing.new(
       listing.to_h.except(:images).merge(
-        price: 1200, user: User.first, player: p,
+        price: 1200, user: current_user, player: p,
       ),
     )
   end

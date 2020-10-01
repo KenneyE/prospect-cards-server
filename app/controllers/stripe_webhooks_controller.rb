@@ -31,10 +31,14 @@ class StripeWebhooksController < ApplicationController
   end
   memoize :_event_class
 
+  def _stripe_object
+    _verified_event.data.object
+  end
+
   def _update_local_record
     return if _event_class.nil?
 
-    theirs = _verified_event.data.object
+    theirs = _stripe_object
 
     ours = _event_class.find_or_initialize_by({ token: theirs.id })
 

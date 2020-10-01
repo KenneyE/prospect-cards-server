@@ -10,11 +10,10 @@ class Mutations::SaveOffer < Mutations::BaseMutation
     payment_intent = Stripe::PaymentIntent.create(
       {
         customer: current_user.stripe_customer_id,
+        payment_method: current_user.stripe_payment_methods.first.token,
         amount: price,
         currency: 'usd',
-        off_session: true,
-        # setup_future_usage: 'off_session',
-        confirm: true,
+        capture_method: 'manual',
         application_fee_amount: (price * 0.05).to_i,
         transfer_data: {
           destination: listing.user.stripe_account_id,
@@ -30,6 +29,6 @@ class Mutations::SaveOffer < Mutations::BaseMutation
 
     raise_errors(new_offer)
 
-    { payment_intent_id: payment_intent.id }
+    { payment_intent_id: payment_intent.client_secret }
   end
 end

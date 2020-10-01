@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_30_225914) do
+ActiveRecord::Schema.define(version: 2020_10_01_163907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,6 +150,14 @@ ActiveRecord::Schema.define(version: 2020_09_30_225914) do
     t.text "transfer_group"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "stripe_payment_methods", force: :cascade do |t|
+    t.text "token", null: false
+    t.text "customer", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["token"], name: "index_stripe_payment_methods_on_token"
   end
 
   create_table "stripe_subscriptions", force: :cascade do |t|

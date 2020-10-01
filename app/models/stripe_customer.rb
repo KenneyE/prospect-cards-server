@@ -6,10 +6,15 @@ class StripeCustomer < StripeModel
              primary_key: :stripe_customer_id,
              inverse_of: :stripe_customer
 
+  has_many :stripe_payment_methods,
+           foreign_key: :customer,
+           primary_key: :token,
+           inverse_of: :stripe_customer,
+           dependent: :destroy
+
   def params_from_stripe_object(customer)
     {
       token: customer.id,
-      default_source: customer.default_source,
     }
   end
 end

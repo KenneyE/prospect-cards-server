@@ -6,6 +6,7 @@ class AcceptOfferService
   end
 
   def accept
+
     offer
   end
 end

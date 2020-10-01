@@ -15,6 +15,9 @@ class Types::User < Types::ActiveRecordObject
   field :has_active_subscription,
         Boolean,
         null: false, method: :active_subscription?
+  field :has_payment_method,
+        Boolean,
+        null: false, method: :payment_method?
 
   field :players, [Types::Player], null: false do
     argument :name, String, required: false
