@@ -6,7 +6,6 @@ class AcceptOfferService
   end
 
   def accept
-    # TODO: Charge people and stuff
     offer
   end
 end

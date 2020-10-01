@@ -1,6 +1,8 @@
 # typed: false
 # Controller for accepting Stripe webhooks
 class StripeWebhooksController < ApplicationController
+  extend Memoist
+
   def event
     @stripe_event = _verified_event
 
@@ -9,10 +11,6 @@ class StripeWebhooksController < ApplicationController
     render(json: {}, status: :ok)
   rescue Stripe::SignatureVerificationError, Stripe::StripeError => e
     render(json: { error: e.message }, status: :bad_request)
-  end
-
-  def _processable_event?(event)
-    StripeWebhookService.class_from_event_type(event.type).present?
   end
 
   def _verified_event
@@ -25,11 +23,13 @@ class StripeWebhooksController < ApplicationController
       Rails.application.credentials.dig(:stripe, :webhook_signing_secret),
     )
   end
+  memoize :_verified_event
 
   def _event_class
     @_event_class ||=
       StripeWebhookService.class_from_event_type(@stripe_event.type)
   end
+  memoize :_event_class
 
   def _update_local_record
     return if _event_class.nil?

@@ -1,0 +1,20 @@
+{
+  "object": {
+    "id": "TEST_COOP",
+    "object": "coupon",
+    "amount_off": 300,
+    "created": 1574174985,
+    "currency": "usd",
+    "duration": "once",
+    "duration_in_months": null,
+    "livemode": true,
+    "max_redemptions": null,
+    "metadata": {
+    },
+    "name": null,
+    "percent_off": null,
+    "redeem_by": 1585612800,
+    "times_redeemed": 0,
+    "valid": true
+  }
+}

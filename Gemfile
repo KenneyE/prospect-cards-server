@@ -27,6 +27,7 @@ gem 'graphql-errors'
 gem 'nilify_blanks'
 gem 'paper_trail'
 gem 'sidekiq'
+gem 'memoist'
 
 gem 'aws-sdk-s3', require: false
 gem 'elasticsearch-rails', '~> 7.0'
@@ -39,8 +40,9 @@ gem 'imgix-rails'
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails', '~> 4.0'
+  gem 'rails-controller-testing'
   gem 'parallel_tests'
-  gem 'rspec-rails', '~> 3.7'
+  gem 'rspec-rails', '~> 3.9'
   gem 'simplecov', require: false
   gem 'spring-commands-rspec'
   gem 'webmock'

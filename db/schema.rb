@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_29_142726) do
+ActiveRecord::Schema.define(version: 2020_09_30_225914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2020_09_29_142726) do
     t.text "description", null: false
     t.bigint "user_id", null: false
     t.integer "price", null: false
-    t.datetime "created_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "player_id", null: false
     t.bigint "category_id", null: false
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2020_09_29_142726) do
     t.integer "price", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "payment_intent_id", null: false
     t.index ["listing_id"], name: "index_offers_on_listing_id"
     t.index ["user_id"], name: "index_offers_on_user_id"
   end
@@ -134,6 +135,7 @@ ActiveRecord::Schema.define(version: 2020_09_29_142726) do
     t.text "token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "default_source"
     t.index ["token"], name: "index_stripe_customers_on_token"
   end
 
