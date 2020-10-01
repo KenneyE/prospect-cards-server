@@ -224,10 +224,6 @@ GEM
       rack (>= 2.0.0)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rails-controller-testing (1.0.5)
-      actionpack (>= 5.0.1.rc1)
-      actionview (>= 5.0.1.rc1)
-      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -362,7 +358,6 @@ DEPENDENCIES
   puma (~> 4.1)
   rack-cors
   rails!
-  rails-controller-testing
   rspec-rails (~> 3.9)
   rubocop
   rubocop-performance
