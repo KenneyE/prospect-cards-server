@@ -24,8 +24,7 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 Layout/LineLength:
-  # Ignore comments at beginning of files for model annotations
-  IgnoredPatterns: ['\A#']
+  Max: 80
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 Naming/PredicateName:

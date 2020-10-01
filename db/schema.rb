@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_01_163907) do
+ActiveRecord::Schema.define(version: 2020_10_01_195830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_163907) do
     t.bigint "set_type_id", null: false
     t.boolean "rookie", default: false, null: false
     t.bigint "grader_id"
+    t.integer "status", default: 0, null: false
     t.index ["category_id"], name: "index_listings_on_category_id"
     t.index ["grader_id"], name: "index_listings_on_grader_id"
     t.index ["manufacturer_id"], name: "index_listings_on_manufacturer_id"
