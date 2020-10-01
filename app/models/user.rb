@@ -43,6 +43,12 @@ class User < ApplicationRecord
           dependent: :destroy,
           inverse_of: :user
 
+  has_many :stripe_payment_methods,
+           foreign_key: :customer,
+           primary_key: :stripe_customer_id,
+           dependent: :destroy,
+           inverse_of: :user
+
   has_one :stripe_customer,
           foreign_key: :token,
           primary_key: :stripe_customer_id,
@@ -57,6 +63,10 @@ class User < ApplicationRecord
 
   def active_subscription?
     stripe_subscriptions.find_each.any?(:active?)
+  end
+
+  def payment_method?
+    stripe_payment_methods.any?
   end
 
   def search_data

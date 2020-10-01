@@ -6,6 +6,7 @@ class StripeWebhookService
     StripeSubscription,
     StripeCustomer,
     StripePaymentIntent,
+    StripePaymentMethod,
   ].freeze
 
   def self.class_from_event_type(event_type)

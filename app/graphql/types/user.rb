@@ -2,7 +2,17 @@ class Types::User < Types::ActiveRecordObject
   field :email, String, null: false
   field :profile_picture_url, String, null: false
 
-  field :listings, [Types::Listing], null: false
+  field :listings, [Types::Listing], null: false do
+    argument :status, Enums::ListingStatusEnum, required: false
+  end
+  def listings(status: nil)
+    user_listings = object.listings
+
+    return user_listings if status.nil?
+
+    user_listings.where(status: Listing.statuses[status])
+  end
+
   field :stripe_account, Types::StripeAccount, null: false do
     argument :refresh, Boolean, required: false
   end
@@ -15,6 +25,9 @@ class Types::User < Types::ActiveRecordObject
   field :has_active_subscription,
         Boolean,
         null: false, method: :active_subscription?
+  field :has_payment_method,
+        Boolean,
+        null: false, method: :payment_method?
 
   field :players, [Types::Player], null: false do
     argument :name, String, required: false

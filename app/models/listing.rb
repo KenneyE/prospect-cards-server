@@ -19,6 +19,8 @@ class Listing < ApplicationRecord
   validates :title, :description, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
 
+  enum status: %i[available pending_sale sold]
+
   def search_data
     {
       id: id,
@@ -27,6 +29,7 @@ class Listing < ApplicationRecord
       imageUrls: image_urls,
       rookie: rookie?,
       price: price,
+      status: status,
       user: {
         id: user_id,
       },

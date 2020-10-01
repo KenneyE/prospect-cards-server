@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_29_142726) do
+ActiveRecord::Schema.define(version: 2020_10_01_195830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2020_09_29_142726) do
     t.text "description", null: false
     t.bigint "user_id", null: false
     t.integer "price", null: false
-    t.datetime "created_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "player_id", null: false
     t.bigint "category_id", null: false
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2020_09_29_142726) do
     t.bigint "set_type_id", null: false
     t.boolean "rookie", default: false, null: false
     t.bigint "grader_id"
+    t.integer "status", default: 0, null: false
     t.index ["category_id"], name: "index_listings_on_category_id"
     t.index ["grader_id"], name: "index_listings_on_grader_id"
     t.index ["manufacturer_id"], name: "index_listings_on_manufacturer_id"
@@ -90,6 +91,7 @@ ActiveRecord::Schema.define(version: 2020_09_29_142726) do
     t.integer "price", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "payment_intent_id", null: false
     t.index ["listing_id"], name: "index_offers_on_listing_id"
     t.index ["user_id"], name: "index_offers_on_user_id"
   end
@@ -134,6 +136,7 @@ ActiveRecord::Schema.define(version: 2020_09_29_142726) do
     t.text "token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "default_source"
     t.index ["token"], name: "index_stripe_customers_on_token"
   end
 
@@ -148,6 +151,14 @@ ActiveRecord::Schema.define(version: 2020_09_29_142726) do
     t.text "transfer_group"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "stripe_payment_methods", force: :cascade do |t|
+    t.text "token", null: false
+    t.text "customer", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["token"], name: "index_stripe_payment_methods_on_token"
   end
 
   create_table "stripe_subscriptions", force: :cascade do |t|
