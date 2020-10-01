@@ -57,14 +57,4 @@ class Types::QueryType < Types::BaseObject
 
     Stripe::Checkout::Session.create(opts).id
   end
-
-  field :setup_intent_id, String, null: false
-  def setup_intent_id
-    opts = {
-      payment_method_types: %w[card],
-      customer: viewer.stripe_customer_id,
-    }
-
-    Stripe::SetupIntent.create(opts).client_secret
-  end
 end
