@@ -18,10 +18,12 @@ class Mutations::SaveListing < Mutations::BaseMutation
 
   def _save_listing(listing, player)
     p = Player.find_or_create_by(name: player[:name])
+    h = listing.to_h
+    h[:price] = (h[:price] * 100).floor
 
     Listing.new(
-      listing.to_h.except(:images).merge(
-        price: 1200, user: current_user, player: p,
+      h.except(:images).merge(
+        user_id: current_user.id, player: p,
       ),
     )
   end

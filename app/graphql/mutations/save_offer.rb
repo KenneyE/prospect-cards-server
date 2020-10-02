@@ -4,7 +4,7 @@ class Mutations::SaveOffer < Mutations::BaseMutation
   field :payment_intent_id, String, null: false
   def resolve(offer:)
     listing = Listing.find(offer[:listing_id])
-    price = offer[:price] * 100
+    price = (offer[:price] * 100).floor
 
 
     payment_intent = Stripe::PaymentIntent.create(

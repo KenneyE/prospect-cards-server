@@ -27,6 +27,7 @@ class Listing < ApplicationRecord
       title: title,
       description: description,
       imageUrls: image_urls,
+      createdAt: created_at,
       rookie: rookie?,
       price: price,
       status: status,
