@@ -1,11 +1,14 @@
 class Mutations::SaveOffer < Mutations::BaseMutation
   argument :offer, Inputs::OfferInput, required: true
 
-  field :payment_intent_id, String, null: false
+  # Return null if unable to create intent
+  field :payment_intent_id, String, null: true
   def resolve(offer:)
+
+    return { payment_intent_id: nil } unless current_user.payment_method?
+
     listing = Listing.find(offer[:listing_id])
     price = (offer[:price] * 100).floor
-
 
     payment_intent = Stripe::PaymentIntent.create(
       {
