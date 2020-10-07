@@ -3,9 +3,9 @@ class Mutations::SaveOffer < Mutations::BaseMutation
 
   # Return null if unable to create intent
   field :payment_intent_id, String, null: true
+  field :offer_id, Integer, null: true
   def resolve(offer:)
-
-    return { payment_intent_id: nil } unless current_user.payment_method?
+    return { payment_intent_id: nil, offer_id: nil } unless current_user.payment_method?
 
     listing = Listing.find(offer[:listing_id])
     price = (offer[:price] * 100).floor
@@ -23,6 +23,7 @@ class Mutations::SaveOffer < Mutations::BaseMutation
         },
       },
     )
+    StripePaymentIntent.sync(payment_intent)
 
     new_offer = current_user.offers.create(
       price: offer[:price] * 100,
@@ -32,6 +33,6 @@ class Mutations::SaveOffer < Mutations::BaseMutation
 
     raise_errors(new_offer)
 
-    { payment_intent_id: payment_intent.client_secret }
+    { payment_intent_id: payment_intent.client_secret, offer_id: new_offer.id }
   end
 end

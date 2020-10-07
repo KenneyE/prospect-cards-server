@@ -13,6 +13,18 @@ class Types::User < Types::ActiveRecordObject
     user_listings.where(status: Listing.statuses[status])
   end
 
+  field :offers, [Types::Offer], null: false do
+    argument :status, Enums::ListingStatusEnum, required: false
+  end
+  def offers(status: nil)
+    user_offers = object.offers.open
+
+    return user_offers if status.nil?
+
+    user_offers.joins(:listing)
+      .where('listings.status': Listing.statuses[status])
+  end
+
   field :stripe_account, Types::StripeAccount, null: false do
     argument :refresh, Boolean, required: false
   end
@@ -34,7 +46,9 @@ class Types::User < Types::ActiveRecordObject
   end
   def players(name: nil)
     p = Player.all
-    p = p.where('LOWER(name) LIKE :name', name: "%#{name.downcase}%") unless name.nil?
+    unless name.nil?
+      p = p.where('LOWER(name) LIKE :name', name: "%#{name.downcase}%")
+    end
 
     p.joins(:listings).group('players.id').order('COUNT(players.id) DESC')
   end

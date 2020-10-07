@@ -14,6 +14,12 @@ class StripePaymentIntent < StripeModel
              primary_key: :stripe_customer_id,
              inverse_of: :stripe_payment_intents
 
+  has_one :offer,
+          foreign_key: :payment_intent_id,
+          primary_key: :token,
+          inverse_of: :stripe_payment_intent,
+          dependent: :destroy
+
   def params_from_stripe_object(intent)
     { token: intent.id }.merge(mirrored_params(intent))
   end
