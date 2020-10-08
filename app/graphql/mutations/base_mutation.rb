@@ -15,11 +15,11 @@ class Mutations::BaseMutation < GraphQL::Schema::Mutation
 
   def require_confirmation!
     # TODO: Uncomment when confirmation emails are actually going out.
-    return if current_user.confirmed?
-
-    raise(
-      Errors::ConfirmationError,
-      'Please confirm your email address and try again.',
-    )
+    # return if current_user.confirmed?
+    #
+    # raise(
+    #   Errors::ConfirmationError,
+    #   'Please confirm your email address and try again.',
+    # )
   end
 end
