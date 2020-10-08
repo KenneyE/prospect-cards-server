@@ -20,7 +20,7 @@ class Listing < ApplicationRecord
   validates :title, :description, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
 
-  enum status: %i[available pending_sale sold flagged approved]
+  enum status: %i[available pending_sale sold]
 
   def search_data
     {
@@ -63,6 +63,6 @@ class Listing < ApplicationRecord
   end
 
   def should_index?
-
+    # TODO: Not flagged and not de-activated
   end
 end
