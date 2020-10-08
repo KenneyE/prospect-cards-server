@@ -12,6 +12,8 @@ class Offer < ApplicationRecord
               greater_than_or_equal_to: 100, message: 'must be at least $1.00'
             }
 
+  scope :unexpired, -> { where('offers.created_at >= ?', 24.hours.ago) }
+
   scope :open,
         lambda {
           joins(:stripe_payment_intent).where(
@@ -19,6 +21,6 @@ class Offer < ApplicationRecord
             stripe_payment_intents: {
               status: %w[processing requires_capture requires_confirmation],
             },
-          )
+          ).unexpired
         }
 end
