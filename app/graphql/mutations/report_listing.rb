@@ -3,6 +3,8 @@ class Mutations::ReportListing < Mutations::BaseMutation
   argument :text, String, required: true
 
   def resolve(listing_id:, text:)
+    require_confirmation!
+
     report = ReportedListingService.new(listing_id).report(current_user, text)
 
     raise_errors(report)

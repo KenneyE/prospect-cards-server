@@ -8,10 +8,18 @@ class Mutations::BaseMutation < GraphQL::Schema::Mutation
   def raise_errors(model)
     return if model.errors.empty?
 
-    raise(Errors::UserInputError, model.errors.full_messages.first)
+    raise(Errors::UserInputError, model.errors.full_messages.join("\n"))
+  end
 
-    # model.errors.full_messages.each do |error|
-    #   raise Errors::UserInputError, error
-    # end
+  protected
+
+  def require_confirmation!
+    # TODO: Uncomment when confirmation emails are actually going out.
+    return if current_user.confirmed?
+
+    raise(
+      Errors::ConfirmationError,
+      'Please confirm your email address and try again.',
+    )
   end
 end
