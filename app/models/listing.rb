@@ -7,6 +7,7 @@ class Listing < ApplicationRecord
   has_many_attached :images
 
   has_many :offers, dependent: :destroy
+  has_many :listing_reports, dependent: :destroy
 
   belongs_to :user
   belongs_to :product_type
@@ -19,7 +20,7 @@ class Listing < ApplicationRecord
   validates :title, :description, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
 
-  enum status: %i[available pending_sale sold]
+  enum status: %i[available pending_sale sold flagged approved]
 
   def search_data
     {
@@ -59,5 +60,9 @@ class Listing < ApplicationRecord
     images.map do |image|
       variant_url(image.variant(resize_to_limit: [170, nil]))
     end
+  end
+
+  def should_index?
+
   end
 end

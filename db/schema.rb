@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_07_150010) do
+ActiveRecord::Schema.define(version: 2020_10_08_033826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,17 @@ ActiveRecord::Schema.define(version: 2020_10_07_150010) do
     t.string "jti", null: false
     t.datetime "exp", null: false
     t.index ["jti"], name: "index_jwt_deny_list_on_jti"
+  end
+
+  create_table "listing_reports", force: :cascade do |t|
+    t.bigint "listing_id", null: false
+    t.text "text", null: false
+    t.datetime "reviewed_at"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["listing_id"], name: "index_listing_reports_on_listing_id"
+    t.index ["user_id"], name: "index_listing_reports_on_user_id"
   end
 
   create_table "listings", force: :cascade do |t|
@@ -218,6 +229,8 @@ ActiveRecord::Schema.define(version: 2020_10_07_150010) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "listing_reports", "listings"
+  add_foreign_key "listing_reports", "users"
   add_foreign_key "listings", "categories"
   add_foreign_key "listings", "graders"
   add_foreign_key "listings", "manufacturers"
