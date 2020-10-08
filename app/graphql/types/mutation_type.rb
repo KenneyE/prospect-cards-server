@@ -1,5 +1,6 @@
 class Types::MutationType < Types::BaseObject
   field :save_listing, mutation: Mutations::SaveListing
+  field :report_listing, mutation: Mutations::ReportListing
 
   field :save_offer, mutation: Mutations::SaveOffer
   field :temp_confirm_offer, mutation: Mutations::TempConfirmOffer

@@ -7,6 +7,7 @@ class Listing < ApplicationRecord
   has_many_attached :images
 
   has_many :offers, dependent: :destroy
+  has_many :listing_reports, dependent: :destroy
 
   belongs_to :user
   belongs_to :product_type
@@ -59,5 +60,9 @@ class Listing < ApplicationRecord
     images.map do |image|
       variant_url(image.variant(resize_to_limit: [170, nil]))
     end
+  end
+
+  def should_index?
+    # TODO: Not flagged and not de-activated
   end
 end
