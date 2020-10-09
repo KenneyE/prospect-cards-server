@@ -108,4 +108,9 @@ class User < ApplicationRecord
       settings: { payouts: { schedule: { interval: 'manual' } } },
     }
   end
+
+  # Tells devise to use our custom mailer
+  def devise_mailer
+    DeviseOverrideMailer
+  end
 end

@@ -1,6 +1,4 @@
 class V1::GraphqlController < ApplicationController
-  before_action :authenticate_user!, except: :schema
-
   def execute
     result = execute_query
     render(json: result)
