@@ -5,6 +5,7 @@ class Mutations::SaveListing < Mutations::BaseMutation
   field :viewer, Types::User, null: false
 
   def resolve(listing:, player:)
+    require_confirmation!
     l = _save_listing(listing, player)
     _save_images(l, listing[:images])
     l.save

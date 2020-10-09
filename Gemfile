@@ -22,7 +22,6 @@ gem 'apollo_upload_server', '2.0.1'
 gem 'devise'
 gem 'devise-jwt'
 gem 'graphql'
-gem 'graphql-errors'
 
 gem 'nilify_blanks'
 gem 'paper_trail'

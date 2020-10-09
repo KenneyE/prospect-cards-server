@@ -5,6 +5,8 @@ class Mutations::SaveOffer < Mutations::BaseMutation
   field :payment_intent_id, String, null: true
   field :offer_id, Integer, null: true
   def resolve(offer:)
+    require_confirmation!
+
     return { payment_intent_id: nil, offer_id: nil } unless current_user.payment_method?
 
     listing = Listing.find(offer[:listing_id])

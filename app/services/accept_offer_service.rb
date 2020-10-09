@@ -7,7 +7,7 @@ class AcceptOfferService
 
   def accept
     unless offer.listing.available?
-      raise(InvalidOfferError, 'Cannot accept already pending offer')
+      raise(Errors::UserInputError, 'Cannot accept already pending offer')
     end
 
     # Prevent accepting another offer while we process this one
