@@ -30,7 +30,7 @@ class Types::QueryType < Types::BaseObject
       p = p.where('LOWER(name) LIKE :name', name: "%#{name.downcase}%")
     end
 
-    p.joins(:listings).group('players.id').order('COUNT(players.id) DESC')
+    p.limit(5).joins(:listings).group('players.id').order('COUNT(players.id) DESC')
   end
 
   field :product_types, [Types::ProductType], null: false
