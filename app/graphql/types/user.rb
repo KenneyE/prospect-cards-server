@@ -41,18 +41,6 @@ class Types::User < Types::ActiveRecordObject
         Boolean,
         null: false, method: :payment_method?
 
-  field :players, [Types::Player], null: false do
-    argument :name, String, required: false
-  end
-  def players(name: nil)
-    p = Player.all
-    unless name.nil?
-      p = p.where('LOWER(name) LIKE :name', name: "%#{name.downcase}%")
-    end
-
-    p.joins(:listings).group('players.id').order('COUNT(players.id) DESC')
-  end
-
   field :available_memberships, [Types::Membership], null: false
   def available_memberships
     [
