@@ -14,7 +14,6 @@ class ApplicationMailer < ActionMailer::Base
     _set_sandbox_mode
 
     @mail.from = Email.new(email: 'info@prospect.cards')
-    @mail.template_id = 'd-cc26d7b564684c86a8664f32abf28527'
   end
 
   protected

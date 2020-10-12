@@ -309,14 +309,14 @@ Devise.setup do |config|
 
   config.jwt do |jwt|
     jwt.secret = Rails.application.credentials.devise[:jwt_secret]
-    jwt.request_formats = { user: %i[json] }
+    jwt.request_formats = { user: [nil, :json] }
 
     jwt.dispatch_requests = [
-      ['POST', %r{^/users/sign_in$}],
-      ['POST', %r{^/users/confirmation$}],
-      ['POST', %r{^/users$}]
+      ['POST', %r{/users/sign_in}],
+      ['GET', %r{/users/confirmation.json}],
+      ['POST', %r{/users}]
     ]
 
-    jwt.expiration_time = 365.days.to_i
+    jwt.expiration_time = 7.days.to_i
   end
 end
