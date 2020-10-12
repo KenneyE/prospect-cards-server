@@ -17,7 +17,7 @@ class Types::User < Types::ActiveRecordObject
     argument :status, Enums::ListingStatusEnum, required: false
   end
   def offers(status: nil)
-    user_offers = object.offers.open
+    user_offers = object.offers.open.order(created_at: :desc)
 
     return user_offers if status.nil?
 

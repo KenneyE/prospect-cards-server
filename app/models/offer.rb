@@ -16,10 +16,10 @@ class Offer < ApplicationRecord
 
   scope :confirmed,
         lambda {
-          joins(:stripe_payment_intent).where(
+          left_joins(:stripe_payment_intent).where(
             offers: { temp_confirmed: true },
             stripe_payment_intents: {
-              status: %w[processing requires_capture requires_confirmation],
+              status: [nil, 'processing', 'requires_capture', 'requires_confirmation', 'requires_payment_method'],
             }
           )
         }

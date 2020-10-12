@@ -10,9 +10,9 @@ class FundReporterServerSchema < GraphQL::Schema
   # Add built-in connections for pagination
   use GraphQL::Pagination::Connections
 
-  rescue_from ActiveRecord::RecordNotFound do |e, _obj, _args|
-    GraphQL::ExecutionError.new(ErrorCode.log_error(e).user_message)
-  end
+  # rescue_from ActiveRecord::RecordNotFound do |_e, _obj, _args|
+  #   GraphQL::ExecutionError.new('Internal server error')
+  # end
 
   rescue_from Errors::UserInputError do |e|
     GraphQL::ExecutionError.new(e)
@@ -31,17 +31,7 @@ class FundReporterServerSchema < GraphQL::Schema
     GraphQL::ExecutionError.new(errors)
   end
 
-  rescue_from StandardError do |e, _obj, args|
-    hash_args = {}
-    args.to_h.each_key do |k|
-      arg = args[k]
-      hash_args[k] =
-        if arg.is_a?(Array)
-          arg.map { |a| a.respond_to?(:to_h) ? a.to_h : a }
-        else
-          arg.respond_to?(:to_h) ? arg.to_h : arg
-        end
-    end
-    GraphQL::ExecutionError.new(ErrorCode.log_error(e).user_message)
-  end
+  # rescue_from StandardError do |_e, _obj, args|
+  #   GraphQL::ExecutionError.new('Internal server error')
+  # end
 end
