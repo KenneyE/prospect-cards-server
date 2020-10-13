@@ -18,7 +18,7 @@ class Mutations::SaveListing < Mutations::BaseMutation
   private
 
   def _save_listing(listing, player)
-    p = Player.find_or_create_by(name: player[:name])
+    p = Player.find_or_create_by(name: player[:name].titleize)
     h = listing.to_h
     h[:price] = (h[:price] * 100).floor
 

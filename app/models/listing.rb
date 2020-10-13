@@ -64,5 +64,6 @@ class Listing < ApplicationRecord
 
   def should_index?
     # TODO: Not flagged and not de-activated
+    true
   end
 end
