@@ -4,6 +4,12 @@ class Types::QueryType < Types::BaseObject
     context[:current_user].present?
   end
 
+  # Same as viewer but used in queries where the viewer may be null
+  field :maybe_viewer, Types::User, null: true
+  def maybe_viewer
+    context[:current_user]
+  end
+
   field :viewer, Types::User, null: false
   def viewer
     context[:current_user]
