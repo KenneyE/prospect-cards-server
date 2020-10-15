@@ -25,6 +25,7 @@ gem 'graphql'
 
 gem 'nilify_blanks'
 gem 'paper_trail'
+gem 'acts_as_list'
 gem 'sidekiq'
 gem 'memoist'
 

@@ -8,7 +8,6 @@ class Mutations::SaveListing < Mutations::BaseMutation
     require_confirmation!
     l = _save_listing(listing, player)
     _save_images(l, listing[:images])
-    l.save
 
     raise_errors(l)
 
@@ -22,7 +21,7 @@ class Mutations::SaveListing < Mutations::BaseMutation
     h = listing.to_h
     h[:price] = (h[:price] * 100).floor
 
-    Listing.new(
+    Listing.create(
       h.except(:images).merge(
         user_id: current_user.id, player: p,
       ),
@@ -31,8 +30,9 @@ class Mutations::SaveListing < Mutations::BaseMutation
 
   def _save_images(listing, images)
     # https://github.com/jetruby/apollo_upload_server-ruby/issues/10#issuecomment-406928478
-    images.each do |img|
-      listing.images.attach(
+    images.each_with_index do |img, ind|
+      new_img = listing.listing_images.create(position: ind)
+      new_img.image.attach(
         io: img['document'].to_io, filename: img['document'].original_filename,
       )
     end

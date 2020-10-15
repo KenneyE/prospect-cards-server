@@ -3,9 +3,10 @@ class Listing < ApplicationRecord
 
   has_paper_trail
 
-  has_one_attached :primary_image
-  has_many_attached :images
-
+  has_many :listing_images,
+           -> { order(position: :asc) },
+           dependent: :destroy,
+           inverse_of: :listing
   has_many :offers, dependent: :destroy
   has_many :listing_reports, dependent: :destroy
 
@@ -57,8 +58,10 @@ class Listing < ApplicationRecord
   end
 
   def image_urls
-    images.map do |image|
-      variant_url(image.variant(resize_to_limit: [170, nil]))
+    listing_images.map do |image|
+      next unless image.image.attached?
+
+      variant_url(image.image.variant(resize_to_limit: [170, nil]))
     end
   end
 

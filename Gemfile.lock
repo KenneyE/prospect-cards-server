@@ -87,6 +87,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    acts_as_list (1.0.2)
+      activerecord (>= 4.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     apollo_upload_server (2.0.1)
@@ -333,6 +335,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_list
   apollo_upload_server (= 2.0.1)
   aws-sdk-s3
   bootsnap (>= 1.4.2)
