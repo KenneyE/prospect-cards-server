@@ -1,6 +1,13 @@
 class Types::User < Types::ActiveRecordObject
   field :email, String, null: false
   field :profile_picture_url, String, null: false
+  field :email_preferences, [Types::EmailPreference], null: false
+  def email_preferences
+    # Return all categories that our database contains
+    cats = EmailPreference.all.pluck(:category).distinct
+    hash = cats.map { |cat| { category: cat, user_id: current_user.id } }
+    EmailPreference.find_or_initialize_by(hash)
+  end
 
   field :listings, [Types::Listing], null: false do
     argument :status, Enums::ListingStatusEnum, required: false
