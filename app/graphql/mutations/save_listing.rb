@@ -31,7 +31,7 @@ class Mutations::SaveListing < Mutations::BaseMutation
   def _save_images(listing, images)
     # https://github.com/jetruby/apollo_upload_server-ruby/issues/10#issuecomment-406928478
     images.each_with_index do |img, ind|
-      new_img = listing.listing_images.create(position: ind)
+      new_img = listing.images.create(position: ind + 1)
       new_img.image.attach(
         io: img['document'].to_io, filename: img['document'].original_filename,
       )

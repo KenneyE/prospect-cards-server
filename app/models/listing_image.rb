@@ -6,6 +6,12 @@ class ListingImage < ApplicationRecord
 
   after_commit :reindex_listing
 
+  def url
+    variant_url(image.variant(resize_to_limit: [170, nil]))
+  end
+
+  private
+
   def reindex_listing
     listing.reindex
   end
