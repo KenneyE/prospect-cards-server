@@ -63,20 +63,26 @@ class ApplicationMailer < ActionMailer::Base
   private
 
   def _add_html_content(view_path, locals)
-    @mail.add_content(
-      Content.new(
-        type: 'text/html',
-        value: render_to_string("/mailers/#{view_path}.html.erb", layout: false, locals: locals),
-      ),
-    )
+    content =
+      render_to_string(
+        "/mailers/#{view_path}.html.erb",
+        layout: false,
+        locals: locals,
+      )
+    @mail.add_content(Content.new(type: 'text/html', value: content))
   end
 
   def _add_text_content(view_path, locals)
     @mail.add_content(
       Content.new(
         type: 'text/plain',
-        value: render_to_string("/mailers/#{view_path}.text.erb", layout: false, locals: locals),
-      ),
+        value:
+          render_to_string(
+            "/mailers/#{view_path}.text.erb",
+            layout: false,
+            locals: locals,
+          )
+      )
     )
   end
 
