@@ -16,7 +16,7 @@ module EmailPreferences
     module InstanceMethods
       protected
 
-      def _send_email
+      def mail(headers = {}, &block)
         return unless recipient_subscribed?
         super
       end
