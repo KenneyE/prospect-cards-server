@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2020_10_17_150942) do
   create_table "email_preferences", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "category", null: false
-    t.boolean "canceled", default: false, null: false
+    t.boolean "subscribed", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_email_preferences_on_user_id"

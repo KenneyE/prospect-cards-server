@@ -29,10 +29,10 @@ module EmailPreferences
       end
 
       def recipient_subscribed?
-        !EmailPreference.find_or_create_by(
+        EmailPreference.find_or_create_by(
           category: current_action_category,
           user: subscriber
-        )&.canceled?
+        ).subscribed?
       end
 
       def set_subscriber
