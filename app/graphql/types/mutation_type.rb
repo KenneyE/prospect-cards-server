@@ -8,4 +8,5 @@ class Types::MutationType < Types::BaseObject
 
   field :track_interest, mutation: Mutations::TrackInterest
   field :save_profile_picture, mutation: Mutations::SaveProfilePicture
+  field :save_email_preferences, mutation: Mutations::SaveEmailPreferences
 end

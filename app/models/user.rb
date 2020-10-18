@@ -27,6 +27,7 @@ class User < ApplicationRecord
   has_many :players, through: :player_interests
   has_many :offers, dependent: :destroy
 
+  has_many :email_preferences, dependent: :destroy
   has_many :stripe_payment_intents,
            foreign_key: :customer,
            primary_key: :stripe_customer_id,

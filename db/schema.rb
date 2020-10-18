@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_15_034807) do
+ActiveRecord::Schema.define(version: 2020_10_17_150942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(version: 2020_10_15_034807) do
     t.text "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "email_preferences", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "category", null: false
+    t.boolean "subscribed", default: true, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_email_preferences_on_user_id"
   end
 
   create_table "graders", force: :cascade do |t|
@@ -237,6 +246,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_034807) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "email_preferences", "users"
   add_foreign_key "listing_images", "listings"
   add_foreign_key "listing_reports", "listings"
   add_foreign_key "listing_reports", "users"

@@ -1,6 +1,15 @@
 class Types::User < Types::ActiveRecordObject
   field :email, String, null: false
   field :profile_picture_url, String, null: false
+  field :email_preferences, [Types::EmailPreference], null: false
+  def email_preferences
+    cats = EmailPreference.all.pluck(:category).uniq
+    cats.map do |cat|
+      EmailPreference.find_or_create_by(
+        { category: cat, user_id: current_user.id },
+      )
+    end
+  end
 
   field :listings, [Types::Listing], null: false do
     argument :status, Enums::ListingStatusEnum, required: false
@@ -21,8 +30,9 @@ class Types::User < Types::ActiveRecordObject
 
     return user_offers if status.nil?
 
-    user_offers.joins(:listing)
-      .where('listings.status': Listing.statuses[status])
+    user_offers.joins(:listing).where(
+      'listings.status': Listing.statuses[status]
+    )
   end
 
   field :stripe_account, Types::StripeAccount, null: false do
@@ -37,9 +47,7 @@ class Types::User < Types::ActiveRecordObject
   field :has_active_subscription,
         Boolean,
         null: false, method: :active_subscription?
-  field :has_payment_method,
-        Boolean,
-        null: false, method: :payment_method?
+  field :has_payment_method, Boolean, null: false, method: :payment_method?
 
   field :available_memberships, [Types::Membership], null: false
   def available_memberships
@@ -48,7 +56,7 @@ class Types::User < Types::ActiveRecordObject
       {
         token: 'price_1HKXHGIFW5W5DEYQmWW2aIvz', price: 10_500, term: '6 months'
       },
-      { token: 'price_1HKXHGIFW5W5DEYQ4AWYr99h', price: 20_000, term: 'year' },
+      { token: 'price_1HKXHGIFW5W5DEYQ4AWYr99h', price: 20_000, term: 'year' }
     ]
-  end
+  end # Return all categories that our database contains
 end
