@@ -2,7 +2,10 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super do |resource|
-      resource.send_confirmation_instructions if resource.errors.empty?
+      if resource.errors.empty?
+        resource.send_confirmation_instructions
+        resource.create_stripe_objects
+      end
     end
   end
 end

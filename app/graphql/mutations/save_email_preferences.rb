@@ -8,7 +8,7 @@ class Mutations::SaveEmailPreferences < Mutations::BaseMutation
     _update_canceled(canceled)
     _update_subscribed(canceled)
 
-    { viewer: current_user }
+    { viewer: current_user, message: 'Preferences saved' }
   end
 
   private

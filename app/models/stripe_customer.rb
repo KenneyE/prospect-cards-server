@@ -12,6 +12,12 @@ class StripeCustomer < StripeModel
            inverse_of: :stripe_customer,
            dependent: :destroy
 
+  has_many :stripe_payment_intents,
+           foreign_key: :customer,
+           primary_key: :token,
+           inverse_of: :stripe_customer,
+           dependent: :destroy
+
   def params_from_stripe_object(customer)
     {
       token: customer.id,
