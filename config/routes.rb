@@ -1,4 +1,9 @@
+# add access to web interface
+require('sidekiq/web')
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web, at: '/sidekiq' if Rails.env.development?
+
   namespace :v1, defaults: { format: 'json' } do
     post '/', to: 'graphql#execute'
 
@@ -9,7 +14,7 @@ Rails.application.routes.draw do
              controllers: {
                sessions: 'users/sessions',
                registrations: 'users/registrations',
-               confirmations: 'users/confirmations'
+               confirmations: 'users/confirmations',
              }
   post '/stripe_webhook', to: 'stripe_webhooks#event', as: :stripe_webhooks
 end

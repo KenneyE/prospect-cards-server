@@ -12,6 +12,9 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
+  config.active_job.queue_adapter = :sidekiq
+  # config.active_job.queue_name_prefix = 'prospect_cards_development'
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
@@ -32,7 +35,7 @@ Rails.application.configure do
   config.imgix = {
     source: 'krispy-kards-local.imgix.net',
     use_https: true,
-    include_library_param: true
+    include_library_param: true,
   }
 
   # Don't care if the mailer can't send.
