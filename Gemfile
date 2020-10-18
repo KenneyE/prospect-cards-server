@@ -29,6 +29,8 @@ gem 'acts_as_list'
 gem 'sidekiq'
 gem 'memoist'
 
+gem 'money'
+
 gem 'aws-sdk-s3', require: false
 gem 'elasticsearch-rails', '~> 7.0'
 gem 'searchkick'
