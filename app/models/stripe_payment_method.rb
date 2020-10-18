@@ -10,11 +10,8 @@ class StripePaymentMethod < StripeModel
              foreign_key: :customer,
              primary_key: :token,
              inverse_of: :stripe_payment_methods
-  belongs_to :user,
-             foreign_key: :customer,
-             primary_key: :stripe_customer_id,
-             inverse_of: :stripe_payment_methods
 
+  delegate :user, to: :stripe_customer
 
   def params_from_stripe_object(payment_method)
     {

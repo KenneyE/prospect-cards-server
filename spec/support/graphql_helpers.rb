@@ -12,7 +12,7 @@ module GraphqlHelpers
   end
 
   def expect_query_result(
-    query, expected, variables: {}, context: {}, schema: ElevationApiSchema
+    query, expected, variables: {}, context: {}, schema: FundReporterServerSchema
   )
     result =
       execute_query(
@@ -25,19 +25,16 @@ module GraphqlHelpers
   alias expects_query_result expect_query_result
 
   def execute_query(
-    query, variables: {}, context: {}, schema: ElevationApiSchema
+    query, variables: {}, context: {}, schema: FundReporterServerSchema
   )
     # Has access to `let`s
     context[:current_user] ||= user if defined?(user)
-    context[:current_admin] ||= admin if defined?(admin)
 
-    viewer = context[:current_user] || context[:current_admin]
-    context[:ability] = Ability.new(viewer)
     schema.execute(query, variables: variables, context: context)
   end
 
   def expect_error(
-    query, expected, variables: {}, context: {}, schema: ElevationApiSchema
+    query, expected, variables: {}, context: {}, schema: FundReporterServerSchema
   )
     result =
       execute_query(

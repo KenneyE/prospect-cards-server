@@ -4,10 +4,8 @@ RSpec.describe 'StripeWebhooks', type: :request do
   include StripeHelpers
 
   before do
-    mock_stripe(:customer)
-    mock_stripe(:account)
-
     create(:user, stripe_customer_id: 'cus_00000000000000')
+    create(:stripe_customer, token: 'cus_00000000000000')
   end
 
   describe '#customer.created' do

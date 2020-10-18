@@ -9,10 +9,12 @@ class StripePaymentIntent < StripeModel
     payment_intent.succeeded
   ].freeze
 
-  belongs_to :user,
+  belongs_to :stripe_customer,
              foreign_key: :customer,
-             primary_key: :stripe_customer_id,
+             primary_key: :token,
              inverse_of: :stripe_payment_intents
+
+  delegate :user, to: :stripe_customer
 
   has_one :offer,
           foreign_key: :payment_intent_id,

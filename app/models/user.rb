@@ -16,8 +16,6 @@ class User < ApplicationRecord
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenyList
 
-  after_create_commit :_create_stripe_objects
-
   has_one_attached :profile_picture
 
   has_many :listings, dependent: :destroy
@@ -28,11 +26,7 @@ class User < ApplicationRecord
   has_many :offers, dependent: :destroy
 
   has_many :email_preferences, dependent: :destroy
-  has_many :stripe_payment_intents,
-           foreign_key: :customer,
-           primary_key: :stripe_customer_id,
-           dependent: :destroy,
-           inverse_of: :user
+
   has_many :stripe_subscriptions,
            foreign_key: :customer,
            primary_key: :stripe_customer_id,
@@ -44,22 +38,31 @@ class User < ApplicationRecord
           dependent: :destroy,
           inverse_of: :user
 
-  has_many :stripe_payment_methods,
-           foreign_key: :customer,
-           primary_key: :stripe_customer_id,
-           dependent: :destroy,
-           inverse_of: :user
-
   has_one :stripe_customer,
           foreign_key: :token,
           primary_key: :stripe_customer_id,
           dependent: :destroy,
           inverse_of: :user
+  has_many :stripe_payment_methods, through: :stripe_customer
+  has_many :stripe_payment_intents, through: :stripe_customer
 
   # Override devise mailer to use ActionMailer
   # https://github.com/plataformatec/devise#activejob-integration
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  def create_stripe_objects
+    account = Stripe::Account.create(_stripe_account_opts)
+    cust = Stripe::Customer.create({ email: email })
+
+    update(
+      stripe_account_id: account.id,
+      stripe_customer_id: cust.id,
+    )
+
+    StripeAccount.create(token: account.id)
+    StripeCustomer.create(token: cust.id)
   end
 
   def active_subscription?
@@ -89,19 +92,6 @@ class User < ApplicationRecord
   end
 
   private
-
-  def _create_stripe_objects
-    account = Stripe::Account.create(_stripe_account_opts)
-    cust = Stripe::Customer.create({ email: email })
-
-    update(
-      stripe_account_id: account.id,
-      stripe_customer_id: cust.id,
-    )
-
-    StripeAccount.create(token: account.id)
-    StripeCustomer.create(token: cust.id)
-  end
 
   def _stripe_account_opts
     {

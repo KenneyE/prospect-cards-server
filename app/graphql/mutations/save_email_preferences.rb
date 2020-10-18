@@ -4,22 +4,31 @@ class Mutations::SaveEmailPreferences < Mutations::BaseMutation
   field :viewer, Types::User, null: false
 
   def resolve(email_preferences:)
-    canceled = email_preferences.filter { |pref| !pref[:subscribed] }
-    _update_canceled(canceled)
-    _update_subscribed(canceled)
+    canceled_cats =
+      email_preferences.filter { |pref| !pref[:subscribed] }.map(&:category)
+    _update_canceled(canceled_cats)
+    _update_subscribed(canceled_cats)
 
-    { viewer: current_user }
+    { viewer: current_user, message: 'Preferences saved' }
   end
 
   private
 
-  def _update_canceled(canceled)
-    current_user.email_preferences.where(category: canceled.map(&:category))
-      .find_each { |pref| pref.update(subscribed: false) }
+  def _update_canceled(canceled_cats)
+    current_user.email_preferences.where(
+      category: canceled_cats, subscribed: true,
+    ).find_each { |pref| pref.update(subscribed: false) }
+
+    newly_canceled =
+      canceled_cats - current_user.email_preferences.pluck(:category)
+
+    current_user.email_preferences.create(
+      newly_canceled.map { |cat| { category: cat, subscribed: false } },
+    )
   end
 
-  def _update_subscribed(canceled)
-    current_user.email_preferences.where.not(category: canceled.map(&:category))
+  def _update_subscribed(canceled_cats)
+    current_user.email_preferences.where.not(category: canceled_cats)
       .find_each { |pref| pref.update(subscribed: true) }
   end
 end

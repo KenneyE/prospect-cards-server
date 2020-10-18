@@ -41,7 +41,7 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails', '~> 4.0'
   gem 'parallel_tests'
-  gem 'rspec-rails', '~> 3.9'
+  gem 'rspec-rails'
   gem 'simplecov', require: false
   gem 'spring-commands-rspec'
   gem 'webmock'
