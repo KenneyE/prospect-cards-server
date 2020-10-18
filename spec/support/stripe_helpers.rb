@@ -75,7 +75,8 @@ module StripeHelpers
   # Convert a JSON fixture file into a usable object with symbolized keys
   # and overridden attributes.
   def object_from_fixture(path, overrides)
-    JSON.parse(File.open(path).read).deep_symbolize_keys.deep_merge(overrides)
+    fixture = JSON.parse(File.open(path).read)
+    fixture.deep_symbolize_keys.deep_merge(overrides)
   end
 
   # Use the path of the request to determine which fixture to use.
