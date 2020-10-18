@@ -88,10 +88,6 @@ class User < ApplicationRecord
     end
   end
 
-  def mailer
-
-  end
-
   private
 
   def _create_stripe_objects
