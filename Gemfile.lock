@@ -283,14 +283,11 @@ GEM
     ruby-progressbar (1.10.1)
     ruby-vips (2.0.17)
       ffi (~> 1.9)
-    ruby_http_client (3.5.0)
     safe_yaml (1.0.5)
     searchkick (4.4.1)
       activemodel (>= 5)
       elasticsearch (>= 6)
       hashie
-    sendgrid-ruby (6.3.3)
-      ruby_http_client (~> 3.4)
     sidekiq (6.1.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
@@ -367,7 +364,6 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   searchkick
-  sendgrid-ruby
   sidekiq
   simplecov
   spring
