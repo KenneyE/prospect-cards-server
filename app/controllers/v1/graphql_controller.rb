@@ -39,7 +39,7 @@ class V1::GraphqlController < ApplicationController
     when Hash
       variables_param
     when ActionController::Parameters
-      variables_param.to_unsafe_hash # GraphQL-Ruby will validate name and type of incoming variables.
+      variables_param.to_unsafe_hash
     when nil
       {}
     else
@@ -52,9 +52,11 @@ class V1::GraphqlController < ApplicationController
     logger.error(err.message)
     logger.error(err.backtrace.join("\n"))
 
-    render(json: {
-             errors: [{ message: err.message, backtrace: err.backtrace }], data: {}
-           },
-           status: :internal_server_error)
+    render(
+      json: {
+        errors: [{ message: err.message, backtrace: err.backtrace }], data: {}
+      },
+      status: :internal_server_error,
+    )
   end
 end

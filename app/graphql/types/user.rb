@@ -58,5 +58,5 @@ class Types::User < Types::ActiveRecordObject
       },
       { token: 'price_1HKXHGIFW5W5DEYQ4AWYr99h', price: 20_000, term: 'year' },
     ]
-  end # Return all categories that our database contains
+  end
 end

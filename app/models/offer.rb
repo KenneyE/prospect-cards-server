@@ -19,7 +19,13 @@ class Offer < ApplicationRecord
           left_joins(:stripe_payment_intent).where(
             offers: { temp_confirmed: true },
             stripe_payment_intents: {
-              status: [nil, 'processing', 'requires_capture', 'requires_confirmation', 'requires_payment_method'],
+              status: [
+                nil,
+                'processing',
+                'requires_capture',
+                'requires_confirmation',
+                'requires_payment_method',
+              ],
             },
           )
         }

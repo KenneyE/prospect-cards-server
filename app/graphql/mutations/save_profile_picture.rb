@@ -6,7 +6,8 @@ class Mutations::SaveProfilePicture < Mutations::BaseMutation
   def resolve(picture:)
     user = current_user
     user.profile_picture.attach(
-      io: picture['document'].to_io, filename: picture['document'].original_filename,
+      io: picture['document'].to_io,
+      filename: picture['document'].original_filename,
     )
     raise_errors(user)
 

@@ -1,8 +1,6 @@
 # typed: ignore
 # Helper methods for testing graphql request specs
 module GraphqlHelpers
-  # Used for `type: :request` specs that include GraphqlHelpers
-  # Use `expect_error` for `type: :graphql` tests
   def expect_error_message(message)
     errors = JSON.parse(response.body)['errors']
     expect(errors).not_to be_nil, 'Expected errors to be present, got nil'
@@ -12,7 +10,11 @@ module GraphqlHelpers
   end
 
   def expect_query_result(
-    query, expected, variables: {}, context: {}, schema: FundReporterServerSchema
+    query,
+    expected,
+    variables: {},
+    context: {},
+    schema: FundReporterServerSchema
   )
     result =
       execute_query(
@@ -34,7 +36,11 @@ module GraphqlHelpers
   end
 
   def expect_error(
-    query, expected, variables: {}, context: {}, schema: FundReporterServerSchema
+    query,
+    expected,
+    variables: {},
+    context: {},
+    schema: FundReporterServerSchema
   )
     result =
       execute_query(

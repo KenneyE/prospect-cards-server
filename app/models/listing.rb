@@ -24,6 +24,7 @@ class Listing < ApplicationRecord
 
   enum status: %i[available pending_sale sold]
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def search_data
     {
       id: id,
@@ -57,6 +58,7 @@ class Listing < ApplicationRecord
       },
     }
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def image_urls
     images.map do |image|

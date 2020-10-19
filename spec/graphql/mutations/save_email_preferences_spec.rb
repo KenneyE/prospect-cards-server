@@ -8,7 +8,9 @@ RSpec.describe Mutations::SaveEmailPreferences, type: :graphql do
 
   let(:mutation) do
     '
-      mutation saveEmailPreferences($emailPreferences: [EmailPreferenceInput!]!) {
+      mutation saveEmailPreferences(
+        $emailPreferences: [EmailPreferenceInput!]!
+      ) {
         saveEmailPreferences(emailPreferences: $emailPreferences) {
           viewer {
             id
