@@ -42,7 +42,12 @@ class Mutations::SaveOffer < Mutations::BaseMutation
   end
 
   def _notify_seller(new_offer)
-    ListingsMailer.with(subscriber_id: current_user.id).offer_received(
+    new_offer.seller.notices.create(
+      title: "New Offer for #{new_offer.listing.title}!",
+      text: "Someone offered #{new_offer.formatted_price} for your listing",
+      path: "/listings/#{new_offer.listing_id}",
+    )
+    ListingsMailer.with(subscriber_id: new_offer.seller).offer_received(
       new_offer.id,
     ).deliver_later
   end

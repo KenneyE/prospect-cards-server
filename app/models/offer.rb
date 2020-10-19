@@ -31,4 +31,12 @@ class Offer < ApplicationRecord
         }
 
   scope :open, -> { confirmed.unexpired }
+
+  def seller
+    listing.user
+  end
+
+  def formatted_price
+    Money.new(price).format
+  end
 end
