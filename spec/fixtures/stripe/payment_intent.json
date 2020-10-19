@@ -20,7 +20,7 @@
   "confirmation_method": "automatic",
   "created": 1601580831,
   "currency": "usd",
-  "customer": null,
+  "customer": "cus_00000000000000",
   "description": "Created by stripe.com/docs demo",
   "invoice": null,
   "last_payment_error": null,
