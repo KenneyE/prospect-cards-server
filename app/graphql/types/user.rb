@@ -31,7 +31,7 @@ class Types::User < Types::ActiveRecordObject
     return user_offers if status.nil?
 
     user_offers.joins(:listing).where(
-      'listings.status': Listing.statuses[status]
+      'listings.status': Listing.statuses[status],
     )
   end
 
@@ -56,7 +56,7 @@ class Types::User < Types::ActiveRecordObject
       {
         token: 'price_1HKXHGIFW5W5DEYQmWW2aIvz', price: 10_500, term: '6 months'
       },
-      { token: 'price_1HKXHGIFW5W5DEYQ4AWYr99h', price: 20_000, term: 'year' }
+      { token: 'price_1HKXHGIFW5W5DEYQ4AWYr99h', price: 20_000, term: 'year' },
     ]
   end # Return all categories that our database contains
 end

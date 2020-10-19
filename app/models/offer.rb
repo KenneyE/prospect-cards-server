@@ -20,7 +20,7 @@ class Offer < ApplicationRecord
             offers: { temp_confirmed: true },
             stripe_payment_intents: {
               status: [nil, 'processing', 'requires_capture', 'requires_confirmation', 'requires_payment_method'],
-            }
+            },
           )
         }
 
