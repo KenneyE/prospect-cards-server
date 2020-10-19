@@ -20,6 +20,7 @@ class User < ApplicationRecord
 
   has_many :listings, dependent: :destroy
   has_many :incoming_offers, through: :listings, source: :offers
+  has_many :notices, dependent: :destroy
 
   has_many :player_interests, dependent: :destroy
   has_many :players, through: :player_interests
@@ -89,6 +90,10 @@ class User < ApplicationRecord
       # TODO: Don't use imgix for this.
       ix_image_url('Krispy Kards-logo-black.png', height: 300)
     end
+  end
+
+  def unread_notices
+    notices.unread.order(created_at: :desc)
   end
 
   private
