@@ -8,6 +8,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def _setup_new_user(user)
     user.send_confirmation_instructions
     user.create_stripe_objects
-    user.notices.create(title: 'Welcome to Prospect Cards!', text: 'Ready to start selling? Click here to start getting paid!', path: '/account/sell')
+    user.notices.create(
+      title: 'Welcome to Prospect Cards!',
+      text: 'Ready to start selling? Click here to start getting paid!',
+      path: '/account/sell',
+    )
   end
 end
