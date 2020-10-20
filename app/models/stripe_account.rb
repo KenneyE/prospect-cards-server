@@ -7,6 +7,9 @@ class StripeAccount < StripeModel
              inverse_of: :stripe_account
 
   def onboarding_link
+    # Only allow onboarding once per account
+    return if charges_enabled?
+
     Stripe::AccountLink.create(
       {
         account: token,
