@@ -1,4 +1,3 @@
-# typed: ignore
 # Actions for the client to check the current admins abilities agains
 class Enums::ListingStatusEnum < Enums::BaseEnum
   value('available', 'available')

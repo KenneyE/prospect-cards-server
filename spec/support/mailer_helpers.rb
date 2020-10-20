@@ -1,4 +1,3 @@
-# typed: ignore
 # Helper methods for testing mailers
 module MailerHelpers
   def expect_enqueue_without_error(method, *arguments)

@@ -1,4 +1,3 @@
-# typed: ignore
 # This allows us to test with Stripe Signature verification enabled.
 # https://github.com/rebelidealist/stripe-ruby-mock/issues/467
 module StripeHelpers

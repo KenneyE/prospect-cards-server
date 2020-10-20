@@ -1,4 +1,3 @@
-# typed: false
 # Fields all models have
 module Interfaces::ActiveRecordInterface
   include GraphQL::Schema::Interface

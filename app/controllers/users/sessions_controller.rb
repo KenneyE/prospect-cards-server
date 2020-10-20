@@ -1,4 +1,3 @@
-# typed: false
 class Users::SessionsController < Devise::SessionsController
   private
 

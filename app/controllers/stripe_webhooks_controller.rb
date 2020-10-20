@@ -1,4 +1,3 @@
-# typed: false
 # Controller for accepting Stripe webhooks
 class StripeWebhooksController < ApplicationController
   extend Memoist

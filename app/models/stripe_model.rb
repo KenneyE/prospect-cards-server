@@ -1,4 +1,3 @@
-# typed: ignore
 # Parent class for all of our models that represent Stripe objects
 class StripeModel < ApplicationRecord
   self.abstract_class = true

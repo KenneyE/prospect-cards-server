@@ -1,4 +1,3 @@
-# typed: ignore
 # Helper methods for testing graphql request specs
 module GraphqlHelpers
   def expect_error_message(message)

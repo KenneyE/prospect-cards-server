@@ -1,4 +1,3 @@
-# typed: true
 # Responsible for miscellaneous Stripe Webhook-related actions that don't belong
 # in a controller or model
 class StripeWebhookService

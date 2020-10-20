@@ -1,4 +1,3 @@
-# typed: false
 class Users::ConfirmationsController < Devise::ConfirmationsController
   def show
     super do |resource|

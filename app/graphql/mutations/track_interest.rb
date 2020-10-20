@@ -1,4 +1,3 @@
-# typed: true
 class Mutations::TrackInterest < Mutations::BaseMutation
   argument :listing_id, Integer, required: true
 
