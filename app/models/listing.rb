@@ -22,7 +22,7 @@ class Listing < ApplicationRecord
   validates :title, :description, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
 
-  enum status: %i[available pending_sale sold]
+  enum status: %i[available pending_sale sold disabled]
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def search_data
@@ -72,7 +72,6 @@ class Listing < ApplicationRecord
   end
 
   def should_index?
-    # TODO: Not flagged and not de-activated
-    true
+    !disabled?
   end
 end
