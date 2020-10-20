@@ -13,7 +13,7 @@ class ReportedListingService
     )
 
     if listing.listing_reports.unreviewed.count >= ListingReport::MAX_REPORTS
-      # TODO: do what?
+      listing.disable!
     end
 
     new_report

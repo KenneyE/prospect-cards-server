@@ -6,4 +6,11 @@ class Types::Listing < Types::ActiveRecordObject
 
   field :player, Types::Player, null: false
   field :offers, [Types::Offer], null: false
+
+  field :reports, [Types::ListingReport], null: false
+  def reports
+    raise(StandardError, 'Unauthorized') unless current_user.admin?
+
+    object.listing_reports
+  end
 end

@@ -30,6 +30,9 @@ class AcceptOfferService
   def _verify_availability
     return if offer.listing.available?
 
-    raise(Errors::UserInputError, 'Cannot accept already pending offer')
+    raise(
+      Errors::UserInputError,
+      'Listing is unavailable and cannot be accepted.',
+    )
   end
 end

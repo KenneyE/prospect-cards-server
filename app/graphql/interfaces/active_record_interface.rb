@@ -4,8 +4,8 @@ module Interfaces::ActiveRecordInterface
 
   field :id, Int, null: false
 
-  field :createdAt, GraphQL::Types::ISO8601DateTime, null: false
-  field :updatedAt, GraphQL::Types::ISO8601DateTime, null: false
+  field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+  field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
   # return errors if they exist
   field :errors, [String], null: false
