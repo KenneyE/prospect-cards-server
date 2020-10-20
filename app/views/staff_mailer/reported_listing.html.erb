@@ -1,0 +1,9 @@
+<h1>Listing Details</h1>
+<p>Title: <%= @report.listing.title %></p>
+<p>Seller: <%= @report.user.email %></p>
+<p>Number of reports: <%= @report.listing.listing_reports.count %></p>
+
+<h1>Report details</h1>
+<p><%= @report.text  %></p>
+
+<a href="<%= client_url %>/listings/<%= @report.listing_id %>">View Listing</a>

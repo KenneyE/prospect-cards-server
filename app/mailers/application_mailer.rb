@@ -1,5 +1,6 @@
 # Top-level mailer with obligatory class-level documentation
 class ApplicationMailer < ActionMailer::Base
+  helper MailerHelper
   default from: 'noreply@prospect.cards'
   layout 'mailer'
 

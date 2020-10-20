@@ -9,6 +9,14 @@ class Mutations::ReportListing < Mutations::BaseMutation
 
     raise_errors(report)
 
+    _notify_staff(report)
+
     { message: 'Thanks for reporting! Our team will review immediately.' }
+  end
+
+  private
+
+  def _notify_staff(report)
+    StaffMailer.reported_listing(report.id).deliver_later
   end
 end
