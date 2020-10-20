@@ -21,4 +21,10 @@ class Mutations::BaseMutation < GraphQL::Schema::Mutation
       'Please confirm your email address and try again.',
     )
   end
+
+  def require_admin!
+    return if current_user.admin?
+
+    raise(StandardError, 'Unauthorized.')
+  end
 end
