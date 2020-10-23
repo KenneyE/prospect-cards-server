@@ -11,7 +11,12 @@ class Types::MutationType < Types::BaseObject
   field :save_profile_picture, mutation: Mutations::SaveProfilePicture
   field :save_email_preferences, mutation: Mutations::SaveEmailPreferences
 
-  #  ADMIN ONLY
   field :accept_listing_reports,
-        mutation: Mutations::Admin::AcceptListingReports
+        mutation: Mutations::Admin::AcceptListingReports do
+    guard ->(_obj, _args, ctx) { ctx[:current_user].admin? }
+  end
+  field :update_listing,
+        mutation: Mutations::Admin::UpdateListing do
+    guard ->(_obj, _args, ctx) { ctx[:current_user].admin? }
+  end
 end

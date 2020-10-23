@@ -9,6 +9,7 @@ class FundReporterServerSchema < GraphQL::Schema
 
   # Add built-in connections for pagination
   use GraphQL::Pagination::Connections
+  use GraphQL::Guard.new
 
   # rescue_from ActiveRecord::RecordNotFound do |_e, _obj, _args|
   #   GraphQL::ExecutionError.new('Internal server error')

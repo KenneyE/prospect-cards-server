@@ -2,6 +2,7 @@ class Types::Listing < Types::ActiveRecordObject
   field :title, String, null: false
   field :description, String, null: false
   field :price, Integer, null: false
+  field :status, Enums::ListingStatusEnum, null: false
   field :images, [Types::ListingImage], null: false
 
   field :player, Types::Player, null: false

@@ -20,9 +20,11 @@ gem 'rack-cors'
 
 gem 'airbrake'
 gem 'apollo_upload_server', '2.0.1'
+gem 'cancancan'
 gem 'devise'
 gem 'devise-jwt'
 gem 'graphql'
+gem 'graphql-guard'
 
 gem 'nilify_blanks'
 gem 'paper_trail'
