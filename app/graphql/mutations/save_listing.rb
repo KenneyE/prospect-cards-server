@@ -7,9 +7,9 @@ class Mutations::SaveListing < Mutations::BaseMutation
   def resolve(listing:, player:)
     require_confirmation!
     l = _save_listing(listing, player)
-    _save_images(l, listing[:images])
-
     raise_errors(l)
+
+    _save_images(l, listing[:images])
 
     { viewer: current_user, message: 'Listing created!' }
   end
