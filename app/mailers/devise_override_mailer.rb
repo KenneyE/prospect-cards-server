@@ -4,4 +4,11 @@ class DeviseOverrideMailer < ApplicationMailer
 
     mail(to: record.email, subject: 'Welcome to Prospect Cards!')
   end
+
+  def reset_password_instructions(record, token, _opts = {})
+    @token = token
+    @resource = record
+
+    mail(to: record.email, subject: 'Prospect Cards - Password Reset')
+  end
 end

@@ -314,6 +314,7 @@ Devise.setup do |config|
     jwt.dispatch_requests = [
       ['POST', %r{/users/sign_in}],
       ['GET', %r{/users/confirmation.json}],
+      ['PATCH', %r{/users/password.json}],
       ['POST', %r{/users}]
     ]
 
