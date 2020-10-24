@@ -30,8 +30,7 @@ module EmailPreferences
 
       def recipient_subscribed?
         EmailPreference.find_or_create_by(
-          category: current_action_category,
-          user: subscriber
+          category: current_action_category, user: subscriber,
         ).subscribed?
       end
 
@@ -41,12 +40,16 @@ module EmailPreferences
         end
 
         @subscriber = User.find(params[:subscriber_id])
+        @unsubscribe_token =
+          Rails.application.message_verifier(:email_preferences).generate(
+            @subscriber.id,
+          )
       end
     end
 
     module ClassMethods
       def categorize(meths = [], as:)
-        actions = meths.empty? ? [:all] : meths
+        actions = meths.empty? ? %i[all] : meths
         actions.each { |action| self.action_categories[action.to_sym] = as }
       end
     end

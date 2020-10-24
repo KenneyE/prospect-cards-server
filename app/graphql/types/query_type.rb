@@ -10,9 +10,24 @@ class Types::QueryType < Types::BaseObject
     context[:current_user]
   end
 
-  field :viewer, Types::User, null: false
-  def viewer
-    context[:current_user]
+  field :viewer, Types::User, null: false do
+    argument :token, String, required: false
+  end
+  def viewer(token: nil)
+    if token.present?
+      begin
+        unescaped = CGI.unescape(token)
+        user_id =
+          Rails.application.message_verifier(:email_preferences).verify(
+            unescaped,
+          )
+        User.find(user_id)
+      rescue ActiveSupport::MessageVerifier::InvalidSignature => err
+        raise(Errors::AuthenticationError, 'Invalid token')
+      end
+    else
+      context[:current_user]
+    end
   end
 
   field :listing, Types::Listing, null: false do

@@ -8,7 +8,7 @@ class Types::User < Types::ActiveRecordObject
     cats = EmailPreference.all.pluck(:category).uniq
     cats.map do |cat|
       EmailPreference.find_or_create_by(
-        { category: cat, user_id: current_user.id },
+        { category: cat, user_id: object.id },
       )
     end
   end
