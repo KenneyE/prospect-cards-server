@@ -9,7 +9,7 @@ class Mutations::ForgotPassword < Mutations::BaseMutation
         %i[email],
         { email: email },
         :not_found,
-        )
+      )
     send_email if @user.persisted?
 
     raise_errors(@user)
@@ -17,11 +17,7 @@ class Mutations::ForgotPassword < Mutations::BaseMutation
     { message: 'Success! You will receive an email with instructions shortly!' }
   end
 
-  def token
-    @user.set_reset_password_token
-  end
-
   def send_email
-    @user.mailer.v3_reset_password_instructions(@user, token).deliver_later
+    @user.send_reset_password_instructions
   end
 end
