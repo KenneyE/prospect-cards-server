@@ -9,6 +9,6 @@ class DeviseOverrideMailer < ApplicationMailer
     @token = token
     @resource = record
 
-    mail(to: record.email, subject: 'Prospect Cards Password Reset')
+    mail(to: record.email, subject: 'Prospect Cards - Password Reset')
   end
 end
