@@ -9,5 +9,11 @@
 
   <body>
     <%= yield %>
+
+    <% if @unsubscribe_token.present? %>
+      <a href="<%= client_url %>/email-preferences/<%= CGI::escape(@unsubscribe_token) %>">
+        Manage Email Preferences
+      </a>
+    <% end %>
   </body>
 </html>

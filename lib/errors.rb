@@ -3,6 +3,7 @@ module Errors
   class InvalidOfferError < StandardError; end
 
   class ConfirmationError < StandardError; end
+  class AuthenticationError < StandardError; end
 
   # Mailer
   class MissingSubscriber < StandardError; end
