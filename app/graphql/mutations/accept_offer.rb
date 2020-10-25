@@ -8,6 +8,9 @@ class Mutations::AcceptOffer < Mutations::BaseMutation
 
     raise_errors(offer)
 
+    OffersMailer.with(subscriber_id: offer.user_id).offer_accepted(offer.id)
+      .deliver_later
+
     { message: 'Offer accepted. Congrats!' }
   end
 end

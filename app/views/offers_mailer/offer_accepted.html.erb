@@ -1,0 +1,6 @@
+<h1>Your offer was accepted!</h1>
+<p>
+  Listing: <%= @offer.listing.title %>
+  <br />
+  Amount: <%= Money.new(@offer.price).format %>
+</p>

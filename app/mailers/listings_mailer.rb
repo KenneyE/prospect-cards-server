@@ -1,7 +1,7 @@
 class ListingsMailer < ApplicationMailer
   include EmailPreferences::Mailer
 
-  categorize as: :listing_offers_and_updates
+  categorize as: :your_listings_and_incoming_offers
 
   def offer_received(offer_id)
     @offer = Offer.find(offer_id)
