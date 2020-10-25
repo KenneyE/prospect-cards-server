@@ -72,6 +72,6 @@ class Listing < ApplicationRecord
   end
 
   def should_index?
-    !disabled?
+    available?
   end
 end
