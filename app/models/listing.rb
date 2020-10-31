@@ -65,7 +65,7 @@ class Listing < ApplicationRecord
       next unless image.image.attached?
 
       {
-        url: variant_url(image.image.variant(resize_to_limit: [170, nil])),
+        url: variant_url(image.image.variant(resize_to_limit: [240, nil])),
         position: image.position,
       }
     end
