@@ -63,7 +63,7 @@ class Types::QueryType < Types::BaseObject
 
   field :manufacturers, [Types::Manufacturer], null: false
   def manufacturers
-    ProductType.all
+    Manufacturer.all
   end
 
   field :set_types, [Types::SetType], null: false

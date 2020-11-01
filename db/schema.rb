@@ -43,17 +43,6 @@ ActiveRecord::Schema.define(version: 2020_10_20_035707) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "counter_offers", force: :cascade do |t|
-    t.bigint "offer_id", null: false
-    t.integer "amount", null: false
-    t.text "message"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["offer_id"], name: "index_counter_offers_on_offer_id"
-    t.index ["user_id"], name: "index_counter_offers_on_user_id"
-  end
-
   create_table "email_preferences", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "category", null: false
@@ -269,8 +258,6 @@ ActiveRecord::Schema.define(version: 2020_10_20_035707) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "counter_offers", "offers"
-  add_foreign_key "counter_offers", "users"
   add_foreign_key "email_preferences", "users"
   add_foreign_key "listing_images", "listings"
   add_foreign_key "listing_reports", "listings"
