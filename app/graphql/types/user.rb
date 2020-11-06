@@ -1,6 +1,14 @@
 class Types::User < Types::ActiveRecordObject
   field :email, String, null: false
   field :admin, Boolean, null: false
+
+  field :full_name, String, null: true
+  field :street1, String, null: true
+  field :street2, String, null: true
+  field :city, String, null: true
+  field :state, String, null: true
+  field :zip, String, null: true
+
   field :profile_picture_url, String, null: false
   field :unread_notices, [Types::Notice], null: false
   field :email_preferences, [Types::EmailPreference], null: false

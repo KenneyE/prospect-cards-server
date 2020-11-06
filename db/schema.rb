@@ -241,7 +241,7 @@ ActiveRecord::Schema.define(version: 2020_11_06_044540) do
     t.text "stripe_account_id"
     t.text "stripe_customer_id"
     t.boolean "admin", default: false, null: false
-    t.text "name"
+    t.text "full_name"
     t.text "street1"
     t.text "street2"
     t.text "city"
