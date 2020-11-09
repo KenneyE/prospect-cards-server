@@ -1,13 +1,24 @@
 class Listing < ApplicationRecord
-  searchkick
+  searchkick callbacks: :async
+  scope :search_import,
+        lambda {
+          available.includes(
+            :images,
+            :user,
+            :player,
+            :product_type,
+            :manufacturer,
+            :set_type,
+            :grader,
+            :category,
+          )
+        }
 
   has_paper_trail
 
   has_many :images,
            -> { order(position: :asc) },
-           class_name: 'ListingImage',
-           dependent: :destroy,
-           inverse_of: :listing
+           class_name: 'ListingImage', dependent: :destroy, inverse_of: :listing
   has_many :offers, dependent: :destroy
   has_many :listing_reports, dependent: :destroy
 
@@ -35,30 +46,15 @@ class Listing < ApplicationRecord
       rookie: rookie?,
       price: price,
       status: status,
-      user: {
-        id: user_id,
-      },
-      player: {
-        name: player.name,
-      },
-      category: {
-        name: category.name,
-      },
-      productType: {
-        name: product_type.name,
-      },
-      manufacturer: {
-        name: manufacturer.name,
-      },
-      setType: {
-        name: set_type.name,
-      },
-      grader: {
-        name: grader.name,
-      },
+      user: { id: user_id },
+      player: { name: player.name },
+      category: { name: category.name },
+      productType: { name: product_type.name },
+      manufacturer: { name: manufacturer.name },
+      setType: { name: set_type.name },
+      grader: { name: grader.name },
     }
-  end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  end # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def image_urls
     images.map do |image|
