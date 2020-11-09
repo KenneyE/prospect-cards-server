@@ -1,18 +1,6 @@
 class Listing < ApplicationRecord
-  searchkick callbacks: :async
-  scope :search_import,
-        lambda {
-          available.includes(
-            :images,
-            :user,
-            :player,
-            :product_type,
-            :manufacturer,
-            :set_type,
-            :grader,
-            :category,
-          )
-        }
+  searchkick
+  scope :search_import, -> { available }
 
   has_paper_trail
 
