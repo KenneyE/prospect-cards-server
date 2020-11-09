@@ -74,6 +74,10 @@ class User < ApplicationRecord
     stripe_payment_methods.any?
   end
 
+  def payment_method
+    stripe_payment_methods.order(:created_at).last
+  end
+
   def search_data
     {
       id: id,
