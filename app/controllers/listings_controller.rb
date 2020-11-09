@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
   include HTTParty
-  base_uri Rails.env.production? ? ENV['ELASTICSEARCH_URL'] : 'http://localhost:9200'
+  URI_BASE = Rails.env.production? ? ENV['ELASTICSEARCH_URL'] : 'http://localhost:9200'
 
   def _msearch
     pref = JSON.parse(request.raw_post.split("\n")[0])
@@ -24,11 +24,16 @@ class ListingsController < ApplicationController
         },
       }
     else
-      resp =
-        self.class.post(
-          '/listings_development/_msearch',
+      r =
+        HTTParty.post(
+          "#{URI_BASE}/listings_#{Rails.env}/_msearch",
           body: request.raw_post,
-        ).response.body
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        )
+
+      resp = r.response.body
     end
     render(json: resp)
   end
