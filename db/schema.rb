@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_08_214555) do
+ActiveRecord::Schema.define(version: 2020_11_09_035630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(version: 2020_11_08_214555) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_email_preferences_on_user_id"
+  end
+
+  create_table "favorite_listings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "listing_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["listing_id"], name: "index_favorite_listings_on_listing_id"
+    t.index ["user_id"], name: "index_favorite_listings_on_user_id"
   end
 
   create_table "graders", force: :cascade do |t|
@@ -269,6 +278,8 @@ ActiveRecord::Schema.define(version: 2020_11_08_214555) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "email_preferences", "users"
+  add_foreign_key "favorite_listings", "listings"
+  add_foreign_key "favorite_listings", "users"
   add_foreign_key "listing_images", "listings"
   add_foreign_key "listing_reports", "listings"
   add_foreign_key "listing_reports", "users"

@@ -17,4 +17,7 @@ Rails.application.routes.draw do
                confirmations: 'users/confirmations',
              }
   post '/stripe_webhook', to: 'stripe_webhooks#event', as: :stripe_webhooks
+  resources :listings, only: [],defaults: { format: 'json' } do
+    post '_msearch', on: :collection
+  end
 end
