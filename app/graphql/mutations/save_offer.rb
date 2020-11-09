@@ -55,7 +55,7 @@ class Mutations::SaveOffer < Mutations::BaseMutation
   def _payment_intent_opts(listing, price)
     {
       customer: current_user.stripe_customer_id,
-      payment_method: current_user.stripe_payment_methods.first.token,
+      payment_method: current_user.payment_method.token,
       amount: price,
       currency: 'usd',
       capture_method: 'manual',

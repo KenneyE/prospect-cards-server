@@ -15,9 +15,7 @@ class Types::User < Types::ActiveRecordObject
   def email_preferences
     cats = EmailPreference.all.pluck(:category).uniq
     cats.map do |cat|
-      EmailPreference.find_or_create_by(
-        { category: cat, user_id: object.id },
-      )
+      EmailPreference.find_or_create_by({ category: cat, user_id: object.id })
     end
   end
 
@@ -58,6 +56,7 @@ class Types::User < Types::ActiveRecordObject
         Boolean,
         null: false, method: :active_subscription?
   field :has_payment_method, Boolean, null: false, method: :payment_method?
+  field :payment_method, Types::StripePaymentMethod, null: true
 
   field :available_memberships, [Types::Membership], null: false
   def available_memberships

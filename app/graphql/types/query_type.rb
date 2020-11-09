@@ -76,20 +76,13 @@ class Types::QueryType < Types::BaseObject
     Grader.all
   end
 
-  field :stripe_checkout_session_id, String, null: false do
-    argument :price, String, required: false
-  end
-  def stripe_checkout_session_id(price: nil)
+  field :stripe_setup_intent_id, String, null: false
+  def stripe_setup_intent_id
     opts = {
       payment_method_types: %w[card],
-      mode: price.present? ? 'subscription' : 'setup',
       customer: viewer.stripe_customer_id,
-      success_url: "#{client_url}/account/payment_added",
-      cancel_url: "#{client_url}/account/add_payment",
     }
 
-    opts[:line_items] = [{ price: price, quantity: 1 }] if price.present?
-
-    Stripe::Checkout::Session.create(opts).id
+    Stripe::SetupIntent.create(opts).client_secret
   end
 end
