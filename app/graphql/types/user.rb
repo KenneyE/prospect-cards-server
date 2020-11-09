@@ -1,15 +1,21 @@
 class Types::User < Types::ActiveRecordObject
   field :email, String, null: false
   field :admin, Boolean, null: false
+
+  field :full_name, String, null: true
+  field :street1, String, null: true
+  field :street2, String, null: true
+  field :city, String, null: true
+  field :state, String, null: true
+  field :zip, String, null: true
+
   field :profile_picture_url, String, null: false
   field :unread_notices, [Types::Notice], null: false
   field :email_preferences, [Types::EmailPreference], null: false
   def email_preferences
     cats = EmailPreference.all.pluck(:category).uniq
     cats.map do |cat|
-      EmailPreference.find_or_create_by(
-        { category: cat, user_id: object.id },
-      )
+      EmailPreference.find_or_create_by({ category: cat, user_id: object.id })
     end
   end
 
@@ -50,6 +56,7 @@ class Types::User < Types::ActiveRecordObject
         Boolean,
         null: false, method: :active_subscription?
   field :has_payment_method, Boolean, null: false, method: :payment_method?
+  field :payment_method, Types::StripePaymentMethod, null: true
 
   field :available_memberships, [Types::Membership], null: false
   def available_memberships

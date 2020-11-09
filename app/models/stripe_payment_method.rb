@@ -17,6 +17,10 @@ class StripePaymentMethod < StripeModel
     {
       token: payment_method.id,
       customer: payment_method.customer,
+      brand: payment_method.card.brand,
+      exp_month: payment_method.card.exp_month,
+      exp_year: payment_method.card.exp_year,
+      last4: payment_method.card.last4,
     }
   end
 end

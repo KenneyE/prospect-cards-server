@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_20_035707) do
+ActiveRecord::Schema.define(version: 2020_11_08_214555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,6 +198,10 @@ ActiveRecord::Schema.define(version: 2020_10_20_035707) do
     t.text "customer", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "brand"
+    t.integer "exp_month"
+    t.integer "exp_year"
+    t.text "last4"
     t.index ["token"], name: "index_stripe_payment_methods_on_token"
   end
 
@@ -241,6 +245,12 @@ ActiveRecord::Schema.define(version: 2020_10_20_035707) do
     t.text "stripe_account_id"
     t.text "stripe_customer_id"
     t.boolean "admin", default: false, null: false
+    t.text "full_name"
+    t.text "street1"
+    t.text "street2"
+    t.text "city"
+    t.text "state"
+    t.text "zip"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

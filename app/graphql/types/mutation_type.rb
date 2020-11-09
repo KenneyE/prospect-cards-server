@@ -6,9 +6,12 @@ class Types::MutationType < Types::BaseObject
   field :temp_confirm_offer, mutation: Mutations::TempConfirmOffer
   field :accept_offer, mutation: Mutations::AcceptOffer
 
+  field :sync_payment, mutation: Mutations::SyncPayment
+
   field :mark_notices_read, mutation: Mutations::MarkNoticesRead
   field :track_interest, mutation: Mutations::TrackInterest
   field :save_profile_picture, mutation: Mutations::SaveProfilePicture
+  field :save_profile, mutation: Mutations::SaveProfile
   field :save_email_preferences, mutation: Mutations::SaveEmailPreferences
   field :forgot_password, mutation: Mutations::ForgotPassword
 
