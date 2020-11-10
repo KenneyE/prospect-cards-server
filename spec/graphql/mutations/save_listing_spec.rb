@@ -16,8 +16,8 @@ RSpec.describe Mutations::SaveListing, type: :graphql do
 
   let(:mutation) do
     '
-      mutation saveListing($listing: ListingInput!, $player: PlayerInput!) {
-        saveListing(listing: $listing, player: $player) {
+      mutation saveListing($listing: ListingInput!) {
+        saveListing(listing: $listing) {
           viewer {
             id
             availableListings: listings(status: available) {

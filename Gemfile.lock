@@ -87,6 +87,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    acts-as-taggable-on (6.5.0)
+      activerecord (>= 5.0, < 6.1)
     acts_as_list (1.0.2)
       activerecord (>= 4.2)
     addressable (2.7.0)
@@ -349,6 +351,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on (~> 6.0)
   acts_as_list
   airbrake
   apollo_upload_server (= 2.0.1)

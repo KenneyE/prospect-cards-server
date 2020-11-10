@@ -42,18 +42,19 @@ class Types::QueryType < Types::BaseObject
     Category.all
   end
 
-  field :players, [Types::Player], null: false do
+  field :tags, [Types::Tag], null: false do
+    argument :context, Enums::TagTypesEnum, required: true
     argument :name, String, required: false
   end
-  def players(name: nil)
-    p = Player.all
-    unless name.nil?
-      p = p.where('LOWER(name) LIKE :name', name: "%#{name.downcase}%")
-    end
+  def tags(context:, name: '')
+    t =
+      ActsAsTaggableOn::Tag.left_joins(:taggings).where(
+        taggings: { context: context },
+      ).where('LOWER(name) LIKE :name', name: "%#{name.downcase}%").group(
+        'tags.id',
+      ).order('COUNT(taggings.id) DESC')
 
-    p.limit(5).joins(:listings).group('players.id').order(
-      'COUNT(players.id) DESC',
-    )
+    t.limit(5).as_json(only: [:id, :name])
   end
 
   field :product_types, [Types::ProductType], null: false
@@ -79,8 +80,7 @@ class Types::QueryType < Types::BaseObject
   field :stripe_setup_intent_id, String, null: false
   def stripe_setup_intent_id
     opts = {
-      payment_method_types: %w[card],
-      customer: viewer.stripe_customer_id,
+      payment_method_types: %w[card], customer: viewer.stripe_customer_id
     }
 
     Stripe::SetupIntent.create(opts).client_secret
