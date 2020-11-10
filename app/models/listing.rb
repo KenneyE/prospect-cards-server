@@ -1,8 +1,17 @@
 class Listing < ApplicationRecord
-  searchkick
-  scope :search_import, -> { available }
+  TAG_TYPES = [
+    :categories,
+    :product_types,
+    :manufacturers,
+    :set_types,
+    :players,
+    :graders,
+  ].freeze
 
   has_paper_trail
+  searchkick
+  scope :search_import, -> { includes(*TAG_TYPES) }
+  acts_as_taggable_on TAG_TYPES
 
   has_many :images,
            -> { order(position: :asc) },
@@ -11,11 +20,7 @@ class Listing < ApplicationRecord
   has_many :listing_reports, dependent: :destroy
 
   belongs_to :user
-  belongs_to :product_type
-  belongs_to :manufacturer
-  belongs_to :set_type
   belongs_to :grader, optional: true
-  belongs_to :category
   belongs_to :player
 
   validates :title, :description, :price, presence: true
@@ -23,7 +28,7 @@ class Listing < ApplicationRecord
 
   enum status: %i[available pending_sale sold disabled]
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
   def search_data
     {
       id: id,
@@ -35,14 +40,20 @@ class Listing < ApplicationRecord
       price: price,
       status: status,
       user: { id: user_id },
-      player: { name: player.name },
-      category: { name: category.name },
-      productType: { name: product_type.name },
-      manufacturer: { name: manufacturer.name },
-      setType: { name: set_type.name },
-      grader: { name: grader.name },
+    }.merge(tag_hash)
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def tag_hash
+    {
+      player: player_list,
+      category: category_list,
+      productType: product_type_list,
+      manufacturer: manufacturer_list,
+      setType: set_type_list,
+      grader: grader_list,
     }
-  end # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  end
 
   def image_urls
     images.map do |image|
