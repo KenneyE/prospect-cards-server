@@ -1,12 +1,12 @@
 class Mutations::SaveListing < Mutations::BaseMutation
   argument :listing, Inputs::ListingInput, required: true
-  argument :player, Inputs::PlayerInput, required: true
 
   field :viewer, Types::User, null: false
 
-  def resolve(listing:, player:)
+  def resolve(listing:)
     require_confirmation!
-    l = _save_listing(listing, player)
+
+    l = _save_listing(listing)
     raise_errors(l)
 
     _save_images(l, listing[:images])
@@ -16,15 +16,22 @@ class Mutations::SaveListing < Mutations::BaseMutation
 
   private
 
-  def _save_listing(listing, player)
-    p = Player.find_or_create_by(name: player[:name].titleize)
+  def _save_listing(listing)
     h = listing.to_h
     h[:price] = (h[:price] * 100).floor
 
     l = Listing.find_or_initialize_by(id: listing[:id])
+
+    l.category_list = listing[:category]
+    l.product_type_list = listing[:product_type]
+    l.manufacturer_list = listing[:manufacturer]
+    l.set_type_list = listing[:set_type]
+    l.player_list = listing[:player]
+    l.grader_list = listing[:grader]
+
     l.update(
-      h.except(:images).merge(
-        user_id: current_user.id, player: p,
+      h.except(:images, *Listing::TAG_TYPES).merge(
+        user_id: current_user.id,
       ),
     )
     l

@@ -1,11 +1,11 @@
 class Listing < ApplicationRecord
   TAG_TYPES = [
-    :categories,
-    :product_types,
-    :manufacturers,
-    :set_types,
-    :players,
-    :graders,
+    :category,
+    :product_type,
+    :manufacturer,
+    :set_type,
+    :player,
+    :grader,
   ].freeze
 
   has_paper_trail
@@ -20,13 +20,15 @@ class Listing < ApplicationRecord
   has_many :listing_reports, dependent: :destroy
 
   belongs_to :user
-  belongs_to :grader, optional: true
-  belongs_to :player
 
   validates :title, :description, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
 
   enum status: %i[available pending_sale sold disabled]
+
+  def player
+    player_list.first
+  end
 
   # rubocop:disable Metrics/MethodLength
   def search_data
@@ -44,17 +46,6 @@ class Listing < ApplicationRecord
   end
   # rubocop:enable Metrics/MethodLength
 
-  def tag_hash
-    {
-      player: player_list,
-      category: category_list,
-      productType: product_type_list,
-      manufacturer: manufacturer_list,
-      setType: set_type_list,
-      grader: grader_list,
-    }
-  end
-
   def image_urls
     images.map do |image|
       next unless image.image.attached?
@@ -68,5 +59,18 @@ class Listing < ApplicationRecord
 
   def should_index?
     available?
+  end
+
+  private
+
+  def tag_hash
+    {
+      player: player_list,
+      category: category_list,
+      productType: product_type_list,
+      manufacturer: manufacturer_list,
+      setType: set_type_list,
+      grader: grader_list,
+    }
   end
 end

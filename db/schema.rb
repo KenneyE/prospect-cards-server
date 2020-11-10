@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_09_163349) do
+ActiveRecord::Schema.define(version: 2020_11_10_050236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,20 +99,8 @@ ActiveRecord::Schema.define(version: 2020_11_09_163349) do
     t.integer "price", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "player_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "product_type_id", null: false
-    t.bigint "manufacturer_id", null: false
-    t.bigint "set_type_id", null: false
     t.boolean "rookie", default: false, null: false
-    t.bigint "grader_id"
     t.integer "status", default: 0, null: false
-    t.index ["category_id"], name: "index_listings_on_category_id"
-    t.index ["grader_id"], name: "index_listings_on_grader_id"
-    t.index ["manufacturer_id"], name: "index_listings_on_manufacturer_id"
-    t.index ["player_id"], name: "index_listings_on_player_id"
-    t.index ["product_type_id"], name: "index_listings_on_product_type_id"
-    t.index ["set_type_id"], name: "index_listings_on_set_type_id"
     t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
@@ -310,12 +298,6 @@ ActiveRecord::Schema.define(version: 2020_11_09_163349) do
   add_foreign_key "listing_images", "listings"
   add_foreign_key "listing_reports", "listings"
   add_foreign_key "listing_reports", "users"
-  add_foreign_key "listings", "categories"
-  add_foreign_key "listings", "graders"
-  add_foreign_key "listings", "manufacturers"
-  add_foreign_key "listings", "players"
-  add_foreign_key "listings", "product_types"
-  add_foreign_key "listings", "set_types"
   add_foreign_key "listings", "users"
   add_foreign_key "notices", "users"
   add_foreign_key "offers", "listings"

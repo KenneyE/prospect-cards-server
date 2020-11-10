@@ -5,7 +5,7 @@ class Types::Listing < Types::ActiveRecordObject
   field :status, Enums::ListingStatusEnum, null: false
   field :images, [Types::ListingImage], null: false
 
-  field :player, Types::Player, null: false
+  field :player, String, null: false
   field :offers, [Types::Offer], null: false
 
   field :reports, [Types::ListingReport], null: false
