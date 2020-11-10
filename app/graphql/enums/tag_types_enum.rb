@@ -4,6 +4,6 @@ class Enums::TagTypesEnum < Enums::BaseEnum
   value('category', 'category')
   value('product_type', 'product_type')
   value('set_type', 'set_type')
-  value('manufacturer', 'Manufaturer')
+  value('manufacturer', 'manufacturer')
   value('grader', 'grader')
 end
