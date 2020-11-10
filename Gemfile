@@ -31,6 +31,7 @@ gem 'nilify_blanks'
 gem 'paper_trail'
 gem 'acts_as_list'
 gem 'acts-as-taggable-on', '~> 6.0'
+gem 'acts_as_favoritor'
 gem 'sidekiq'
 gem 'memoist'
 
