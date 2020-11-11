@@ -37,6 +37,14 @@ class Types::QueryType < Types::BaseObject
     Listing.find(id)
   end
 
+
+  field :listings, [Types::Listing], null: false do
+    argument :listing_ids, [Integer], required: true
+  end
+  def listings(listing_ids:)
+    Listing.where(id: listing_ids).limit(50)
+  end
+
   field :categories, [Types::Category], null: false
   def categories
     Category.all
