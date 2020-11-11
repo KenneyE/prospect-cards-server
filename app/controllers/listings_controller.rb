@@ -21,7 +21,7 @@ class ListingsController < ApplicationController
               scope_results: lambda do |r|
                 user_signed_in? ? r.where.not(user_id: current_user.id) : r
               end,
-            ).results.map(&:id).as_json,
+            ).results.as_json(only: :id),
         },
       }
     else
