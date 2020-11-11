@@ -21,11 +21,7 @@ class ListingsController < ApplicationController
               scope_results: lambda do |r|
                 user_signed_in? ? r.where.not(user_id: current_user.id) : r
               end,
-            ).results.map do |l|
-              l.search_data.merge(
-                isFavorited: user_signed_in? && l.favorited_by?(current_user),
-              )
-            end.as_json,
+            ).results.map(&:id).as_json,
         },
       }
     else
