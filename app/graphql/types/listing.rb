@@ -10,7 +10,9 @@ class Types::Listing < Types::ActiveRecordObject
   field :is_favorited, Boolean, null: false do
     argument :user_id, Integer, required: false
   end
-  def is_favorited(user_id: current_user.id)
+  def is_favorited(user_id: current_user&.id)
+    return false if user_id.nil?
+
     object.favorited_by?(User.find(user_id))
   end
 
