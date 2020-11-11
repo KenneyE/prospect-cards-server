@@ -2,7 +2,7 @@ class User < ApplicationRecord
   include(Imgix::Rails::UrlHelper)
 
   searchkick
-
+  acts_as_favoritor
   has_paper_trail
 
   devise :database_authenticatable,

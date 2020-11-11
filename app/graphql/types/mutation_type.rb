@@ -10,6 +10,7 @@ class Types::MutationType < Types::BaseObject
 
   field :mark_notices_read, mutation: Mutations::MarkNoticesRead
   field :track_interest, mutation: Mutations::TrackInterest
+  field :toggle_favorite, mutation: Mutations::ToggleFavorite
   field :save_profile_picture, mutation: Mutations::SaveProfilePicture
   field :save_profile, mutation: Mutations::SaveProfile
   field :save_email_preferences, mutation: Mutations::SaveEmailPreferences

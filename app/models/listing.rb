@@ -12,6 +12,7 @@ class Listing < ApplicationRecord
   searchkick
   scope :search_import, -> { includes(*TAG_TYPES) }
   acts_as_taggable_on TAG_TYPES
+  acts_as_favoritable
 
   has_many :images,
            -> { order(position: :asc) },
