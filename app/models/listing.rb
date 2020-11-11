@@ -12,6 +12,7 @@ class Listing < ApplicationRecord
   searchkick
   scope :search_import, -> { includes(*TAG_TYPES) }
   acts_as_taggable_on TAG_TYPES
+  acts_as_favoritable
 
   has_many :images,
            -> { order(position: :asc) },
@@ -65,12 +66,12 @@ class Listing < ApplicationRecord
 
   def tag_hash
     {
-      player: player_list,
-      category: category_list,
-      productType: product_type_list,
-      manufacturer: manufacturer_list,
-      setType: set_type_list,
-      grader: grader_list,
+      player: player_list.first,
+      category: category_list.first,
+      productType: product_type_list.first,
+      manufacturer: manufacturer_list.first,
+      setType: set_type_list.first,
+      grader: grader_list.first,
     }
   end
 end

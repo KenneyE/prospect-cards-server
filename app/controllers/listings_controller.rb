@@ -1,6 +1,7 @@
 class ListingsController < ApplicationController
   include HTTParty
-  URI_BASE = Rails.env.production? ? ENV['ELASTICSEARCH_URL'] : 'http://localhost:9200'
+  URI_BASE =
+    Rails.env.production? ? ENV['ELASTICSEARCH_URL'] : 'http://localhost:9200'
 
   def _msearch
     pref = JSON.parse(request.raw_post.split("\n")[0])
@@ -20,7 +21,7 @@ class ListingsController < ApplicationController
               scope_results: lambda do |r|
                 user_signed_in? ? r.where.not(user_id: current_user.id) : r
               end,
-            ).results.map(&:search_data).as_json,
+            ).results.as_json(only: :id),
         },
       }
     else
@@ -28,9 +29,7 @@ class ListingsController < ApplicationController
         HTTParty.post(
           "#{URI_BASE}/listings_#{Rails.env}/_msearch",
           body: request.raw_post,
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
         )
 
       resp = r.response.body
