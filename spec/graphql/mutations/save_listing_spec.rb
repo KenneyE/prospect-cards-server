@@ -3,46 +3,48 @@ require 'rails_helper'
 RSpec.describe Mutations::SaveListing, type: :graphql do
   let(:user) { create(:user) }
   let(:listing_input) do
-    attributes_for(:listing).merge(
       {
-        categoryId: create(:category).id,
-        productTypeId: create(:product_type).id,
-        manufacturerId: create(:manufacturer).id,
-        setTypeId: create(:set_type).id,
+        title: 'Listing Title',
+        description: 'Listing Desc',
+        player: 'Big Kahuna',
+        category: 'Baseball',
+        productType: 'Box',
+        manufacturer: 'Panini',
+        setType: 'Something',
+        price: 1_234_5,
         images: [],
-      },
-    )
+      }
   end
 
   let(:mutation) do
     '
-      mutation saveListing($listing: ListingInput!) {
-        saveListing(listing: $listing) {
-          viewer {
-            id
-            availableListings: listings(status: available) {
-              ...listing
+        mutation saveListing($listing: ListingInput!) {
+          saveListing(listing: $listing) {
+            viewer {
+              id
+              availableListings: listings(status: available) {
+                ...listing
+              }
             }
+            message
           }
-          message
         }
-      }
-      fragment listing on Listing {
-        title
-        description
-        price
-        images {
-          id
-          url
-        }
-        player {
-          name
-        }
-        offers {
-          id
+        fragment listing on Listing {
+          title
+          description
           price
+          status
+          player
+          isFavorited
+          images {
+            id
+            url
+          }
+          offers {
+            id
+            price
+          }
         }
-      }
     '
   end
   let(:expected) do
@@ -55,9 +57,11 @@ RSpec.describe Mutations::SaveListing, type: :graphql do
               description: 'Listing Desc',
               images: [],
               offers: [],
-              player: { name: 'Big Kahuna' },
+              player: 'Big Kahuna',
               price: 1_234_500,
               title: 'Listing Title',
+              isFavorited: false,
+              status: 'available',
             },
           ],
         },
@@ -65,16 +69,9 @@ RSpec.describe Mutations::SaveListing, type: :graphql do
       },
     }
   end
-  let(:variables) { { listing: listing_input, player: { name: 'Big Kahuna' } } }
+  let(:variables) { { listing: listing_input } }
 
   describe '#resolve' do
     it { expect_query_result(mutation, expected, variables: variables) }
-
-    it 'creates new player' do
-      expect { execute_query(mutation, variables: variables) }.to change(
-        Player,
-        :count,
-      ).by(1)
-    end
   end
 end

@@ -47,11 +47,6 @@ class Types::QueryType < Types::BaseObject
     end
   end
 
-  field :categories, [Types::Category], null: false
-  def categories
-    Category.all
-  end
-
   field :tags, [Types::Tag], null: false do
     argument :context, Enums::TagTypesEnum, required: true
     argument :name, String, required: false
@@ -67,26 +62,6 @@ class Types::QueryType < Types::BaseObject
       ).order('COUNT(taggings.id) DESC').having('COUNT(taggings.id) > 4')
 
     t.limit(5).as_json(only: %i[id name])
-  end
-
-  field :product_types, [Types::ProductType], null: false
-  def product_types
-    ProductType.all
-  end
-
-  field :manufacturers, [Types::Manufacturer], null: false
-  def manufacturers
-    Manufacturer.all
-  end
-
-  field :set_types, [Types::SetType], null: false
-  def set_types
-    SetType.all
-  end
-
-  field :graders, [Types::Grader], null: false
-  def graders
-    Grader.all
   end
 
   field :stripe_setup_intent_id, String, null: false
