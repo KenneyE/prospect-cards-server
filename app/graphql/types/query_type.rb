@@ -57,12 +57,14 @@ class Types::QueryType < Types::BaseObject
     argument :name, String, required: false
   end
   def tags(context:, name: '')
+    #  Return tags of this context that match the name. Order by most common
+    # and only include tags with at least 5 occurences
     t =
       ActsAsTaggableOn::Tag.left_joins(:taggings).where(
         taggings: { context: context },
       ).where('LOWER(name) LIKE :name', name: "%#{name.downcase}%").group(
         'tags.id',
-      ).order('COUNT(taggings.id) DESC')
+      ).order('COUNT(taggings.id) DESC').having('COUNT(taggings.id) > 4')
 
     t.limit(5).as_json(only: %i[id name])
   end

@@ -66,7 +66,7 @@ class Listing < ApplicationRecord
 
   def tag_hash
     {
-      player: player_list.first,
+      player: player,
       category: category_list.first,
       productType: product_type_list.first,
       manufacturer: manufacturer_list.first,
