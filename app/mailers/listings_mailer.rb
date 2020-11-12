@@ -12,6 +12,6 @@ class ListingsMailer < ApplicationMailer
   def buy_now(offer_id)
     @offer = Offer.find(offer_id)
 
-    mail(to: @offer.listing.user.email, subject: "Your listing was purchased!")
+    mail(to: @offer.listing.user.email, subject: 'Your listing was purchased!')
   end
 end

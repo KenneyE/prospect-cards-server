@@ -21,11 +21,13 @@ class Mutations::SaveOffer < Mutations::BaseMutation
 
     if _buy_now?
       offer = AcceptOfferService.new(new_offer).accept
-      _notify_seller_of_buy_now(new_offer) if offer.valid?
+      raise_errors(offer)
+
+      _notify_seller_of_buy_now(new_offer)
+      _notify_buyer(new_offer)
     else
       _notify_seller_of_offer(new_offer)
     end
-
 
     { payment_intent_id: payment_intent.client_secret, offer_id: new_offer.id }
   end
@@ -37,8 +39,7 @@ class Mutations::SaveOffer < Mutations::BaseMutation
   end
 
   def _create_intent
-    payment_intent =
-      Stripe::PaymentIntent.create(_payment_intent_opts)
+    payment_intent = Stripe::PaymentIntent.create(_payment_intent_opts)
     StripePaymentIntent.sync(payment_intent)
 
     payment_intent
@@ -58,11 +59,15 @@ class Mutations::SaveOffer < Mutations::BaseMutation
       text: "Your listing was purchased for  #{new_offer.formatted_price}",
       path: "/listings/#{new_offer.listing_id}",
     )
-    ListingsMailer.with(subscriber_id: new_offer.seller).offer_received(
-      new_offer.id,
-      ).deliver_later
+    ListingsMailer.with(subscriber_id: new_offer.seller).buy_now(new_offer.id)
+      .deliver_later
   end
 
+  def _notify_buyer(new_offer)
+    OffersMailer.with(subscriber_id: offer.user_id).buy_now_confirmation(
+      offer.id,
+    ).deliver_later
+  end
 
   def _notify_seller_of_offer(new_offer)
     new_offer.seller.notices.create(
