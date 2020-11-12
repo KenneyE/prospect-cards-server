@@ -37,12 +37,14 @@ class Types::QueryType < Types::BaseObject
     Listing.find(id)
   end
 
-
   field :listings, [Types::Listing], null: false do
     argument :listing_ids, [Integer], required: true
   end
   def listings(listing_ids:)
-    Listing.where(id: listing_ids).limit(50)
+    Listing.where(id: listing_ids).limit(50).sort_by do |l|
+      # Maintain the order based on provided IDs
+      listing_ids.index(l.id)
+    end
   end
 
   field :categories, [Types::Category], null: false
@@ -62,7 +64,7 @@ class Types::QueryType < Types::BaseObject
         'tags.id',
       ).order('COUNT(taggings.id) DESC')
 
-    t.limit(5).as_json(only: [:id, :name])
+    t.limit(5).as_json(only: %i[id name])
   end
 
   field :product_types, [Types::ProductType], null: false
