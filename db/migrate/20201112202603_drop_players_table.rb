@@ -1,7 +1,6 @@
 class DropPlayersTable < ActiveRecord::Migration[6.1]
   def change
     drop_table :categories
-    drop_table :favorite_listings
     drop_table :graders
     drop_table :manufacturers
     drop_table :player_interests
