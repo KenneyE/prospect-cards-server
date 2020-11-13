@@ -36,7 +36,7 @@ RSpec.describe Mutations::AcceptOffer, type: :graphql do
       it 'raises error' do
         expect_error(
           mutation,
-          'Cannot accept already pending offer',
+          'Listing is unavailable and cannot be accepted.',
           variables: variables,
         )
       end

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe Mutations::TempConfirmOffer, type: :graphql do
+RSpec.describe Mutations::ConfirmOffer, type: :graphql do
   let(:user) { create(:user) }
   let(:offer) { create(:offer, user: user) }
 
   let(:mutation) do
     '
-      mutation tempConfirmOffer($offerId: Int!) {
+      mutation confirmOffer($offerId: Int!) {
         tempConfirmOffer(offerId: $offerId) {
           viewer {
             id
@@ -41,7 +41,7 @@ RSpec.describe Mutations::TempConfirmOffer, type: :graphql do
 
     it 'sets offer as temp confirmed' do
       execute_query(mutation, variables: variables)
-      expect(offer.reload).to be_temp_confirmed
+      expect(offer.reload).to be_confirmed
     end
   end
 end

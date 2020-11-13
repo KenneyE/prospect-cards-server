@@ -1,2 +1,0 @@
-class SetType < ApplicationRecord
-end

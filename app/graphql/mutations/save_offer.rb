@@ -11,56 +11,47 @@ class Mutations::SaveOffer < Mutations::BaseMutation
       return { payment_intent_id: nil, offer_id: nil }
     end
 
-    payment_intent = _create_intent(offer)
-    new_offer = _create_offer(offer, payment_intent)
+    @listing = Listing.find(offer[:listing_id])
+    @offer_input = offer
+
+    payment_intent = _create_intent
+    new_offer = _create_offer(payment_intent)
 
     raise_errors(new_offer)
-
-    _notify_seller(new_offer)
 
     { payment_intent_id: payment_intent.client_secret, offer_id: new_offer.id }
   end
 
   private
 
-  def _create_intent(offer)
-    listing = Listing.find(offer[:listing_id])
-    price = (offer[:price] * 100).floor
-    payment_intent =
-      Stripe::PaymentIntent.create(_payment_intent_opts(listing, price))
+  def _create_intent
+    payment_intent = Stripe::PaymentIntent.create(_payment_intent_opts)
     StripePaymentIntent.sync(payment_intent)
 
     payment_intent
   end
 
-  def _create_offer(offer, payment_intent)
+  def _create_offer(payment_intent)
     current_user.offers.create(
-      price: offer[:price] * 100,
-      listing_id: offer[:listing_id],
+      price: _offer_price,
+      listing_id: @listing.id,
       payment_intent_id: payment_intent.id,
     )
   end
 
-  def _notify_seller(new_offer)
-    new_offer.seller.notices.create(
-      title: "New Offer for #{new_offer.listing.title}!",
-      text: "Someone offered #{new_offer.formatted_price} for your listing",
-      path: "/listings/#{new_offer.listing_id}",
-    )
-    ListingsMailer.with(subscriber_id: new_offer.seller).offer_received(
-      new_offer.id,
-    ).deliver_later
-  end
-
-  def _payment_intent_opts(listing, price)
+  def _payment_intent_opts
     {
       customer: current_user.stripe_customer_id,
       payment_method: current_user.payment_method.token,
-      amount: price,
+      amount: _offer_price,
       currency: 'usd',
       capture_method: 'manual',
-      application_fee_amount: (price * 0.05).to_i,
-      transfer_data: { destination: listing.user.stripe_account_id },
+      application_fee_amount: (_offer_price * 0.05).to_i,
+      transfer_data: { destination: @listing.user.stripe_account_id },
     }
+  end
+
+  def _offer_price
+    @offer_input[:price].floor
   end
 end

@@ -22,8 +22,6 @@ class User < ApplicationRecord
   has_many :incoming_offers, through: :listings, source: :offers
   has_many :notices, dependent: :destroy
 
-  has_many :player_interests, dependent: :destroy
-  has_many :players, through: :player_interests
   has_many :offers, dependent: :destroy
 
   has_many :email_preferences, dependent: :destroy
@@ -81,9 +79,6 @@ class User < ApplicationRecord
   def search_data
     {
       id: id,
-      players: {
-        name: players.pluck(:name),
-      },
     }
   end
 

@@ -1,0 +1,6 @@
+<h1>Your item was purchased with "Buy Now"!</h1>
+<p>
+  Listing: <%= @offer.listing.title %>
+  <br />
+  Amount: <%= Money.new(@offer.price).format %>
+</p>

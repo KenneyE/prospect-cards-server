@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_10_160632) do
+ActiveRecord::Schema.define(version: 2020_11_13_033927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,12 +37,6 @@ ActiveRecord::Schema.define(version: 2020_11_10_160632) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "categories", force: :cascade do |t|
-    t.text "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "email_preferences", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "category", null: false
@@ -50,15 +44,6 @@ ActiveRecord::Schema.define(version: 2020_11_10_160632) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_email_preferences_on_user_id"
-  end
-
-  create_table "favorite_listings", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "listing_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["listing_id"], name: "index_favorite_listings_on_listing_id"
-    t.index ["user_id"], name: "index_favorite_listings_on_user_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -76,12 +61,6 @@ ActiveRecord::Schema.define(version: 2020_11_10_160632) do
     t.index ["favoritor_id", "favoritor_type"], name: "fk_favorites"
     t.index ["favoritor_type", "favoritor_id"], name: "index_favorites_on_favoritor_type_and_favoritor_id"
     t.index ["scope"], name: "index_favorites_on_scope"
-  end
-
-  create_table "graders", force: :cascade do |t|
-    t.text "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "jwt_deny_list", force: :cascade do |t|
@@ -123,12 +102,6 @@ ActiveRecord::Schema.define(version: 2020_11_10_160632) do
     t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
-  create_table "manufacturers", force: :cascade do |t|
-    t.text "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "notices", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "title", null: false
@@ -147,36 +120,9 @@ ActiveRecord::Schema.define(version: 2020_11_10_160632) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "payment_intent_id", null: false
-    t.boolean "temp_confirmed", default: false, null: false
+    t.boolean "confirmed", default: false, null: false
     t.index ["listing_id"], name: "index_offers_on_listing_id"
     t.index ["user_id"], name: "index_offers_on_user_id"
-  end
-
-  create_table "player_interests", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "player_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["player_id"], name: "index_player_interests_on_player_id"
-    t.index ["user_id"], name: "index_player_interests_on_user_id"
-  end
-
-  create_table "players", force: :cascade do |t|
-    t.text "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "product_types", force: :cascade do |t|
-    t.text "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "set_types", force: :cascade do |t|
-    t.text "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "stripe_accounts", force: :cascade do |t|
@@ -312,8 +258,6 @@ ActiveRecord::Schema.define(version: 2020_11_10_160632) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "email_preferences", "users"
-  add_foreign_key "favorite_listings", "listings"
-  add_foreign_key "favorite_listings", "users"
   add_foreign_key "listing_images", "listings"
   add_foreign_key "listing_reports", "listings"
   add_foreign_key "listing_reports", "users"
@@ -321,7 +265,5 @@ ActiveRecord::Schema.define(version: 2020_11_10_160632) do
   add_foreign_key "notices", "users"
   add_foreign_key "offers", "listings"
   add_foreign_key "offers", "users"
-  add_foreign_key "player_interests", "players"
-  add_foreign_key "player_interests", "users"
   add_foreign_key "taggings", "tags"
 end

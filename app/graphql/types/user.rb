@@ -8,6 +8,7 @@ class Types::User < Types::ActiveRecordObject
   field :city, String, null: true
   field :state, String, null: true
   field :zip, String, null: true
+  field :confirmed, Boolean, null: false, method: :confirmed?
 
   field :profile_picture_url, String, null: false
   field :unread_notices, [Types::Notice], null: false
