@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_202603) do
+ActiveRecord::Schema.define(version: 2020_11_13_033927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_202603) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "payment_intent_id", null: false
-    t.boolean "temp_confirmed", default: false, null: false
+    t.boolean "confirmed", default: false, null: false
     t.index ["listing_id"], name: "index_offers_on_listing_id"
     t.index ["user_id"], name: "index_offers_on_user_id"
   end

@@ -3,7 +3,7 @@ class Types::MutationType < Types::BaseObject
   field :report_listing, mutation: Mutations::ReportListing
 
   field :save_offer, mutation: Mutations::SaveOffer
-  field :temp_confirm_offer, mutation: Mutations::TempConfirmOffer
+  field :confirm_offer, mutation: Mutations::ConfirmOffer
   field :accept_offer, mutation: Mutations::AcceptOffer
 
   field :sync_payment, mutation: Mutations::SyncPayment
