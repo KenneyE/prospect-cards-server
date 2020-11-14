@@ -52,6 +52,6 @@ class Mutations::SaveOffer < Mutations::BaseMutation
   end
 
   def _offer_price
-    @offer_input[:price].floor
+    @offer_input[:price].floor * 100
   end
 end

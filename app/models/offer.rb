@@ -9,7 +9,7 @@ class Offer < ApplicationRecord
   # Minimum bid of $1
   validates :price,
             numericality: {
-              greater_than_or_equal_to: 500, message: 'must be at least $5.00'
+              greater_than_or_equal_to: 500
             }
 
   scope :unexpired, -> { where('offers.created_at >= ?', 24.hours.ago) }
