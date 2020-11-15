@@ -45,20 +45,43 @@ class User < ApplicationRecord
   has_many :stripe_payment_methods, through: :stripe_customer
   has_many :stripe_payment_intents, through: :stripe_customer
 
+  validates :username, presence: true, uniqueness: { case_sensitive: false }
+  validates :username, format: { with: /^[a-zA-Z0-9_+.]*$/, multiline: true }
+
+  # https://github.com/heartcombo/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address
+  attr_writer :login
+
   # Override devise mailer to use ActionMailer
   # https://github.com/plataformatec/devise#activejob-integration
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    conditions[:email]&.downcase!
+
+    if (login = conditions.delete(:login))
+      where(conditions.to_h).find_by(
+        [
+          'lower(username) = :value OR lower(email) = :value',
+          { value: login.downcase },
+        ],
+      )
+    elsif conditions.key?(:username) || conditions.key?(:email)
+      find_by(conditions.to_h)
+    end
+  end
+
+  def login
+    @login || username || email
+  end
+
   def create_stripe_objects
     account = Stripe::Account.create(_stripe_account_opts)
     cust = Stripe::Customer.create({ email: email })
 
-    update(
-      stripe_account_id: account.id,
-      stripe_customer_id: cust.id,
-    )
+    update(stripe_account_id: account.id, stripe_customer_id: cust.id)
 
     StripeAccount.create(token: account.id)
     StripeCustomer.create(token: cust.id)
@@ -77,9 +100,7 @@ class User < ApplicationRecord
   end
 
   def search_data
-    {
-      id: id,
-    }
+    { id: id }
   end
 
   def profile_picture_url
