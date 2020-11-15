@@ -9,7 +9,15 @@ class Listing < ApplicationRecord
   ].freeze
 
   has_paper_trail
-  searchkick
+  searchkick merge_mappings: true,
+             mappings: {
+               properties: {
+                 player: { type: 'text' },
+                 title: { type: 'text' },
+                 description: { type: 'text' },
+               },
+             }
+
   scope :search_import, -> { includes(*TAG_TYPES) }
   acts_as_taggable_on TAG_TYPES
   acts_as_favoritable

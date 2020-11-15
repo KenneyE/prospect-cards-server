@@ -21,6 +21,7 @@ class ListingsController < ApplicationController
             ).results.as_json(only: :id),
         },
       }
+
     else
       r =
         HTTParty.post(
@@ -28,7 +29,7 @@ class ListingsController < ApplicationController
           body: request.raw_post,
           headers: { 'Content-Type': 'application/json' },
         )
-
+  
       resp = r.response.body
     end
     render(json: resp)
