@@ -9,9 +9,6 @@ class ListingsController < ApplicationController
 
     if pref['preference'] == 'SearchResult'
       listings = Listing.all
-      if current_user.present?
-        listings = listings.where.not(user_id: current_user.id)
-      end
 
       resp = {
         responses: {

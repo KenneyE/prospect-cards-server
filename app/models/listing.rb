@@ -1,11 +1,11 @@
 class Listing < ApplicationRecord
-  TAG_TYPES = [
-    :category,
-    :product_type,
-    :manufacturer,
-    :set_type,
-    :player,
-    :grader,
+  TAG_TYPES = %i[
+    category
+    product_type
+    manufacturer
+    set_type
+    player
+    grader
   ].freeze
 
   has_paper_trail
@@ -44,17 +44,13 @@ class Listing < ApplicationRecord
       status: status,
       user: { id: user_id },
     }.merge(tag_hash)
-  end
-  # rubocop:enable Metrics/MethodLength
+  end # rubocop:enable Metrics/MethodLength
 
   def image_urls
     images.map do |image|
       next unless image.image.attached?
 
-      {
-        url: variant_url(image.image.variant(resize_to_limit: [240, nil])),
-        position: image.position,
-      }
+      { url: image.url, position: image.position }
     end
   end
 

@@ -1,4 +1,6 @@
 class ListingImage < ApplicationRecord
+  include(Imgix::Rails::UrlHelper)
+
   has_one_attached :image
 
   belongs_to :listing
@@ -7,7 +9,8 @@ class ListingImage < ApplicationRecord
   after_commit :reindex_listing
 
   def url
-    variant_url(image.variant(resize_to_limit: [240, nil]))
+    # variant_url(image.variant(resize_to_limit: [240, nil]))
+    ix_image_url(image.key, height: 240, fm: 'webp')
   end
 
   private

@@ -86,7 +86,6 @@ class User < ApplicationRecord
     if profile_picture.attached?
       variant_url(profile_picture.variant(resize_to_limit: [200, nil]))
     else
-      # TODO: Don't use imgix for this.
       ix_image_url('Krispy Kards-logo-black.png', height: 200)
     end
   end
