@@ -37,3 +37,4 @@ en:
           attributes:
             price:
               greater_than_or_equal_to: 'must be at least $5.00'
+              above_listing_price: 'cannot be greater than asking price of listing'

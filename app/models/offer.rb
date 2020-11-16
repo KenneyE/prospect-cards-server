@@ -7,10 +7,8 @@ class Offer < ApplicationRecord
              inverse_of: :offer
 
   # Minimum bid of $1
-  validates :price,
-            numericality: {
-              greater_than_or_equal_to: 500
-            }
+  validates :price, numericality: { greater_than_or_equal_to: 500 }
+  validate :_price_not_above_listing
 
   scope :unexpired, -> { where('offers.created_at >= ?', 24.hours.ago) }
 
@@ -38,5 +36,13 @@ class Offer < ApplicationRecord
 
   def formatted_price
     Money.new(price).format
+  end
+
+  private
+
+  def _price_not_above_listing
+    return if price <= listing.price
+
+    errors.add(:price, :above_listing_price)
   end
 end
