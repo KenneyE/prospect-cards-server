@@ -12,7 +12,7 @@ class Listing < ApplicationRecord
   searchkick merge_mappings: true,
              mappings: {
                properties: {
-                 player: { type: 'text' },
+                 playerText: { type: 'text' },
                  title: { type: 'text' },
                  description: { type: 'text' },
                },
@@ -45,6 +45,7 @@ class Listing < ApplicationRecord
       id: id,
       title: title,
       description: description,
+      playerText: player,
       createdAt: created_at,
       rookie: rookie?,
       price: price,
