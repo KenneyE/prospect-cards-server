@@ -8,9 +8,15 @@ class ListingImage < ApplicationRecord
 
   after_commit :reindex_listing
 
-  def url
+  def fallback_url
     # variant_url(image.variant(resize_to_limit: [240, nil]))
-    ix_image_url(image.key, height: 240, fm: 'webp')
+    ix_image_url(image.key, height: 240, fm: 'png')
+  end
+
+  def urls
+    [
+      ix_image_url(image.key, height: 240, fm: 'webp')
+    ]
   end
 
   private

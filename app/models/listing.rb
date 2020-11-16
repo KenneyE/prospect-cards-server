@@ -45,14 +45,12 @@ class Listing < ApplicationRecord
       id: id,
       title: title,
       description: description,
-      images: image_urls,
       createdAt: created_at,
       rookie: rookie?,
       price: price,
-      status: status,
-      user: { id: user_id },
     }.merge(tag_hash)
-  end # rubocop:enable Metrics/MethodLength
+  end
+  # rubocop:enable Metrics/MethodLength
 
   def image_urls
     images.map do |image|
