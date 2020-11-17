@@ -5,7 +5,8 @@ class User < ApplicationRecord
   acts_as_favoritor
   has_paper_trail
 
-  devise :database_authenticatable,
+  devise :invitable,
+         :database_authenticatable,
          :registerable,
          :recoverable,
          :rememberable,
@@ -24,8 +25,6 @@ class User < ApplicationRecord
 
   has_many :offers, dependent: :destroy
   has_many :purchases, through: :offers
-  # has_many :purchased_listings,
-  #          through: :purchases, class_name: 'Listing', source: :listing
 
   has_many :email_preferences, dependent: :destroy
 

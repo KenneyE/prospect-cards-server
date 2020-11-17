@@ -24,6 +24,7 @@ gem 'apollo_upload_server', '2.0.1'
 gem 'cancancan'
 gem 'devise'
 gem 'devise-jwt'
+gem 'devise_invitable', '~> 2.0.0'
 gem 'graphql'
 gem 'graphql-guard'
 
