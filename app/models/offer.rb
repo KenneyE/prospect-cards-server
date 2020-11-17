@@ -6,6 +6,8 @@ class Offer < ApplicationRecord
              primary_key: :token,
              inverse_of: :offer
 
+  has_one :purchase, dependent: :destroy
+
   # Minimum bid of $1
   validates :price, numericality: { greater_than_or_equal_to: 500 }
   validate :_price_not_above_listing
@@ -31,7 +33,7 @@ class Offer < ApplicationRecord
   scope :open, -> { confirmed.unexpired }
 
   def seller
-    listing.user
+    listing.seller
   end
 
   def formatted_price

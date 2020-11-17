@@ -28,7 +28,8 @@ class Listing < ApplicationRecord
   has_many :offers, dependent: :destroy
   has_many :listing_reports, dependent: :destroy
 
-  belongs_to :user
+  belongs_to :seller,
+             class_name: 'User', foreign_key: :user_id, inverse_of: :listings
 
   validates :title, :description, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
@@ -50,8 +51,7 @@ class Listing < ApplicationRecord
       rookie: rookie?,
       price: price,
     }.merge(tag_hash)
-  end
-  # rubocop:enable Metrics/MethodLength
+  end # rubocop:enable Metrics/MethodLength
 
   def image_urls
     images.map do |image|

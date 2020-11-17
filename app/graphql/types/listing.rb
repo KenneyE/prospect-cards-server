@@ -8,6 +8,7 @@ class Types::Listing < Types::ActiveRecordObject
   field :player, String, null: false
   field :offers, [Types::Offer], null: false
 
+  field :seller, Types::User, null: false
   field :owned_by_user, Boolean, null: false
   def owned_by_user
     current_user.present? && object.user_id == current_user.id

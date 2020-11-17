@@ -47,7 +47,7 @@ class Mutations::SaveOffer < Mutations::BaseMutation
       currency: 'usd',
       capture_method: 'manual',
       application_fee_amount: (_offer_price * 0.05).to_i,
-      transfer_data: { destination: @listing.user.stripe_account_id },
+      transfer_data: { destination: @listing.seller.stripe_account_id },
     }
   end
 

@@ -23,6 +23,9 @@ class User < ApplicationRecord
   has_many :notices, dependent: :destroy
 
   has_many :offers, dependent: :destroy
+  has_many :purchases, through: :offers
+  # has_many :purchased_listings,
+  #          through: :purchases, class_name: 'Listing', source: :listing
 
   has_many :email_preferences, dependent: :destroy
 
@@ -111,6 +114,8 @@ class User < ApplicationRecord
   def unread_notices
     notices.unread.order(created_at: :desc)
   end
+
+  def orders; end
 
   private
 

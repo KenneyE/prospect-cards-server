@@ -1,5 +1,6 @@
 class Types::User < Types::ActiveRecordObject
   field :email, String, null: false
+  field :username, String, null: false
   field :admin, Boolean, null: false
 
   field :full_name, String, null: true
@@ -12,6 +13,7 @@ class Types::User < Types::ActiveRecordObject
 
   field :profile_picture_url, String, null: false
   field :unread_notices, [Types::Notice], null: false
+  field :purchases, [Types::Purchase], null: false
   field :email_preferences, [Types::EmailPreference], null: false
   def email_preferences
     cats = EmailPreference.all.pluck(:category).uniq

@@ -13,7 +13,10 @@ class AcceptOfferService
 
     intent = Stripe::PaymentIntent.capture(offer.payment_intent_id)
 
-    offer.listing.update(status: :sold) if intent.status == 'succeeded'
+    if intent.status == 'succeeded'
+      offer.listing.update(status: :sold)
+      Purchase.create(offer: offer, listing: listing)
+    end
     offer
   rescue ::Stripe::StripeError => e
     _handle_stripe_error(e)
