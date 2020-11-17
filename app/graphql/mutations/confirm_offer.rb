@@ -34,7 +34,7 @@ class Mutations::ConfirmOffer < Mutations::BaseMutation
       text: "Your listing was purchased for  #{new_offer.formatted_price}",
       path: "/listings/#{new_offer.listing_id}",
     )
-    ListingsMailer.with(subscriber_id: new_offer.seller).buy_now(new_offer.id)
+    ListingsMailer.with(subscriber_id: new_offer.seller.id).buy_now(new_offer.id)
       .deliver_later
   end
 
@@ -50,7 +50,7 @@ class Mutations::ConfirmOffer < Mutations::BaseMutation
       text: "Someone offered #{offer.formatted_price} for your listing",
       path: "/listings/#{offer.listing_id}",
       )
-    ListingsMailer.with(subscriber_id: offer.seller).offer_received(
+    ListingsMailer.with(subscriber_id: offer.seller.id).offer_received(
       offer.id,
       ).deliver_later
   end

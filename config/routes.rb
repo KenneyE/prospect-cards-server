@@ -2,7 +2,9 @@
 require('sidekiq/web')
 
 Rails.application.routes.draw do
-  mount Sidekiq::Web, at: '/sidekiq' if Rails.env.development?
+  authenticate :user, ->(a) { a.admin? } do
+    mount Sidekiq::Web, at: '/sidekiq'
+  end
 
   namespace :v1, defaults: { format: 'json' } do
     post '/', to: 'graphql#execute'
