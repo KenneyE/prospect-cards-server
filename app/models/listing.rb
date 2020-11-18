@@ -51,6 +51,7 @@ class Listing < ApplicationRecord
       createdAt: created_at,
       rookie: rookie?,
       price: price,
+      year: year,
     }.merge(tag_hash)
   end # rubocop:enable Metrics/MethodLength
 

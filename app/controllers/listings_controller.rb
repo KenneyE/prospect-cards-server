@@ -12,9 +12,9 @@ class ListingsController < ApplicationController
     results =
       listings.search(
         body: query,
-        scope_results: lambda do |r|
-          user_signed_in? ? r.where.not(user_id: current_user.id) : r
-        end,
+        # scope_results: lambda do |r|
+        #   user_signed_in? ? r.where.not(user_id: current_user.id) : r
+        # end,
       )
 
     resp = if pref['preference'] == 'SearchResult'

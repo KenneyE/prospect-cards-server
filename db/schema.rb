@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_17_172707) do
+ActiveRecord::Schema.define(version: 2020_11_18_052944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(version: 2020_11_17_172707) do
     t.datetime "created_at", null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "counter_offers", force: :cascade do |t|
+    t.bigint "offer_id", null: false
+    t.integer "amount", null: false
+    t.text "message"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["offer_id"], name: "index_counter_offers_on_offer_id"
+    t.index ["user_id"], name: "index_counter_offers_on_user_id"
   end
 
   create_table "email_preferences", force: :cascade do |t|
@@ -99,6 +110,7 @@ ActiveRecord::Schema.define(version: 2020_11_17_172707) do
     t.integer "status", default: 0, null: false
     t.text "favoritable_score"
     t.text "favoritable_total"
+    t.integer "year"
     t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
@@ -280,6 +292,8 @@ ActiveRecord::Schema.define(version: 2020_11_17_172707) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "counter_offers", "offers"
+  add_foreign_key "counter_offers", "users"
   add_foreign_key "email_preferences", "users"
   add_foreign_key "listing_images", "listings"
   add_foreign_key "listing_reports", "listings"

@@ -4,6 +4,7 @@ class Inputs::ListingInput < Types::BaseInputObject
   argument :description, String, required: true
   argument :price, Float, required: true
   argument :images, [ApolloUploadServer::Upload], required: true
+  argument :year, Integer, required: false
   argument :category, String, required: true
   argument :product_type, String, required: true
   argument :manufacturer, String, required: true

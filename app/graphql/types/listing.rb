@@ -4,6 +4,7 @@ class Types::Listing < Types::ActiveRecordObject
   field :price, Integer, null: false
   field :status, Enums::ListingStatusEnum, null: false
   field :images, [Types::ListingImage], null: false
+  field :year, Integer, null: true
 
   field :player, String, null: false
   field :offers, [Types::Offer], null: false
