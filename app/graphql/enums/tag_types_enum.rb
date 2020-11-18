@@ -6,4 +6,5 @@ class Enums::TagTypesEnum < Enums::BaseEnum
   value('set_type', 'set_type')
   value('manufacturer', 'manufacturer')
   value('grader', 'grader')
+  value('parallel', 'parallel')
 end

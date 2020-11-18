@@ -28,6 +28,7 @@ class Mutations::SaveListing < Mutations::BaseMutation
     l.set_type_list = listing[:set_type]
     l.player_list = listing[:player]
     l.grader_list = listing[:grader]
+    l.parallel_list = listing[:parallel]
 
     l.update(
       h.except(:images, *Listing::TAG_TYPES).merge(

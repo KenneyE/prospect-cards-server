@@ -6,6 +6,7 @@ class Listing < ApplicationRecord
     set_type
     player
     grader
+    parallel
   ].freeze
 
   has_paper_trail
@@ -75,6 +76,7 @@ class Listing < ApplicationRecord
       manufacturer: manufacturer_list.first,
       setType: set_type_list.first,
       grader: grader_list.first,
+      parallel: parallel_list.first,
     }
   end
 end

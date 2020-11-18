@@ -9,5 +9,6 @@ class Inputs::ListingInput < Types::BaseInputObject
   argument :manufacturer, String, required: true
   argument :set_type, String, required: true
   argument :grader, String, required: false
+  argument :parallel, String, required: false
   argument :player, String, required: false
 end
