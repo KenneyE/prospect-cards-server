@@ -5,7 +5,8 @@ class User < ApplicationRecord
   acts_as_favoritor
   has_paper_trail
 
-  devise :database_authenticatable,
+  devise :invitable,
+         :database_authenticatable,
          :registerable,
          :recoverable,
          :rememberable,
@@ -24,8 +25,6 @@ class User < ApplicationRecord
 
   has_many :offers, dependent: :destroy
   has_many :purchases, through: :offers
-  # has_many :purchased_listings,
-  #          through: :purchases, class_name: 'Listing', source: :listing
 
   has_many :email_preferences, dependent: :destroy
 
@@ -58,6 +57,12 @@ class User < ApplicationRecord
   # https://github.com/plataformatec/devise#activejob-integration
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  def self.send_invite!(email)
+    # Database requires a username, so use a placeholder. Will be overriden
+    # when user accepts invitation
+    User.invite!({ email: email, username: Base64.encode64(email) })
   end
 
   def self.find_for_database_authentication(warden_conditions)
@@ -116,6 +121,16 @@ class User < ApplicationRecord
   end
 
   def orders; end
+
+  def setup_new_user
+    send_confirmation_instructions
+    create_stripe_objects
+    notices.create(
+      title: 'Welcome to Prospect Cards!',
+      text: 'Ready to start selling? Click here to start getting paid!',
+      path: '/account/sell',
+    )
+  end
 
   private
 

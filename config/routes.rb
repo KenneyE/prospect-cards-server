@@ -17,6 +17,7 @@ Rails.application.routes.draw do
                sessions: 'users/sessions',
                registrations: 'users/registrations',
                confirmations: 'users/confirmations',
+               invitations: 'users/invitations',
              }
   post '/stripe_webhook', to: 'stripe_webhooks#event', as: :stripe_webhooks
   resources :listings, only: [],defaults: { format: 'json' } do

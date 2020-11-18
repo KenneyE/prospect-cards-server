@@ -1,5 +1,5 @@
-class Users::RegistrationsController < Devise::RegistrationsController
-  def create
+class Users::InvitationsController < Devise::InvitationsController
+  def update
     super { |resource| _setup_new_user(resource) if resource.errors.empty? }
   end
 

@@ -30,6 +30,13 @@ class Types::QueryType < Types::BaseObject
     end
   end
 
+  field :invited_viewer, Types::User, null: true do
+    argument :token, String, required: true
+  end
+  def invited_viewer(token:)
+    User.find_by_invitation_token(token, true)
+  end
+
   field :listing, Types::Listing, null: false do
     argument :id, Integer, required: true
   end

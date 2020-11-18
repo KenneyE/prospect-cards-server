@@ -9,4 +9,9 @@ class DeviseOverrideMailerPreview < ActionMailer::Preview
     user = User.first
     DeviseOverrideMailer.reset_password_instructions(user, '123')
   end
+
+  def invitation_instructions
+    user = User.first
+    DeviseOverrideMailer.invitation_instructions(user, '123')
+  end
 end
