@@ -364,6 +364,7 @@ Devise.setup do |config|
       ['POST', %r{/users/sign_in}],
       ['GET', %r{/users/confirmation.json}],
       ['PATCH', %r{/users/password.json}],
+      ['PATCH', %r{/users/invitation.json}],
       ['POST', %r{/users}]
     ]
 

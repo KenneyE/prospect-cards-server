@@ -52,3 +52,6 @@ RSpec/MultipleExpectations:
   Max: 2
 Rails/EnumHash:
   Enabled: false
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_invitation_token

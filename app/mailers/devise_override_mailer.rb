@@ -11,4 +11,12 @@ class DeviseOverrideMailer < ApplicationMailer
 
     mail(to: record.email, subject: 'Prospect Cards - Password Reset')
   end
+
+  def invitation_instructions(record, token, _opts = {})
+    @accept_url = "#{_client_url}/accept-invitation/#{token}"
+
+    mail(
+      to: record.email, subject: "You've been invited to join Prospect Cards!",
+    )
+  end
 end
