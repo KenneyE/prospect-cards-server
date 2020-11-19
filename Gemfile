@@ -27,6 +27,7 @@ gem 'devise-jwt'
 gem 'devise_invitable', '~> 2.0.0'
 gem 'graphql'
 gem 'graphql-guard'
+gem 'rorvswild'
 
 gem 'nilify_blanks'
 gem 'paper_trail'

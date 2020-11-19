@@ -266,6 +266,7 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.4)
+    rorvswild (1.5.8)
     rspec-core (3.9.3)
       rspec-support (~> 3.9.3)
     rspec-expectations (3.9.2)
@@ -387,6 +388,7 @@ DEPENDENCIES
   puma (~> 4.1)
   rack-cors
   rails!
+  rorvswild
   rspec-rails
   rubocop
   rubocop-performance
