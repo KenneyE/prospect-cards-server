@@ -66,7 +66,7 @@ class Types::QueryType < Types::BaseObject
         taggings: { context: context },
       ).where('LOWER(name) LIKE :name', name: "%#{name.downcase}%").group(
         'tags.id',
-      ).order('COUNT(taggings.id) DESC').having('COUNT(taggings.id) > 4')
+      ).order('COUNT(taggings.id) DESC')#.having('COUNT(taggings.id) > 4')
 
     t.limit(5).as_json(only: %i[id name])
   end
