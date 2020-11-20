@@ -1,6 +1,6 @@
 class Inputs::ListingInput < Types::BaseInputObject
   argument :id, Int, required: false
-  argument :title, String, required: true
+  argument :title, String, required: false
   argument :description, String, required: true
   argument :price, Float, required: true
   argument :images, [ApolloUploadServer::Upload], required: true

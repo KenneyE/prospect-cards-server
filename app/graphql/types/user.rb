@@ -33,6 +33,11 @@ class Types::User < Types::ActiveRecordObject
     user_listings.where(status: Listing.statuses[status])
   end
 
+  field :favorite_listings, [Types::Listing], null: false
+  def favorite_listings
+    object.favorited_by_type('Listing')
+  end
+
   field :offers, [Types::Offer], null: false do
     argument :status, Enums::ListingStatusEnum, required: false
   end

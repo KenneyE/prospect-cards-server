@@ -37,8 +37,23 @@ class Listing < ApplicationRecord
 
   enum status: %i[available pending_sale sold disabled]
 
+  before_validation :_set_title
+
+  # TODO: Define these methods dynamically using TAG_TYPES
   def player
     player_list.first
+  end
+
+  def manufacturer
+    manufacturer_list.first
+  end
+
+  def set_type
+    set_type_list.first
+  end
+
+  def parallel
+    parallel_list.first
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -79,5 +94,9 @@ class Listing < ApplicationRecord
       grader: grader_list.first,
       parallel: parallel_list.first,
     }
+  end
+
+  def _set_title
+    self.title = "#{year} #{manufacturer} #{set_type} #{player} #{parallel}"
   end
 end

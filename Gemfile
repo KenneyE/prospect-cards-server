@@ -19,7 +19,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rack-cors'
 gem 'httparty'
 
-gem 'airbrake'
+# gem 'airbrake'
 gem 'apollo_upload_server', '2.0.1'
 gem 'cancancan'
 gem 'devise'
